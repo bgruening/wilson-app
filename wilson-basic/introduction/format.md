@@ -7,7 +7,7 @@ output: html_document
   <br><br>
    CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, zscore, pvalue). Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible, without having to modify the code of WIlsON for each specific experiment.
   <br><br>
-  <img src="clarion_excel_colored.png" width="100%">
+  <img src="images/clarion_excel_colored.png" width="100%">
   <br><br>
   <p class="font">
   The format consists of three blocks of data with distinct structures:
@@ -21,7 +21,7 @@ output: html_document
 
 </br>
 ## <a name="header"></a> Header:
-<img src="header.png"/>
+<img src="images/header.png"/>
 <p class="font">
   <ul class="font">
     <li>Line identifier '!'</li>
@@ -41,7 +41,7 @@ output: html_document
 
 </br>
 ## <a name="metadata"></a> Metadata:
-<img src="metadata.png"/>
+<img src="images/metadata.png"/>
 <p class="font">
   <ul class="font">
     <li>Line identifier '#'</li>
@@ -106,7 +106,7 @@ output: html_document
 
 </br>
 ## <a name="data"></a> Data:
-<img src="data.png"/>
+<img src="images/data.png"/>
 <p class="font">
   <ul class="font">
     <li>Traditional tab-delimited data matrix</li>
