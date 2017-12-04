@@ -4,12 +4,13 @@ library(shinydashboard)
 library(shinythemes)
 library(colourpicker)
 library(wilson)
+source("introduction/introduction.R")
 
 #
 # Data options
 #
-# Specify the input file here
-wilson_input <- "data/prmt5_example.se"
+# Use all files specified in data/
+load <- sapply(list.files(path = "data/"), function(x){ paste0("data/", x)})
 
 #
 # UI options
@@ -24,10 +25,10 @@ wilson_mainpanelwidth <- 10
 # Server options
 #
 # Set to false to disable images from the wilson package
-wilson_images_enabled <- TRUE
+wilson_images_enabled <- F#TRUE
 
 # Allow the server to print messages to the console
-wilson_logging <- TRUE
+wilson_logging <- F#TRUE
 
 # Redirect stdout to stderr when run on a server. This will print all output into the log file.
 wilson_redirect_stdout <- FALSE
@@ -62,11 +63,6 @@ if (wilson_redirect_stdout & !interactive() ) {
 	sink(stderr(), type="output")
 }
 
-# Load and parse data
-table <- parser(wilson_input)
-data <- table$data
-metadata <- table$metadata
-
 # Define the UI
 ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboardSidebar(disable = TRUE),
                     body = dashboardBody(
@@ -93,13 +89,15 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                  #filter_h_duoscatter_interactive,
                                  #filter_h_heatmap_static,
                                  #filter_h_heatmap_interactive {font-size: 10px}"),
-                      navbarPage(title = "WIlsON", theme = shinytheme("sandstone"), position = "fixed-top",
+                      tags$head(tags$link(rel = "icon", type = "image/png", href = "wilson_icon.png")),
+                      titlePanel(title = "", windowTitle = "WIlsON"),
+                      navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;")), theme = shinytheme("sandstone"), position = "fixed-top",
                                  # introduction ------------------------------------------------------------
                                  navbarMenu(
-                                   title = "Introduction",
-                                   start(),
-                                   format()
-                                 ),
+                                    title = "Introduction",
+                                    start(),
+                                    format()
+                                  ),
                                  # feature Selection -------------------------------------------------------
                                  tabPanel(title = "Feature Selection",
                                           sidebarLayout(
@@ -109,7 +107,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                          tags$h6("Highlighted Features"),
                                                          verbatimTextOutput("filter_h1"),
                                                          tags$h3("Global Parameters"),
-                                                         uiOutput("features")
+                                                         selectInput(inputId = "fileLoader", label = "Select data set", choices = load)
                                             ),
                                             mainPanel(width = wilson_mainpanelwidth,
                                                       tabBox(width = 12,
@@ -133,7 +131,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            verbatimTextOutput("filter_geneviewer_static"),
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_geneviewer_static"),
-                                                           tags$h3("Global Parameters")
+                                                           tags$h3("Global Parameters"),
+                                                           numericInput(inputId = "width_geneviewer_static", label = "Width", value = 0, min = 0),
+                                                           numericInput(inputId = "height_geneviewer_static", label = "Height", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "GeneViewer",
@@ -154,7 +154,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            verbatimTextOutput("filter_geneviewer_interactive"),
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_geneviewer_interactive"),
-                                                           tags$h3("Global Parameters")
+                                                           tags$h3("Global Parameters"),
+                                                           numericInput(inputId = "width_geneviewer_interactive", label = "Width", value = 0, min = 0),
+                                                           numericInput(inputId = "height_geneviewer_interactive", label = "Height", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "GeneViewer",
@@ -164,7 +166,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                                tabPanel(title = "Data",
                                                                         dataTableOutput("geneviewer_interactive_table")
                                                                )
-
+                                                               
                                                         )
                                               )
                                             )
@@ -181,7 +183,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            verbatimTextOutput("filter_pca"),
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_pca"),
-                                                           tags$h3("Global Parameters")
+                                                           tags$h3("Global Parameters"),
+                                                           numericInput(inputId = "width_pca", label = "Width", value = 0, min = 0),
+                                                           numericInput(inputId = "height_pca", label = "Height", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "PCA", id = "pca_tabs",
@@ -202,7 +206,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            verbatimTextOutput("filter_global_cor_heatmap"),
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_global_cor_heatmap"),
-                                                           tags$h3("Global Parameters")
+                                                           tags$h3("Global Parameters"),
+                                                           numericInput(inputId = "width_global_cor_heatmap", label = "Width", value = 0, min = 0),
+                                                           numericInput(inputId = "height_global_cor_heatmap", label = "Height", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Global correlation heatmap",
@@ -230,6 +236,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h6("Highlighted Features"),
                                                     verbatimTextOutput("filter_h_simple_scatter_static"),
                                                     tags$h3("Global Parameters"),
+                                                    numericInput(inputId = "width_simple_scatter_static", label = "Width", value = 0, min = 0),
+                                                    numericInput(inputId = "height_simple_scatter_static", label = "Height", value = 0, min = 0),
                                                     markerUI("marker_simple_scatter_static")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -253,6 +261,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h6("Highlighted Features"),
                                                     verbatimTextOutput("filter_h_duoscatter_static"),
                                                     tags$h3("Global Parameters"),
+                                                    numericInput(inputId = "width_duoscatter_static", label = "Width", value = 0, min = 0),
+                                                    numericInput(inputId = "height_duoscatter_static", label = "Height", value = 0, min = 0),
                                                     markerUI("marker_duoscatter_static")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -287,6 +297,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h6("Highlighted Features"),
                                                     verbatimTextOutput("filter_h_simple_scatter_interactive"),
                                                     tags$h3("Global Parameters"),
+                                                    numericInput(inputId = "width_simple_scatter_interactive", label = "Width", value = 0, min = 0),
+                                                    numericInput(inputId = "height_simple_scatter_interactive", label = "Height", value = 0, min = 0),
                                                     markerUI("marker_simple_scatter_interactive")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -310,6 +322,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h6("Highlighted Features"),
                                                     verbatimTextOutput("filter_h_duoscatter_interactive"),
                                                     tags$h3("Global Parameters"),
+                                                    numericInput(inputId = "width_duoscatter_interactive", label = "Width", value = 0, min = 0),
+                                                    numericInput(inputId = "height_duoscatter_interactive", label = "Height", value = 0, min = 0),
                                                     markerUI("marker_duoscatter_interactive")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -345,7 +359,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            verbatimTextOutput("filter_heatmap_static"),
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_heatmap_static"),
-                                                           tags$h3("Global Parameters")
+                                                           tags$h3("Global Parameters"),
+                                                           numericInput(inputId = "width_heatmap_static", label = "Width", value = 0, min = 0),
+                                                           numericInput(inputId = "height_heatmap_static", label = "Height", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Heatmap",
@@ -366,7 +382,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            verbatimTextOutput("filter_heatmap_interactive"),
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_heatmap_interactive"),
-                                                           tags$h3("Global Parameters")
+                                                           tags$h3("Global Parameters"),
+                                                           numericInput(inputId = "width_heatmap_interactive", label = "Width", value = 0, min = 0),
+                                                           numericInput(inputId = "height_heatmap_interactive", label = "Height", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Heatmap",
@@ -381,43 +399,45 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                             )
                                    )
                                  )
-
+                                 
                       )
                     )
 )
 
-# Define the server function
 server <- function(session, input, output) {
+  # Load and parse data
+  parsed <- reactive({
+    shiny::req(input$fileLoader)
+    
+    parser(input$fileLoader)
+  })
+  
   text <- reactive(paste(fs()$filter, collapse = "\n"))
   output$filter1 <- output$filter_geneviewer_static <- output$filter_geneviewer_interactive <- output$filter_pca <- output$filter_global_cor_heatmap <- output$filter_simple_scatter_static <- output$filter_simple_scatter_interactive <- output$filter_duoscatter_static <- output$filter_duoscatter_interactive <- output$filter_heatmap_static <- output$filter_heatmap_interactive <- renderText(text())
-
+  
   text_h <- reactive(paste(fsh()$filter, collapse = "\n"))
   output$filter_h1 <- output$filter_h_geneviewer_static <- output$filter_h_geneviewer_interactive <- output$filter_h_pca <- output$filter_h_global_cor_heatmap <- output$filter_h_simple_scatter_static <- output$filter_h_simple_scatter_interactive <- output$filter_h_duoscatter_static <- output$filter_h_duoscatter_interactive <- output$filter_h_heatmap_static <- output$filter_h_heatmap_interactive <- renderText(text_h())
-
+  
   # featureSelection --------------------------------------------------------
-  output$features <- renderUI({
-    selectInput(inputId = "selectFeatures", label = "Features to select from", choices = metadata[[1]], multiple = TRUE)
-  })
-
-  fs <- callModule(featureSelector, "featureSelector", data = data, features = reactive(input$selectFeatures), feature.grouping = metadata[, c(1,3)], step = 100)
-  fsh <- callModule(featureSelector, "featureSelector_h", data = reactive(fs()$data), features = reactive(input$selectFeatures), selection.default = "none")
-
+  fs <- callModule(featureSelector, "featureSelector", data = reactive(parsed()$data), feature.grouping = reactive(parsed()$metadata[, c(1,3)]), step = 100)
+  fsh <- callModule(featureSelector, "featureSelector_h", data = reactive(fs()$data), feature.grouping = reactive(parsed()$metadata[, c(1,3)]), selection.default = "none")
+  
   # geneviewer --------------------------------------------------------------
-  gene_static <- callModule(geneView, "geneviewer_static", data = reactive(fs()$data), metadata = metadata, level = metadata[level != "feature"][["level"]], plot.method = "static")
-  gene_interactive <- callModule(geneView, "geneviewer_interactive", data = reactive(fs()$data), metadata = metadata, level = metadata[level != "feature"][["level"]], plot.method = "interactive")
-
+  gene_static <- callModule(geneView, "geneviewer_static", data = reactive(fs()$data), metadata = reactive(parsed()$metadata), level = reactive(parsed()$metadata[level != "feature"][["level"]]), plot.method = "static", custom.label = reactive(fs()$data), width = reactive(input$width_geneviewer_static), height = reactive(input$height_geneviewer_static))
+  gene_interactive <- callModule(geneView, "geneviewer_interactive", data = reactive(fs()$data), metadata = reactive(parsed()$metadata), level = reactive(parsed()$metadata[level != "feature"][["level"]]), plot.method = "interactive", custom.label = reactive(fs()$data), width = reactive(input$width_geneviewer_interactive), height = reactive(input$height_geneviewer_interactive))
+  
   output$geneviewer_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     gene_static()
   })
-
+  
   output$geneviewer_interactive_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     gene_interactive()
   })
-
+  
   # data reduction ----------------------------------------------------------
   # pca
-  pca <- callModule(pca, "pca", data = reactive(fs()$data), metadata = metadata, level = metadata[level != "feature"][["level"]], entryLabel = "Ensembl gene")
-
+  pca <- callModule(pca, "pca", data = reactive(fs()$data), types = reactive(parsed()$metadata[level != "feature", c("key", "level", "label", "sub_label")]), level = reactive(parsed()$metadata[level != "feature"][["level"]]), width = reactive(input$width_pca), height = reactive(input$height_pca))
+  
   output$pca_data_tabs <- renderUI({
     tabs <- lapply(names(pca()), function(name) {
       tabPanel(
@@ -427,7 +447,7 @@ server <- function(session, input, output) {
     })
     do.call(tabsetPanel, tabs)
   })
-
+  
   observe({
     if(input$pca_tabs == "Data" & !is.null(pca())){
       for(name in names(pca())) {
@@ -441,23 +461,23 @@ server <- function(session, input, output) {
       }
     }
   })
-
+  
   # global clustering heatmap
-  glob_cor_table <- callModule(global_cor_heatmap, "glob_cor_heat", data = reactive(fs()$data), types = metadata[level != "feature", c("key", "level")])
-
+  glob_cor_table <- callModule(global_cor_heatmap, "glob_cor_heat", data = reactive(fs()$data), types = reactive(parsed()$metadata[level != "feature", c("key", "level", "label", "sub_label")]), width = reactive(input$width_global_cor_heatmap), height = reactive(input$height_global_cor_heatmap))
+  
   output$glob_cor_heat_data <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     glob_cor_table()
   })
-
+  
   # scatterplot -------------------------------------------------------------
   ## static
-  marker_simple_static <- callModule(marker, "marker_simple_scatter_static", highlight.labels = reactive(names(fsh()$data)))
-  marker_duo_static <- callModule(marker, "marker_duoscatter_static", highlight.labels = reactive(names(fsh()$data)))
-
-  scatter_static <- callModule(scatterPlot, "simple_scatter_static", data = reactive(fs()$data), types = metadata[level != "feature", c("key", "level")], features = reactive(fsh()$data), markerReac = marker_simple_static, entryLabel = "Ensembl gene")
-  duo_static_1 <- callModule(scatterPlot, "duoscatter_static_1", data = reactive(fs()$data), types = metadata[level != "feature", c("key", "level")], features = reactive(fsh()$data), markerReac = marker_duo_static, entryLabel = "Ensembl gene")
-  duo_static_2 <- callModule(scatterPlot, "duoscatter_static_2", data = reactive(fs()$data), types = metadata[level != "feature", c("key", "level")], features = reactive(fsh()$data), markerReac = marker_duo_static, entryLabel = "Ensembl gene")
-
+  marker_simple_static <- callModule(marker, "marker_simple_scatter_static", highlight.labels = reactive(fsh()$data))
+  marker_duo_static <- callModule(marker, "marker_duoscatter_static", highlight.labels = reactive(fsh()$data))
+  
+  scatter_static <- callModule(scatterPlot, "simple_scatter_static", data = reactive(fs()$data), types = reactive(parsed()$metadata[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_simple_static, width = reactive(input$width_simple_scatter_static), height = reactive(input$height_simple_scatter_static))
+  duo_static_1 <- callModule(scatterPlot, "duoscatter_static_1", data = reactive(fs()$data), types = reactive(parsed()$metadata[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static))
+  duo_static_2 <- callModule(scatterPlot, "duoscatter_static_2", data = reactive(fs()$data), types = reactive(parsed()$metadata[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static))
+  
   output$simple_scatter_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     scatter_static()
   })
@@ -467,15 +487,15 @@ server <- function(session, input, output) {
   output$duoscatter_static_table_2 <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     duo_static_2()
   })
-
+  
   ## interactive
-  marker_simple_interactive <- callModule(marker, "marker_simple_scatter_interactive", highlight.labels = reactive(names(fsh()$data)))
-  marker_duo_interactive <- callModule(marker, "marker_duoscatter_interactive", highlight.labels = reactive(names(fsh()$data)))
-
-  scatter_interactive <- callModule(scatterPlot, "simple_scatter_interactive", data = reactive(fs()$data), types = metadata[level != "feature", c("key", "level")], features = reactive(fsh()$data), markerReac = marker_simple_interactive, entryLabel = "Ensembl gene", plot.method = "interactive")
-  duo_interactive_1 <- callModule(scatterPlot, "duoscatter_interactive_1", data = reactive(fs()$data), types = metadata[level != "feature", c("key", "level")], features = reactive(fsh()$data), markerReac = marker_duo_interactive, entryLabel = "Ensembl gene", plot.method = "interactive")
-  duo_interactive_2 <- callModule(scatterPlot, "duoscatter_interactive_2", data = reactive(fs()$data), types = metadata[level != "feature", c("key", "level")], features = reactive(fsh()$data), markerReac = marker_duo_interactive, entryLabel = "Ensembl gene", plot.method = "interactive")
-
+  marker_simple_interactive <- callModule(marker, "marker_simple_scatter_interactive", highlight.labels = reactive(fsh()$data))
+  marker_duo_interactive <- callModule(marker, "marker_duoscatter_interactive", highlight.labels = reactive(fsh()$data))
+  
+  scatter_interactive <- callModule(scatterPlot, "simple_scatter_interactive", data = reactive(fs()$data), types = reactive(parsed()$metadata[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_simple_interactive, plot.method = "interactive", width = reactive(input$width_simple_scatter_interactive), height = reactive(input$height_simple_scatter_interactive))
+  duo_interactive_1 <- callModule(scatterPlot, "duoscatter_interactive_1", data = reactive(fs()$data), types = reactive(parsed()$metadata[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive))
+  duo_interactive_2 <- callModule(scatterPlot, "duoscatter_interactive_2", data = reactive(fs()$data), types = reactive(parsed()$metadata[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive))
+  
   output$simple_scatter_interactive_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     scatter_interactive()
   })
@@ -485,18 +505,18 @@ server <- function(session, input, output) {
   output$duoscatter_interactive_table_2 <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     duo_interactive_2()
   })
-
+  
   # heatmap -----------------------------------------------------------------
   ## static
-  heatmap_static_table <- callModule(heatmap, "heatmap_static", data = reactive(fs()$data), types = metadata[level != "feature", c("key", "level")], plot.method = "static", entryLabel = "Ensembl gene")
-
+  heatmap_static_table <- callModule(heatmap, "heatmap_static", data = reactive(fs()$data), types = reactive(parsed()$metadata[level != "feature", c("key", "level", "label", "sub_label")]), plot.method = "static", custom.row.label = reactive(fs()$data), width = reactive(input$width_heatmap_static), height = reactive(input$height_heatmap_static))
+  
   output$heatmap_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     heatmap_static_table()
   })
-
+  
   ## interactive
-  heatmap_interactive_table <- callModule(heatmap, "heatmap_interactive", data = reactive(fs()$data), types = metadata[level != "feature", c("key", "level")], plot.method = "interactive", entryLabel = "Ensembl gene")
-
+  heatmap_interactive_table <- callModule(heatmap, "heatmap_interactive", data = reactive(fs()$data), types = reactive(parsed()$metadata[level != "feature", c("key", "level", "label", "sub_label")]), plot.method = "interactive", custom.row.label = reactive(fs()$data), width = reactive(input$width_heatmap_interactive), height = reactive(input$height_heatmap_interactive))
+  
   output$heatmap_interactive_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     heatmap_interactive_table()
   })
