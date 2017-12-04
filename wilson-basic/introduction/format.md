@@ -35,7 +35,7 @@ output: html_document
     <li><b>format</b>: Name of the file format (must be Clarion)</li>
     <li><b>version</b>: Version of the file format (1.0)</li>
     <li><b>experiment_id</b>: Unique id to be used for the experiment</li>
-    <li><b>delimiter</b>: In-field delimiter for multi-value fields (e.g. multiple kegg pathways)</li>
+    <li><b>delimiter(*)</b>: In-field delimiter for multi-value fields (e.g. multiple kegg pathways). Mandatory for multi-value fields.</li>
   </ul>
 </p>
 
@@ -66,30 +66,31 @@ output: html_document
         <li>Must be one of:</li>
         <ul class="font">
           <li><i>sample:</i> Data relating to a single sample</li>
-          <li><i>condition:</i> Data relating to a single condition</li>
+          <li><i>condition:</i> Data relating to a single condition (combination of all samples; e.g. average count)</li>
           <li><i>contrast:</i> Data relating to a single contrast (pairwise comparison of conditions)</li>
-          <li><i>feature:</i> Annotation relating to a feature</li>
+          <li><i>feature:</i> Annotation relating to a feature (e.g. gene, transcript, probe, protein, ...)</li>
         </ul>
       </ul>
-    <li><b>type</b>:</li>
+    <li><b>type(*)</b>:</li>
       <ul class="font">
+        <li>Mandatory for multi-value fields</li>
         <li>Further classify content level</li>
         <li>Must be one of:</li>
         <li>For level = feature = values to be filtered for</li>
         <ul class="font">
-          <li><i>unique_id:</i> Unique identifier</li>
-          <li><i>name:</i> Main feature name / symbol / label</li>
-          <li><i>category_s:</i> Single value per field; categorical data</li>
-          <li><i>category_m:</i> Multiple delimited values per field; categorical data</li>
+          <li><i>unique_id:</i> Unique identifier (e.g. ENSMUSG00000023944)</li>
+          <li><i>name:</i> Main feature name / symbol / label (e.g. Hsp90ab1)</li>
+          <li><i>category:</i> Single value per field; categorical data (e.g. protein_coding)</li>
+          <li><i>array:</i> Multiple delimited values per field; categorical data (e.g. Cholinergic synapse|Choline metabolism in cancer)</li>
         </ul>
         <li>For levels = sample, condition, contrast = values to be plotted</li>
         <ul class="font">
           <li><i>score:</i> count, intensity, ...</li>
           <li><i>ratio:</i> foldchange, log2foldchange, ...</li>
           <li><i>probability:</i> pvalue, padj, ...</li>
-          <li><i>category_s:</i> Categorical data (not numeric); single value per field</li>
-          <li><i>category_m:</i> Categorical data (not numeric); multiple values per field</li>
+          <li><i>array:</i> Multiple numeric values per field; e.g. coverage/windows, ...</li>
         </ul>
+        <li>Attention: if the type is not given, the first feature column is expected to hold a unique identifier!</li>
       </ul>
     <li><b>label</b>:</li>
       <ul class="font">
@@ -99,7 +100,7 @@ output: html_document
         <li>For level = contrast delimited by '|' (condition1|condition2)</li>
       </ul>
     <li><b>sub_label</b>:</li>
-      <ul class="font"><li>Optional more detailed label to permit further branching</li></ul>
+      <ul class="font"><li>Optional more detailed label to offer a logical subselection of a column using the interface</li></ul>
   </ul>
 </p>
 
@@ -110,5 +111,6 @@ output: html_document
   <ul class="font">
     <li>Traditional tab-delimited data matrix</li>
     <li>Minimum: one column with a unique id; one column with a numerical value</li>
+    <li>If types are missing first column will be treated as unique_id</li>
   </ul>
 </p>

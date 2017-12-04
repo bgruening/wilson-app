@@ -87,7 +87,7 @@ output: html_document
 
 <p class="font justify">
  As mentioned above, the first step of WILsON is to select the tab "Feature Selection" at the top menue. This allows to select a subset of data to be used for plotting by applying filtering steps (without filtering all features of the dataset will be plotted).
- The table at the top of the "Feature Selection" page displays the current selection. Several tabs located below the table are intended for filtering steps based on various criteria available per feature.WILsON supports a presorting for sample, condition and contrasts among others.
+ The table at the top of the "Feature Selection" page displays the current selection. Several tabs located below the table are intended for filtering steps based on various criteria available per feature. WILsON supports a presorting for sample, condition, and contrasts among others.
  The "highlight" pane supports the creation of a subset of the selected features. The highlighted data can be used in certain plots which support highlighting (e.g. scatterplot) to either add a fixed color or labels.
  After filtering, plots of interest can be selected and generated via the tabs on top.
 </p>
@@ -101,7 +101,7 @@ output: html_document
 
 ### Filter
 <p class="font">
- Based on the columns content (textual, multi textual,numeric) WIlsON's featureSelector will provide a appropriate filter visualization, enabling an efficient way to select data. 
+ Based on the columns content (textual, numeric) WIlsON's Feature Selector will provide appropriate filter interfaces to enable an efficient way to select data.
 </p>
 
 #### **Textual (Annotation)**
@@ -114,18 +114,18 @@ output: html_document
 #### **Numeric (Value)**
 <img src="feature_selector_range_slider.png"/>
 <p class="font"><i>
- This filter is intented to select a numeric range. The 'inner' or 'outer' options allows the definition of either the range within the set markers (inner) or outside of the marker (outer), which is also displayed trough the slider coloring. The markers are draggable. As the step size is scaled according to the spread of the data, editable value fields aside the slider can be utilized to change the minimum and maximum value (slider range is recalculate). 
+ This filter is intented to select a numeric range. The 'inner' or 'outer' options allows the definition of either the range within the set markers (inner) or outside of the marker (outer), which is also displayed trough the slider coloring. As the step size is scaled according to the spread of the data, editable value fields aside the slider can be utilized to change the minimum and maximum value (slider range is recalculated).
 </i>
 </p>
 
 ### Additional options
 <p class="font">
- Once the data is filtered, the remaining subset of features is displayed in the table on top of the feature selection page (see table above). This selection can be narrowed down further by e.g. a keyword search field on the top right of the table. Additionally, manual selection of rows by marking is supported as well. Sorting on specific columns by clicking the <b>column title</b> might help to find spcific features of interest. Once the table is given in the correct order, it can be filtered for a specific number of entries as given below.
+ Once the data is filtered, the remaining subset of features is displayed in the table on top of the feature selection page (see table above). This selection can be narrowed down further by e.g. a keyword search field on the top right of the table. Additionally, manual selection of rows by marking is supported as well. Sorting on specific columns by clicking the <b>column title</b> can help to find specific features of interest. Once the table is sorted correctly, it can be filtered for a specific number of entries.
 </p>
 
 <img src="feature_selector_row_selector.png"/></br>
 <p class="font">
-<i>Finally, specific <b>rows</b> (row numbers) can be selected from the feature table via the slider shown above, a powerful filter in combination with column sorting and nummeric filtering on e.g. fold changes. For example, this filter allows the generation of a featureset of the top 50 up and down regulated genes on chromosome 3.
+<i>Specific <b>rows</b> (row numbers) can be selected from the feature table via the slider shown above, a powerful filter in combination with column sorting and numeric filtering on e.g. fold changes. This could be used to e.g. generate a list of the top 50 up and down regulated genes on chromosome 3.
 </i>
 </p>
 
@@ -142,7 +142,7 @@ output: html_document
 #### PCA (Principal Component Analysis)
 <p class="font plot">
  <img src="example_pca2.png" class="plot"/>
- A PCA is used to get an overview on the variation of the data based on the selected features. By default the two dimensions with the highest variation are selected (PC 1 and PC2), presented in a two-dimensional scatterplot.
+ A PCA is used to get an overview on the variation of the data based on the selected features. By default the two dimensions with the highest variation are selected (PC1 and PC2) and presented in a two-dimensional scatterplot.
 </p>
 
 #### Global Correlation Heatmap
@@ -224,7 +224,7 @@ Thanks to the plotly package, several plots are available as an interactive vers
 <img src="case1_4_plot1.png"/>
 
 <p class="font">
- The resulting plot is troubled by the large range of the values (0-7000) which can reduce the recognition of patterns. A row-wise z-score <b>Transformation</b> might help.
+ The resulting plot is troubled by the large range of the values (0-7000) which can hinder the recognition of patterns. A row-wise z-score <b>Transformation</b> might help.
 </p>
 <img src="case1_4_plot2.png"/>
 
@@ -257,3 +257,45 @@ To only select genes with a relatively high expression, reorder the table by cli
 </p>
 <img src="case2_4_fin_subset.png" style="margin-bottom:20px"/>
 <img src="case2_5_lineplot.png" width="40%" height="40%"/>
+
+### Case 3
+<p class="font">
+<b>Create scatterplot of non-coding RNAs including labeling of those with the most prominent up-regulation</b></br>
+</br>
+<b>Data set</b>: <i>RNAseq_Zhang_2015.se</i>. First select non-coding RNAs on the <b>feature</b> level: <b>Ensembl biotype</b> = <i>miRNA, lincRNA, antisense</i>. Then switch to the <b>Scatterplot/Simple Scatter</b> tab: choose the <b>X-axis</b> data to be type <i>condition</i>, column <i>wt</i>, transformation <i>log2</i>, and <b>Y-axis</b> data to be type <i>condition</i>, column <i>mt</i>, transformation <i>log2</i>. This will compare the mean normalized counts per condition of the selected non-coding RNAs.
+</p>
+<img src="case3_1_uncolored.png" width="40%" height="40%"/>
+
+<p class="font">
+In order to color the scatterplot by Log2FC please choose Z-axis to be type <b>contrast</b> and column <i>Unfitted Log2FoldChange (mt/wt)</i>. Furthermore set the <b>Color scheme</b> to <i>Diverging/BuWtRd</i>. The resulting plot shows RNAs up-regulated in the <i>mt</i> condition using red dots. But the colors are slightly pale and do not seem to be centered around 0.
+</p>
+<img src="case3_2_pale.png" width="40%" height="40%"/>
+
+<p class="font">
+Tick <b>Winsorize to upper/lower</b>, then set <b>Lower limit</b> to <i>-1</i> and <b>Upper limit</b> to <i>1</i> to modify the color palette range to be more intense and centered around 0.
+</p>
+<img src="case3_3_intense.png" width="40%" height="40%"/>
+
+<p class="font">
+Next please go back to the <b>Feature Selection</b> tab and switch from the Data to the <b>Highlight</b> sub-tab to select a subset of features to be labeled inside the plot. Open the <b>contrast</b> level and select <b>BaseMean</b> <i>>= 100</i> and <b>Unfitted Log2FoldChange (mt/wt)</b> <i>>= 0.5</i> to get RNAs with a certain minimum expression and up-regulated in the mutant. Now switch to the <b>Scatterplot/Simple Scatter</b> tab again and set the <b>Highlight/Label Selected Features</b> on the side bar to <i>Mark</i>. Furthermore change <b>Select label column</b> to <i>Ensembl gene</i> to use the gene symbol for display as a label.
+</p>
+<img src="case3_4_label.png" width="40%" height="40%"/>
+
+
+
+</br><hr>
+## <a name="contact_license"></a> Contact and License
+<p class="font" class="justify">
+</br>
+Wilson was created by Hendrik Schultheis, Jens Preussner, Carsten Kuenne, and Mario Looso.
+</br></br>
+Bioinformatics Core Unit, Max Planck Institute for Heart and Lung Research, Bad Nauheim, Germany.
+</br></br>
+Copyright (C) 2017. This project is licensed under the MIT license.
+</br></br>
+The source code for the modular Wilson R package is available on <a href="https://github.molgen.mpg.de/loosolab/wilson">Github.</a>
+</br>
+The source code for the Wilson workbench implementing that package is available on <a href="https://github.molgen.mpg.de/loosolab/wilson-apps">Github.</a>
+</br>
+The container for the Wilson workbench ist available on <a href="https://hub.docker.com/r/loosolab/uropa/">Docker.</a>
+</p>
