@@ -24,11 +24,9 @@ wilson_mainpanelwidth <- 10
 #
 # Server options
 #
-# Set to false to disable images from the wilson package
-wilson_images_enabled <- F#TRUE
 
 # Allow the server to print messages to the console
-wilson_logging <- F#TRUE
+wilson_logging <- FALSE
 
 # Redirect stdout to stderr when run on a server. This will print all output into the log file.
 wilson_redirect_stdout <- FALSE
@@ -51,7 +49,6 @@ wilson_auto_reload_interval <- 3000
 #
 if (wilson_logging) options(shiny.trace = TRUE)
 if (wilson_enable_reactive_event_logging) options(shiny.reactlog=TRUE)
-if (wilson_images_enabled) shiny::addResourcePath(prefix = "wilson_www", directoryPath = "inst/www/")
 if (wilson_enable_auto_reload) {
   options(shiny.autoreload = TRUE)
 	options(shiny.autoreload.pattern = wilson_auto_reload_pattern)
