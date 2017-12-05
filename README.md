@@ -14,6 +14,7 @@ Install R (https://www.r-project.org/), e.g.:
 sudo apt-get install r-base
 ```
 Install R Shiny server: https://www.rstudio.com/products/shiny/download-server/ (make sure to install to global R library, NOT personal!).
+
 Start R and install WIlsON application and necessary R packages (make sure to install to global R library, NOT personal!).
 ```
 R
