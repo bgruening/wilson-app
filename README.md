@@ -29,7 +29,7 @@ sudo apt-get install libnlopt-dev
 
 Download the WIlsON application archive from https://github.molgen.mpg.de/loosolab/wilson-apps/tree/hendrik-basic and unzip. Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
 
-Restart R Shiny server
+Restart R Shiny server.
 ```
 sudo systemctl stop shiny-server
 sudo systemctl daemon-reload
