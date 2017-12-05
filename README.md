@@ -13,7 +13,7 @@ Install R (https://www.r-project.org/), e.g.:
 ```
 sudo apt-get install r-base
 ```
-Install R Shiny server: https://www.rstudio.com/products/shiny/download-server/ (make sure to install to global R library, NOT personal!).
+Install R Shiny server according to the manual found here https://www.rstudio.com/products/shiny/download-server/ (make sure to install to global R library, NOT personal!).
 
 Start R and install WIlsON application and necessary R packages (make sure to install to global R library, NOT personal!).
 ```
@@ -27,9 +27,12 @@ Should the FactoMineR R package fail to install, you might have to quit R and fi
 sudo apt-get install libnlopt-dev
 ```
 
-Go to https://github.molgen.mpg.de/loosolab/wilson-apps/tree/hendrik-basic.
+Go to https://github.molgen.mpg.de/loosolab/wilson-apps/tree/hendrik-basic. 
+
 Clone or download.
+
 Unzip.
+
 Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
 
 ## More
