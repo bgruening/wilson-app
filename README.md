@@ -16,9 +16,9 @@ sudo apt-get upgrade
 sudo apt-get install r-base libnlopt-dev  wget libssl-dev libxml2-dev libcurl4-openssl-dev git gdebi-core
 ```
 
-Install R Shiny server according to the manual found here https://www.rstudio.com/products/shiny/download-server/ (make sure to install to global R library, NOT personal!).
+Install **R Shiny server** according to the manual found here https://www.rstudio.com/products/shiny/download-server/ (make sure to install to global R library, NOT personal!).
 
-Start R and install the WIlsON R package and dependencies (make sure to install to global R library, NOT personal!).
+Start R and install the **WIlsON R package** and dependencies (make sure to install to global R library, NOT personal!).
 ```
 R
 install.packages("devtools")
@@ -26,7 +26,7 @@ devtools::install_github(repo = "HendrikSchultheis/wilson", ref = "package", hos
 #to be replaced with later:  devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
 ```
 
-Download the WIlsON application archive from https://github.molgen.mpg.de/loosolab/wilson-apps/tree/hendrik-basic and unzip. Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
+Download the **WIlsON application** archive from https://github.molgen.mpg.de/loosolab/wilson-apps/tree/hendrik-basic and unzip. Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
 
 Restart R Shiny server.
 ```
