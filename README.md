@@ -15,25 +15,26 @@ sudo apt-get install r-base
 ```
 Install R Shiny server according to the manual found here https://www.rstudio.com/products/shiny/download-server/ (make sure to install to global R library, NOT personal!).
 
-Start R and install WIlsON application and necessary R packages (make sure to install to global R library, NOT personal!).
+Start R and install the WIlsON R package and dependencies (make sure to install to global R library, NOT personal!).
 ```
 R
 install.packages("devtools")
 devtools::install_github(repo = "HendrikSchultheis/wilson", ref = "package", host="github.molgen.mpg.de/api/v3", auth_token = "00fd601b5439997d3a637c6fecf6e6a50eaf9d09")
 #to be replaced with later:  devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
 ```
-Should the FactoMineR R package fail to install, you might have to quit R and first install the following Debian package. Then please reinstall Wilson according to the previous step.
+Should the FactoMineR R package fail to install, you might have to quit R and first install the following Debian package. Then please reinstall the WIlsON R package according to the previous step.
 ```
 sudo apt-get install libnlopt-dev
 ```
 
-Go to https://github.molgen.mpg.de/loosolab/wilson-apps/tree/hendrik-basic. 
+Download the WIlsON application archive from https://github.molgen.mpg.de/loosolab/wilson-apps/tree/hendrik-basic and unzip. Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
 
-Clone or download.
-
-Unzip.
-
-Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
+Restart R Shiny server
+```
+sudo systemctl stop shiny-server
+sudo systemctl daemon-reload
+sudo systemctl start shiny-server
+```
 
 ## More
 Please make sure to check our other projects at http://loosolab.mpi-bn.mpg.de/.
