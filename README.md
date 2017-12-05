@@ -13,7 +13,7 @@ Update and install the following Debian packages.
 ```
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install r-base libnlopt-dev  wget libssl-dev libxml2-dev libcurl4-openssl-dev git gdebi-core
+sudo apt-get install r-base libnlopt-dev wget libssl-dev libxml2-dev libcurl4-openssl-dev git gdebi-core
 ```
 
 Install **R Shiny server** according to the manual found here https://www.rstudio.com/products/shiny/download-server/ (make sure to install to global R library, NOT personal!).
