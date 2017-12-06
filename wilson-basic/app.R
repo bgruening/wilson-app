@@ -35,7 +35,7 @@ wilson_redirect_stdout <- FALSE
 wilson_enable_reactive_event_logging <- FALSE
 
 # Enable automatic reload of files that change during the runtime. All connected Shiny sessions will be reloaded. This incurs a substantial performance penalty and should not be used in production.
-wilson_enable_auto_reload <- FALSE
+wilson_enable_auto_reload <- TRUE
 
 # Customize the patterns for files that shiny will monitor for automatic reloading
 wilson_auto_reload_pattern <- ".*\\.(r|se|R)$"
