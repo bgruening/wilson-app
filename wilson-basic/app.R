@@ -7,12 +7,6 @@ library(wilson)
 source("introduction/introduction.R")
 
 #
-# Data options
-#
-# Use all files specified in data/
-load <- sapply(list.files(path = "data/"), function(x){ paste0("data/", x)})
-
-#
 # UI options
 #
 # width of the side panel
@@ -104,7 +98,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                          tags$h6("Highlighted Features"),
                                                          verbatimTextOutput("filter_h1"),
                                                          tags$h3("Global Parameters"),
-                                                         selectInput(inputId = "fileLoader", label = "Select data set", choices = load)
+                                                         uiOutput(outputId = "fileLoader")
                                             ),
                                             mainPanel(width = wilson_mainpanelwidth,
                                                       tabBox(width = 12,
@@ -402,6 +396,16 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
 )
 
 server <- function(session, input, output) {
+  #
+  # Data options
+  #
+  # Use all files specified in data/
+  load <- sapply(list.files(path = "data/"), function(x){ paste0("data/", x)})
+  
+  output$fileLoader <- renderUI({
+    selectInput(inputId = "fileLoader", label = "Select data set", choices = load)
+  })
+  
   # Load and parse data
   parsed <- reactive({
     shiny::req(input$fileLoader)
