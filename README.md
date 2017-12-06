@@ -40,6 +40,15 @@ sudo systemctl daemon-reload
 sudo systemctl start shiny-server
 ```
 
+## Server structure
+The R Shiny WIlsON application consists of the following components.
+```
+app.R			-> R code
+data			-> Folder with input files in [CLARION](http://loosolab.mpi-bn.mpg.de/apps/wilson/) format
+introduction		-> Introduction / Data Format web pages
+www			-> WIlsON logo
+```
+
 ## More
 Please make sure to check our other projects at http://loosolab.mpi-bn.mpg.de/.
 
