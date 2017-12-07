@@ -295,7 +295,7 @@ Copyright (C) 2017. This project is licensed under the MIT license.
 </br></br>
 The source code for the modular Wilson R package is available on <a href="https://github.molgen.mpg.de/loosolab/wilson">Github.</a>
 </br>
-The source code for the Wilson workbench implementing that package is available on <a href="https://github.molgen.mpg.de/loosolab/wilson-apps">Github.</a>
+The source code for the Wilson R application implementing that package is available on <a href="https://github.molgen.mpg.de/loosolab/wilson-apps">Github.</a>
 </br>
 The container for the Wilson workbench ist available on <a href="https://hub.docker.com/r/loosolab/wilson/">Docker.</a>
 </p>
