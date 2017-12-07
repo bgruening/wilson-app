@@ -297,5 +297,5 @@ The source code for the modular Wilson R package is available on <a href="https:
 </br>
 The source code for the Wilson workbench implementing that package is available on <a href="https://github.molgen.mpg.de/loosolab/wilson-apps">Github.</a>
 </br>
-The container for the Wilson workbench ist available on <a href="https://hub.docker.com/r/loosolab/uropa/">Docker.</a>
+The container for the Wilson workbench ist available on <a href="https://hub.docker.com/r/loosolab/wilson/">Docker.</a>
 </p>
