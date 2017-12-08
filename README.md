@@ -2,13 +2,13 @@
 ## Abstract
 This repository contains the reference application of the [WIlsON R package]( https://github.molgen.mpg.de/loosolab/wilson), which is intended to provide HT screening results to the end user, either via a centralized R Shiny server, via applications such as Rstudio, or as a virtualized Docker container for offline usage. Please refer to that repository for a more detailed description. The WIlsON tool is a first step towards a user friendly and customizable omics result presentation that enables end users to generate high quality publication ready graphics without any programming skills.
 
-## Example application
+## Demo Server
 WIlsON can be tested on our [official demonstration server](http://loosolab.mpi-bn.mpg.de/apps/wilson/).  
 
 ## Docker
 Get a Docker container [here](https://hub.docker.com/r/loosolab/wilson/).
 
-## Installation of R Shiny server in “virgin” Debian 9 Linux
+## Installation in “virgin” Debian 9 Linux
 Update and install the following Debian packages.
 ```
 sudo apt-get update
@@ -26,7 +26,7 @@ devtools::install_github(repo = "HendrikSchultheis/wilson", ref = "package", hos
 #to be replaced with later:  devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
 ```
 
-Download the **WIlsON R application** archive from https://github.molgen.mpg.de/loosolab/wilson-apps/tree/hendrik-basic and unzip. Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
+Download the **WIlsON R application** archive from https://github.molgen.mpg.de/loosolab/wilson-apps/ and unzip. Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
 
 Change the owner of the R Shiny apps folder to be the “shiny” user.
 ```
@@ -57,6 +57,24 @@ cp mydata.clarion /srv/shiny-server/sample-apps/data
 sudo systemctl stop shiny-server
 sudo systemctl daemon-reload
 sudo systemctl start shiny-server
+```
+## Run app in RStudio
+To run this app in your local RStudio you have to install the **WIlsON R package** and it's dependencies.
+```
+install.packages("devtools")
+devtools::install_github(repo = "HendrikSchultheis/wilson", ref = "package", host="github.molgen.mpg.de/api/v3", auth_token = "00fd601b5439997d3a637c6fecf6e6a50eaf9d09")
+#to be replaced with later:  devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
+```
+Now either clone the repository and use ``runApp()``:
+```
+# Switch with setwd into the main folder e.g. wilson-apps.
+setwd('yourPath'/wilson-apps)
+# Use runApp to run the desired app. E.g. for wilson-basic
+shiny::runApp("wilson-basic/")
+```
+Or use ``runUrl()``:
+```
+shiny::runUrl("https://github.molgen.mpg.de/loosolab/wilson-apps/archive/master.zip", subdir = "/wilson-basic")
 ```
 
 ## More
