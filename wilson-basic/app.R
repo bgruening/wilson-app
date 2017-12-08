@@ -32,7 +32,7 @@ wilson_enable_reactive_event_logging <- FALSE
 wilson_enable_auto_reload <- TRUE
 
 # Customize the patterns for files that shiny will monitor for automatic reloading
-wilson_auto_reload_pattern <- ".*\\.(r|se|R)$"
+wilson_auto_reload_pattern <- ".*\\.(r|se|R|clarion)$"
 # wilson_auto_reload_pattern <- ".*\\.(r|html?|js|css|png|jpe?g|gif)$"
 
 # Sets the auto reload polling interval in milliseconds
