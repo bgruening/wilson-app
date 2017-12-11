@@ -11,9 +11,6 @@ The underlying WIlsON R package can be downloaded [here](https://github.molgen.m
 
 Please make sure to check our other projects at http://loosolab.mpi-bn.mpg.de/.
 
-
-## Example application
-
 ## Installation of R Shiny server in “virgin” Debian 9 Linux
 Update and install the following Debian packages.
 ```
