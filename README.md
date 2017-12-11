@@ -4,9 +4,13 @@ This repository contains the reference application of the [WIlsON R package]( ht
 
 ## Availability
 WIlsON can be tested on our [official demonstration server](http://loosolab.mpi-bn.mpg.de/apps/wilson/). 
+
 Get a Docker container [here](https://hub.docker.com/r/loosolab/wilson/).
+
 The underlying WIlsON R package can be downloaded [here](https://github.molgen.mpg.de/loosolab/wilson). 
+
 Please make sure to check our other projects at http://loosolab.mpi-bn.mpg.de/.
+
 
 ## Example application
 
