@@ -22,7 +22,7 @@ Rscript -e "install.packages(c('devtools'), \
 repos='https://cran.rstudio.com/')" && \
  
 #Installs BIOCONDUCTOR/BiocInstaller
-Rscript -e 'source("https://bioconductor.org/biocLite.R")' \
+Rscript -e 'source("https://bioconductor.org/biocLite.R")' && \
  
 #Install Shiny-Server
 wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.5.872-amd64.deb && \
