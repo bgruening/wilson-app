@@ -80,5 +80,8 @@ shiny::runUrl("https://github.molgen.mpg.de/loosolab/wilson-apps/archive/master.
 ## More
 Please make sure to check our other projects at http://loosolab.mpi-bn.mpg.de/.
 
+## How to cite
+* Schultheis H, Kuenne C, Preussner J, Wiegandt R, Fust A, Looso M. WIlsON: Webbased Interactive Omics VisualizatioN. Bioinformatics  (2017), doi: https://XY
+
 ## License
 This project is licensed under the MIT license.
