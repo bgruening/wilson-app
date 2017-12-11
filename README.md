@@ -51,7 +51,7 @@ app.R		-> R code
 The [CLARION](http://loosolab.mpi-bn.mpg.de/apps/wilson/) format is explained in detail in the introduction of our official demonstration server.
 
 ## How do I load my own data?
-Just adapt your tab-delimited file to use the CLARION format and place it/them into the /data folder. Then you just have to reload the app or the server. That’s it! 
+Just adapt your tab-delimited file to use the CLARION format, add the file suffix *.clarion* or *.se*, and place it/them into the /data folder. Then you just have to reload the app or the server. That’s it! 
 ```
 cp mydata.clarion /srv/shiny-server/sample-apps/data
 sudo systemctl stop shiny-server
