@@ -431,7 +431,7 @@ server <- function(session, input, output) {
   output$filter_h1 <- output$filter_h_geneviewer_static <- output$filter_h_geneviewer_interactive <- output$filter_h_pca <- output$filter_h_global_cor_heatmap <- output$filter_h_simple_scatter_static <- output$filter_h_simple_scatter_interactive <- output$filter_h_duoscatter_static <- output$filter_h_duoscatter_interactive <- output$filter_h_heatmap_static <- output$filter_h_heatmap_interactive <- renderText(text_h())
   
   # featureSelection --------------------------------------------------------
-  fs <- callModule(featureSelector, "featureSelector", data = reactive(parsed()$data[1:1000]), feature.grouping = reactive(parsed()$metadata[, c(1,3)]), step = 100, delimiter = delimiter)
+  fs <- callModule(featureSelector, "featureSelector", data = reactive(parsed()$data), feature.grouping = reactive(parsed()$metadata[, c(1,3)]), step = 100, delimiter = delimiter)
   fsh <- callModule(featureSelector, "featureSelector_h", data = reactive(fs()$data), feature.grouping = reactive(parsed()$metadata[, c(1,3)]), selection.default = "none", delimiter = delimiter)
   
   # geneviewer --------------------------------------------------------------
