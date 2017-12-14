@@ -123,8 +123,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_geneviewer_static"),
                                                            tags$h3("Global Parameters"),
-                                                           numericInput(inputId = "width_geneviewer_static", label = "Width", value = 0, min = 0),
-                                                           numericInput(inputId = "height_geneviewer_static", label = "Height", value = 0, min = 0)
+                                                           numericInput(inputId = "width_geneviewer_static", label = "Width in cm", value = 0, min = 0),
+                                                           numericInput(inputId = "height_geneviewer_static", label = "Height in cm", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "GeneViewer",
@@ -146,8 +146,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_geneviewer_interactive"),
                                                            tags$h3("Global Parameters"),
-                                                           numericInput(inputId = "width_geneviewer_interactive", label = "Width", value = 0, min = 0),
-                                                           numericInput(inputId = "height_geneviewer_interactive", label = "Height", value = 0, min = 0)
+                                                           numericInput(inputId = "width_geneviewer_interactive", label = "Width in cm", value = 0, min = 0),
+                                                           numericInput(inputId = "height_geneviewer_interactive", label = "Height in cm", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "GeneViewer",
@@ -175,8 +175,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_pca"),
                                                            tags$h3("Global Parameters"),
-                                                           numericInput(inputId = "width_pca", label = "Width", value = 0, min = 0),
-                                                           numericInput(inputId = "height_pca", label = "Height", value = 0, min = 0)
+                                                           numericInput(inputId = "width_pca", label = "Width in cm", value = 0, min = 0),
+                                                           numericInput(inputId = "height_pca", label = "Height in cm", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "PCA", id = "pca_tabs",
@@ -198,8 +198,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_global_cor_heatmap"),
                                                            tags$h3("Global Parameters"),
-                                                           numericInput(inputId = "width_global_cor_heatmap", label = "Width", value = 0, min = 0),
-                                                           numericInput(inputId = "height_global_cor_heatmap", label = "Height", value = 0, min = 0)
+                                                           numericInput(inputId = "width_global_cor_heatmap", label = "Width in cm", value = 0, min = 0),
+                                                           numericInput(inputId = "height_global_cor_heatmap", label = "Height in cm", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Global correlation heatmap",
@@ -227,8 +227,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h6("Highlighted Features"),
                                                     verbatimTextOutput("filter_h_simple_scatter_static"),
                                                     tags$h3("Global Parameters"),
-                                                    numericInput(inputId = "width_simple_scatter_static", label = "Width", value = 0, min = 0),
-                                                    numericInput(inputId = "height_simple_scatter_static", label = "Height", value = 0, min = 0),
+                                                    numericInput(inputId = "width_simple_scatter_static", label = "Width in cm", value = 0, min = 0),
+                                                    numericInput(inputId = "height_simple_scatter_static", label = "Height in cm", value = 0, min = 0),
                                                     markerUI("marker_simple_scatter_static")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -252,8 +252,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h6("Highlighted Features"),
                                                     verbatimTextOutput("filter_h_duoscatter_static"),
                                                     tags$h3("Global Parameters"),
-                                                    numericInput(inputId = "width_duoscatter_static", label = "Width", value = 0, min = 0),
-                                                    numericInput(inputId = "height_duoscatter_static", label = "Height", value = 0, min = 0),
+                                                    numericInput(inputId = "width_duoscatter_static", label = "Width in cm", value = 0, min = 0),
+                                                    numericInput(inputId = "height_duoscatter_static", label = "Height in cm", value = 0, min = 0),
                                                     markerUI("marker_duoscatter_static")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -288,8 +288,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h6("Highlighted Features"),
                                                     verbatimTextOutput("filter_h_simple_scatter_interactive"),
                                                     tags$h3("Global Parameters"),
-                                                    numericInput(inputId = "width_simple_scatter_interactive", label = "Width", value = 0, min = 0),
-                                                    numericInput(inputId = "height_simple_scatter_interactive", label = "Height", value = 0, min = 0),
+                                                    numericInput(inputId = "width_simple_scatter_interactive", label = "Width in cm", value = 0, min = 0),
+                                                    numericInput(inputId = "height_simple_scatter_interactive", label = "Height in cm", value = 0, min = 0),
                                                     markerUI("marker_simple_scatter_interactive")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -313,8 +313,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h6("Highlighted Features"),
                                                     verbatimTextOutput("filter_h_duoscatter_interactive"),
                                                     tags$h3("Global Parameters"),
-                                                    numericInput(inputId = "width_duoscatter_interactive", label = "Width", value = 0, min = 0),
-                                                    numericInput(inputId = "height_duoscatter_interactive", label = "Height", value = 0, min = 0),
+                                                    numericInput(inputId = "width_duoscatter_interactive", label = "Width in cm", value = 0, min = 0),
+                                                    numericInput(inputId = "height_duoscatter_interactive", label = "Height in cm", value = 0, min = 0),
                                                     markerUI("marker_duoscatter_interactive")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -351,8 +351,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_heatmap_static"),
                                                            tags$h3("Global Parameters"),
-                                                           numericInput(inputId = "width_heatmap_static", label = "Width", value = 0, min = 0),
-                                                           numericInput(inputId = "height_heatmap_static", label = "Height", value = 0, min = 0)
+                                                           numericInput(inputId = "width_heatmap_static", label = "Width in cm", value = 0, min = 0),
+                                                           numericInput(inputId = "height_heatmap_static", label = "Height in cm", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Heatmap",
@@ -374,8 +374,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h6("Highlighted Features"),
                                                            verbatimTextOutput("filter_h_heatmap_interactive"),
                                                            tags$h3("Global Parameters"),
-                                                           numericInput(inputId = "width_heatmap_interactive", label = "Width", value = 0, min = 0),
-                                                           numericInput(inputId = "height_heatmap_interactive", label = "Height", value = 0, min = 0)
+                                                           numericInput(inputId = "width_heatmap_interactive", label = "Width in cm", value = 0, min = 0),
+                                                           numericInput(inputId = "height_heatmap_interactive", label = "Height in cm", value = 0, min = 0)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Heatmap",
