@@ -61,6 +61,25 @@ sudo systemctl daemon-reload
 sudo systemctl start shiny-server
 ```
 
+## Run app in RStudio
+To run this app in your local RStudio you have to install the **WIlsON R package** and it's dependencies.
+```
+install.packages("devtools")
+devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3", auth_token = "00fd601b5439997d3a637c6fecf6e6a50eaf9d09")
+#to be replaced with later:  devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
+```
+Now either clone the repository and use ``runApp()``:
+```
+# Switch with setwd into the main folder e.g. wilson-apps.
+setwd('yourPath'/wilson-apps)
+# Use runApp to run the desired app. E.g. for wilson-basic
+shiny::runApp("wilson-basic/")
+```
+Or use ``runUrl()``:
+```
+shiny::runUrl("https://github.molgen.mpg.de/loosolab/wilson-apps/archive/master.zip", subdir = "/wilson-basic")
+```
+
 ## How to cite
 * Schultheis H, Kuenne C, Preussner J, Wiegandt R, Fust A, Looso M. WIlsON: Webbased Interactive Omics VisualizatioN. Bioinformatics  (2017), doi: https://XY
 
