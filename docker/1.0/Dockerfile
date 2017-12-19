@@ -31,8 +31,7 @@ rm /srv/shiny-server/index.html && \
 rm -rf /srv/shiny-server/sample-apps && \
   
 #Install WILSON
-#AUTH TOKEN because of PRIVATE Repo
-Rscript -e 'devtools::install_github(repo = "HendrikSchultheis/wilson", ref = "package", host="github.molgen.mpg.de/api/v3", auth_token = "00fd601b5439997d3a637c6fecf6e6a50eaf9d09")' && \
+Rscript -e 'devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")' && \
   
 #Install WILSON App
 git clone https://github.molgen.mpg.de/loosolab/wilson-apps /srv/shiny-server/tmp && \
