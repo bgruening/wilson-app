@@ -25,8 +25,7 @@ Start R and install the **WIlsON R** package and dependencies (make sure to inst
 ```
 R
 install.packages("devtools")
-devtools::install_github(repo = "HendrikSchultheis/wilson", ref = "package", host="github.molgen.mpg.de/api/v3", auth_token = "00fd601b5439997d3a637c6fecf6e6a50eaf9d09")
-#to be replaced with later:  devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
+devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
 ```
 
 Download the **WIlsON R application** archive from https://github.molgen.mpg.de/loosolab/wilson-apps and unzip. Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
@@ -65,8 +64,7 @@ sudo systemctl start shiny-server
 To run this app in your local RStudio you have to install the **WIlsON R package** and it's dependencies.
 ```
 install.packages("devtools")
-devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3", auth_token = "00fd601b5439997d3a637c6fecf6e6a50eaf9d09")
-#to be replaced with later:  devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
+devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
 ```
 Now either clone the repository and use ``runApp()``:
 ```
