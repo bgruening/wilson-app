@@ -399,8 +399,8 @@ server <- function(session, input, output) {
   #
   # Data options
   #
-  # Use all files specified in data/
-  load <- sapply(list.files(path = "data/"), function(x){ paste0("data/", x)})
+  # Use all .se and .clarion files specified in data/
+  load <- sapply(list.files(path = "data/", pattern = "\\.se|\\.clarion"), function(x){ paste0("data/", x)})
   
   output$fileLoader <- renderUI({
     selectInput(inputId = "fileLoader", label = "Select data set", choices = load)
