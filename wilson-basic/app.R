@@ -3,6 +3,7 @@ library(DT)
 library(shinydashboard)
 library(shinythemes)
 library(colourpicker)
+library(shinyjs)
 library(wilson)
 source("introduction/introduction.R")
 
@@ -57,6 +58,7 @@ if (wilson_redirect_stdout & !interactive() ) {
 # Define the UI
 ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboardSidebar(disable = TRUE),
                     body = dashboardBody(
+                      useShinyjs(),
                       tags$style(type="text/css", "body {padding-top: 60px;}"),
                       tags$style(type="text/css",
                                  "#filter1,
@@ -410,7 +412,23 @@ server <- function(session, input, output) {
   parsed <- reactive({
     shiny::req(input$fileLoader)
     
-    parser(input$fileLoader)
+    file <- try(parser(input$fileLoader))
+    
+    if(!isTruthy(file)) {
+      showNotification(
+                      id = "parsing-error",
+                      paste0("Error parsing file ", input$fileLoader, "."),
+                      file,
+                      duration = NULL,
+                      type = "error"
+                      )
+      
+      shinyjs::addClass(selector = "#shiny-notification-parsing-error", class = "notification-position-center")
+    } else {
+      removeNotification(id = "parsing-error")
+    }
+    
+    shiny::req(file)
   })
   
   # fetch delimiter
