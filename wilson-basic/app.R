@@ -91,7 +91,16 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                     $('#top-menu a:contains(\"Scatterplot\")').addClass('disabled').parent().addClass('disabled');
                                     $('#top-menu a:contains(\"Heatmap\")').addClass('disabled').parent().addClass('disabled');
                                   };"
-                                )
+                                ),
+                                # custom dropdown width
+                                tags$style(
+                                  HTML('#fileLoader + div>.selectize-dropdown{
+                                          width: 300px !important;
+                                        }
+                                       #fileLoader + div>.selectize-input{
+                                          overflow: auto;
+                                       }
+                                       '))
                                 ),
                       titlePanel(title = "", windowTitle = "WIlsON"),
                       navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;")), theme = shinytheme("sandstone"), position = "fixed-top", id = "top-menu",
@@ -415,7 +424,7 @@ server <- function(session, input, output) {
   load <- sapply(list.files(path = "data/", pattern = "\\.se|\\.clarion"), function(x){ paste0("data/", x)})
   
   output$fileLoader <- renderUI({
-    selectInput(inputId = "fileLoader", label = "Select data set", choices = load)
+    selectizeInput(inputId = "fileLoader", label = "Select data set", choices = load)
   })
   
   # Load and parse data
