@@ -82,9 +82,19 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                  #filter_h_duoscatter_interactive,
                                  #filter_h_heatmap_static,
                                  #filter_h_heatmap_interactive {font-size: 10px}"),
-                      tags$head(tags$link(rel = "icon", type = "image/png", href = "wilson_icon.png")),
+                      tags$head(tags$link(rel = "icon", type = "image/png", href = "wilson_icon.png"),
+                                # disable tabs on load
+                                tags$script(
+                                  "window.onload = function() {
+                                    $('#top-menu a:contains(\"Geneview\")').addClass('disabled').parent().addClass('disabled');
+                                    $('#top-menu a:contains(\"Data Reduction\")').addClass('disabled').parent().addClass('disabled');
+                                    $('#top-menu a:contains(\"Scatterplot\")').addClass('disabled').parent().addClass('disabled');
+                                    $('#top-menu a:contains(\"Heatmap\")').addClass('disabled').parent().addClass('disabled');
+                                  };"
+                                )
+                                ),
                       titlePanel(title = "", windowTitle = "WIlsON"),
-                      navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;")), theme = shinytheme("sandstone"), position = "fixed-top",
+                      navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;")), theme = shinytheme("sandstone"), position = "fixed-top", id = "top-menu",
                                  # introduction ------------------------------------------------------------
                                  navbarMenu(
                                     title = "Introduction",
@@ -451,6 +461,25 @@ server <- function(session, input, output) {
   # featureSelection --------------------------------------------------------
   fs <- callModule(featureSelector, "featureSelector", data = reactive(parsed()$data), feature.grouping = reactive(parsed()$metadata[, c(1,3)]), step = 100, delimiter = delimiter)
   fsh <- callModule(featureSelector, "featureSelector_h", data = reactive(fs()$data), feature.grouping = reactive(parsed()$metadata[, c(1,3)]), selection.default = "none", delimiter = delimiter)
+  
+  # enable/ disable tabs
+  observe({
+    if(isTruthy(fs()$data)) {
+      runjs(
+        "$('#top-menu a:contains(\"Geneview\")').removeClass('disabled').parent().removeClass('disabled');
+         $('#top-menu a:contains(\"Data Reduction\")').removeClass('disabled').parent().removeClass('disabled');
+         $('#top-menu a:contains(\"Scatterplot\")').removeClass('disabled').parent().removeClass('disabled');
+         $('#top-menu a:contains(\"Heatmap\")').removeClass('disabled').parent().removeClass('disabled');"
+      )
+    } else {
+      runjs(
+        "$('#top-menu a:contains(\"Geneview\")').addClass('disabled').parent().addClass('disabled');
+         $('#top-menu a:contains(\"Data Reduction\")').addClass('disabled').parent().addClass('disabled');
+         $('#top-menu a:contains(\"Scatterplot\")').addClass('disabled').parent().addClass('disabled');
+         $('#top-menu a:contains(\"Heatmap\")').addClass('disabled').parent().addClass('disabled');"
+      )
+    }
+  })
   
   # geneviewer --------------------------------------------------------------
   gene_static <- callModule(geneView, "geneviewer_static", data = reactive(fs()$data), metadata = reactive(parsed()$metadata), level = reactive(parsed()$metadata[level != "feature"][["level"]]), plot.method = "static", custom.label = reactive(fs()$data), width = reactive(input$width_geneviewer_static), height = reactive(input$height_geneviewer_static))
