@@ -146,7 +146,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_geneviewer_static", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_geneviewer_static", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_geneviewer_static", label = "scaling factor", min = 1, max = 10, value = 1)
+                                                           sliderInput(inputId = "scale_geneviewer_static", label = "Scaling factor", min = 1, max = 10, value = 1)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "GeneViewer",
@@ -170,7 +170,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_geneviewer_interactive", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_geneviewer_interactive", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_geneviewer_interactive", label = "scaling factor", min = 1, max = 10, value = 1)
+                                                           sliderInput(inputId = "scale_geneviewer_interactive", label = "Scaling factor", min = 1, max = 10, value = 1)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "GeneViewer",
@@ -200,7 +200,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_pca", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_pca", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_pca", label = "scaling factor", min = 1, max = 10, value = 1)
+                                                           sliderInput(inputId = "scale_pca", label = "Scaling factor", min = 1, max = 10, value = 1)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "PCA", id = "pca_tabs",
@@ -224,7 +224,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_global_cor_heatmap", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_global_cor_heatmap", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_global_cor_heatmap", label = "scaling factor", min = 1, max = 10, value = 2)
+                                                           sliderInput(inputId = "scale_global_cor_heatmap", label = "Scaling factor", min = 1, max = 10, value = 2)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Global correlation heatmap",
@@ -254,7 +254,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h3("Global Parameters"),
                                                     numericInput(inputId = "width_simple_scatter_static", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_simple_scatter_static", label = "Height in cm", value = 0, min = 0),
-                                                    sliderInput(inputId = "scale_simple_scatter_static", label = "scaling factor", min = 1, max = 10, value = 1),
+                                                    sliderInput(inputId = "scale_simple_scatter_static", label = "Scaling factor", min = 1, max = 10, value = 1),
                                                     markerUI("marker_simple_scatter_static")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -280,7 +280,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h3("Global Parameters"),
                                                     numericInput(inputId = "width_duoscatter_static", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_duoscatter_static", label = "Height in cm", value = 0, min = 0),
-                                                    sliderInput(inputId = "scale_duoscatter_static", label = "scaling factor", min = 1, max = 10, value = 1),
+                                                    sliderInput(inputId = "scale_duoscatter_static", label = "Scaling factor", min = 1, max = 10, value = 1),
                                                     markerUI("marker_duoscatter_static")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -317,7 +317,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h3("Global Parameters"),
                                                     numericInput(inputId = "width_simple_scatter_interactive", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_simple_scatter_interactive", label = "Height in cm", value = 0, min = 0),
-                                                    sliderInput(inputId = "scale_simple_scatter_interactive", label = "scaling factor", min = 1, max = 10, value = 1),
+                                                    sliderInput(inputId = "scale_simple_scatter_interactive", label = "Scaling factor", min = 1, max = 10, value = 1),
                                                     markerUI("marker_simple_scatter_interactive")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -343,7 +343,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h3("Global Parameters"),
                                                     numericInput(inputId = "width_duoscatter_interactive", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_duoscatter_interactive", label = "Height in cm", value = 0, min = 0),
-                                                    sliderInput(inputId = "scale_duoscatter_interactive", label = "scaling factor", min = 1, max = 10, value = 1),
+                                                    sliderInput(inputId = "scale_duoscatter_interactive", label = "Scaling factor", min = 1, max = 10, value = 1),
                                                     markerUI("marker_duoscatter_interactive")
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
@@ -382,7 +382,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_heatmap_static", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_heatmap_static", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_heatmap_static", label = "scaling factor", min = 1, max = 10, value = 1)
+                                                           sliderInput(inputId = "scale_heatmap_static", label = "Scaling factor", min = 1, max = 10, value = 1)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Heatmap",
@@ -406,7 +406,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_heatmap_interactive", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_heatmap_interactive", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_heatmap_interactive", label = "scaling factor", min = 1, max = 10, value = 1)
+                                                           sliderInput(inputId = "scale_heatmap_interactive", label = "Scaling factor", min = 1, max = 10, value = 1)
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Heatmap",
