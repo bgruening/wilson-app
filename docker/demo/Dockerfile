@@ -25,8 +25,8 @@ repos='https://cran.rstudio.com/')" && \
 Rscript -e 'source("https://bioconductor.org/biocLite.R")' && \
  
 #Install Shiny-Server
-wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.5.872-amd64.deb && \
-gdebi -n shiny-server-1.5.5.872-amd64.deb && \
+wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.6.875-amd64.deb && \
+gdebi -n shiny-server-1.5.6.875-amd64.deb && \
 rm /srv/shiny-server/index.html && \
 rm -rf /srv/shiny-server/sample-apps && \
   
@@ -41,4 +41,8 @@ chown -R shiny:shiny /srv/shiny-server/
   
 EXPOSE 3838
   
-CMD ["shiny-server"]
+ADD wilson-key.sh /
+
+RUN chmod +x /wilson-key.sh
+
+ENTRYPOINT ["/bin/bash", "-c", "/wilson-key.sh"]
