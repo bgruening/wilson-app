@@ -63,38 +63,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                       useShinyjs(),
                       tags$style(type="text/css", "body {padding-top: 60px;}"),
                       tags$style(type="text/css",
-                                 "#filter1,
-                                 #filter_geneviewer_static,
-                                 #filter_geneviewer_interactive,
-                                 #filter_pca,
-                                 #filter_global_cor_heatmap,
-                                 #filter_simple_scatter_static,
-                                 #filter_simple_scatter_interactive,
-                                 #filter_duoscatter_static,
-                                 #filter_duoscatter_interactive,
-                                 #filter_heatmap_static,
-                                 #filter_heatmap_interactive,
-                                 #filter_h1,
-                                 #filter_h_geneviewer_static,
-                                 #filter_h_geneviewer_interactive,
-                                 #filter_h_pca, #filter_h_global_cor_heatmap,
-                                 #filter_h_simple_scatter_static,
-                                 #filter_h_simple_scatter_interactive,
-                                 #filter_h_duoscatter_static,
-                                 #filter_h_duoscatter_interactive,
-                                 #filter_h_heatmap_static,
-                                 #filter_h_heatmap_interactive,
-                                 #filter_log,
-                                 #geneviewer_static_log,
-                                 #geneviewer_interactive_log,
-                                 #pca_log,
-                                 #global_cor_heatmap_log,
-                                 #simple_scatter_static_log,
-                                 #simple_scatter_interactive_log,
-                                 #duoscatter_static_log,
-                                 #duoscatter_interactive_log,
-                                 #heatmap_static_log,
-                                 #heatmap_interactive_log {font-size: 10px}"),
+                                 "pre[id*='filter'] {font-size: 10px;}
+                                  pre[id*='log'] {height: 200px; font-size: 10px}"),
                       tags$head(tags$link(rel = "icon", type = "image/png", href = "wilson_icon.png"),
                                 # disable tabs on load
                                 tags$script(
@@ -112,8 +82,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                         }
                                        #fileLoader + div>.selectize-input{
                                           overflow: auto;
-                                       }
-                                       '))
+                                       }'))
                                 ),
                       titlePanel(title = "", windowTitle = "WIlsON"),
                       navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;")), theme = shinytheme("sandstone"), position = "fixed-top", id = "top-menu",
