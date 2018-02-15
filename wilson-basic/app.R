@@ -5,6 +5,8 @@ library(shinythemes)
 library(colourpicker)
 library(shinyjs)
 library(wilson)
+library(log4r)
+library(shinyBS)
 source("introduction/introduction.R")
 
 #
@@ -61,27 +63,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                       useShinyjs(),
                       tags$style(type="text/css", "body {padding-top: 60px;}"),
                       tags$style(type="text/css",
-                                 "#filter1,
-                                 #filter_geneviewer_static,
-                                 #filter_geneviewer_interactive,
-                                 #filter_pca,
-                                 #filter_global_cor_heatmap,
-                                 #filter_simple_scatter_static,
-                                 #filter_simple_scatter_interactive,
-                                 #filter_duoscatter_static,
-                                 #filter_duoscatter_interactive,
-                                 #filter_heatmap_static,
-                                 #filter_heatmap_interactive,
-                                 #filter_h1,
-                                 #filter_h_geneviewer_static,
-                                 #filter_h_geneviewer_interactive,
-                                 #filter_h_pca, #filter_h_global_cor_heatmap,
-                                 #filter_h_simple_scatter_static,
-                                 #filter_h_simple_scatter_interactive,
-                                 #filter_h_duoscatter_static,
-                                 #filter_h_duoscatter_interactive,
-                                 #filter_h_heatmap_static,
-                                 #filter_h_heatmap_interactive {font-size: 10px}"),
+                                 "pre[id*='filter'] {font-size: 10px;}
+                                  pre[id*='log'] {height: 200px; font-size: 10px}"),
                       tags$head(tags$link(rel = "icon", type = "image/png", href = "wilson_icon.png"),
                                 # disable tabs on load
                                 tags$script(
@@ -99,8 +82,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                         }
                                        #fileLoader + div>.selectize-input{
                                           overflow: auto;
-                                       }
-                                       '))
+                                       }'))
                                 ),
                       titlePanel(title = "", windowTitle = "WIlsON"),
                       navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;")), theme = shinytheme("sandstone"), position = "fixed-top", id = "top-menu",
@@ -119,7 +101,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                          tags$h6("Highlighted Features"),
                                                          verbatimTextOutput("filter_h1"),
                                                          tags$h3("Global Parameters"),
-                                                         uiOutput(outputId = "fileLoader")
+                                                         uiOutput(outputId = "fileLoader"),
+                                                         bsButton("filter_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                         hidden(verbatimTextOutput("filter_log"))
                                             ),
                                             mainPanel(width = wilson_mainpanelwidth,
                                                       tabBox(width = 12,
@@ -146,7 +130,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_geneviewer_static", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_geneviewer_static", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_geneviewer_static", label = "Scaling factor", min = 1, max = 10, value = 1)
+                                                           sliderInput(inputId = "scale_geneviewer_static", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                           bsButton("geneviewer_static_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                           hidden(verbatimTextOutput("geneviewer_static_log"))
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "GeneViewer",
@@ -170,7 +156,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_geneviewer_interactive", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_geneviewer_interactive", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_geneviewer_interactive", label = "Scaling factor", min = 1, max = 10, value = 1)
+                                                           sliderInput(inputId = "scale_geneviewer_interactive", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                           bsButton("geneviewer_interactive_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                           hidden(verbatimTextOutput("geneviewer_interactive_log"))
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "GeneViewer",
@@ -200,7 +188,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_pca", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_pca", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_pca", label = "Scaling factor", min = 1, max = 10, value = 1)
+                                                           sliderInput(inputId = "scale_pca", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                           bsButton("pca_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                           hidden(verbatimTextOutput("pca_log"))
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "PCA", id = "pca_tabs",
@@ -224,7 +214,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_global_cor_heatmap", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_global_cor_heatmap", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_global_cor_heatmap", label = "Scaling factor", min = 1, max = 10, value = 2)
+                                                           sliderInput(inputId = "scale_global_cor_heatmap", label = "Scaling factor", min = 1, max = 10, value = 2),
+                                                           bsButton("global_cor_heatmap_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                           hidden(verbatimTextOutput("global_cor_heatmap_log"))
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Global correlation heatmap",
@@ -255,7 +247,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     numericInput(inputId = "width_simple_scatter_static", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_simple_scatter_static", label = "Height in cm", value = 0, min = 0),
                                                     sliderInput(inputId = "scale_simple_scatter_static", label = "Scaling factor", min = 1, max = 10, value = 1),
-                                                    markerUI("marker_simple_scatter_static")
+                                                    markerUI("marker_simple_scatter_static"),
+                                                    bsButton("simple_scatter_static_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                    hidden(verbatimTextOutput("simple_scatter_static_log"))
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
                                                  tabBox(width = 12, selected = "Simple Scatter",
@@ -281,7 +275,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     numericInput(inputId = "width_duoscatter_static", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_duoscatter_static", label = "Height in cm", value = 0, min = 0),
                                                     sliderInput(inputId = "scale_duoscatter_static", label = "Scaling factor", min = 1, max = 10, value = 1),
-                                                    markerUI("marker_duoscatter_static")
+                                                    markerUI("marker_duoscatter_static"),
+                                                    bsButton("duoscatter_static_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                    hidden(verbatimTextOutput("duoscatter_static_log"))
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
                                                  tabBox(width = 12, selected = "Duoscatter",
@@ -318,7 +314,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     numericInput(inputId = "width_simple_scatter_interactive", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_simple_scatter_interactive", label = "Height in cm", value = 0, min = 0),
                                                     sliderInput(inputId = "scale_simple_scatter_interactive", label = "Scaling factor", min = 1, max = 10, value = 1),
-                                                    markerUI("marker_simple_scatter_interactive")
+                                                    markerUI("marker_simple_scatter_interactive"),
+                                                    bsButton("simple_scatter_interactive_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                    hidden(verbatimTextOutput("simple_scatter_interactive_log"))
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
                                                  tabBox(width = 12, selected = "Simple Scatter",
@@ -344,7 +342,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     numericInput(inputId = "width_duoscatter_interactive", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_duoscatter_interactive", label = "Height in cm", value = 0, min = 0),
                                                     sliderInput(inputId = "scale_duoscatter_interactive", label = "Scaling factor", min = 1, max = 10, value = 1),
-                                                    markerUI("marker_duoscatter_interactive")
+                                                    markerUI("marker_duoscatter_interactive"),
+                                                    bsButton("duoscatter_interactive_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                    hidden(verbatimTextOutput("duoscatter_interactive_log"))
                                        ),
                                        mainPanel(width = wilson_mainpanelwidth,
                                                  tabBox(width = 12, selected = "Duoscatter",
@@ -382,7 +382,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_heatmap_static", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_heatmap_static", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_heatmap_static", label = "Scaling factor", min = 1, max = 10, value = 1)
+                                                           sliderInput(inputId = "scale_heatmap_static", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                           bsButton("heatmap_static_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                           hidden(verbatimTextOutput("heatmap_static_log"))
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Heatmap",
@@ -406,7 +408,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_heatmap_interactive", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_heatmap_interactive", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_heatmap_interactive", label = "Scaling factor", min = 1, max = 10, value = 1)
+                                                           sliderInput(inputId = "scale_heatmap_interactive", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                           bsButton("heatmap_interactive_log_b", label = "Toggle log", style = "default", size = "small"),
+                                                           hidden(verbatimTextOutput("heatmap_interactive_log"))
                                               ),
                                               mainPanel(width = wilson_mainpanelwidth,
                                                         tabBox(width = 12, selected = "Heatmap",
@@ -427,6 +431,52 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
 )
 
 server <- function(session, input, output) {
+  # logging
+  if(!dir.exists("logs")) {
+    dir.create("logs")
+  }
+  
+  logger <- create.logger(logfile = paste0("logs/", session$token, ".log"), level = "INFO")
+  set_logger(logger, token = session$token)
+  
+  # delete logger on session end
+  onSessionEnded(function() {
+    remove(list = paste0("logger", session$token), envir = wilson:::wilson.globals)
+  })
+  
+  # read log
+  log <- reactiveFileReader(intervalMillis = 100, session = session, filePath = paste0("logs/", session$token, ".log"), readFunc = readLines)
+  
+  # show log
+  prepare_log <- reactive(paste(log(), collapse = "\n"))
+  output$filter_log <- output$geneviewer_static_log <- output$geneviewer_interactive_log <- output$pca_log <- output$global_cor_heatmap_log <- output$simple_scatter_static_log <- output$simple_scatter_interactive_log <- output$duoscatter_static_log <- output$duoscatter_interactive_log <- output$heatmap_static_log <- output$heatmap_interactive_log <- renderText(prepare_log())
+  
+  observeEvent(ignoreNULL = FALSE, ignoreInit = TRUE, {
+    input$filter_log_b
+    input$geneviewer_static_log_b
+    input$geneviewer_interactive_log_b
+    input$pca_log_b
+    input$global_cor_heatmap_log_b
+    input$simple_scatter_static_log_b
+    input$simple_scatter_interactive_log_b
+    input$duoscatter_static_log_b
+    input$duoscatter_interactive_log_b
+    input$heatmap_static_log_b
+    input$heatmap_interactive_log_b
+  }, {
+    toggle("filter_log")
+    toggle("geneviewer_static_log")
+    toggle("geneviewer_interactive_log")
+    toggle("pca_log")
+    toggle("global_cor_heatmap_log")
+    toggle("simple_scatter_static_log")
+    toggle("simple_scatter_interactive_log")
+    toggle("duoscatter_static_log")
+    toggle("duoscatter_interactive_log")
+    toggle("heatmap_static_log")
+    toggle("heatmap_interactive_log")
+  })
+  
   #
   # Data options
   #
@@ -444,6 +494,7 @@ server <- function(session, input, output) {
     file <- try(parser(input$fileLoader))
     
     if(!isTruthy(file)) {
+      error(logger, paste("Couldn't parse", input$fileLoader, file))
       showNotification(
                       id = "parsing-error",
                       paste0("Error parsing file ", input$fileLoader, "."),
@@ -454,6 +505,7 @@ server <- function(session, input, output) {
       
       shinyjs::addClass(selector = "#shiny-notification-parsing-error", class = "notification-position-center")
     } else {
+      info(logger, paste("Parsing file", input$fileLoader))
       removeNotification(id = "parsing-error")
     }
     
