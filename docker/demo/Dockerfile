@@ -37,8 +37,6 @@ Rscript -e 'devtools::install_github(repo = "loosolab/wilson", host="github.molg
 git clone https://github.molgen.mpg.de/loosolab/wilson-apps /srv/shiny-server/tmp && \
 cp -a /srv/shiny-server/tmp/wilson-basic/. /srv/shiny-server/ && \
 rm -rf /srv/shiny-server/tmp && \
-rm -rf /srv/shiny-server/data && \
-mkdir /srv/shiny-server/data && \
 chown -R shiny:shiny /srv/shiny-server/
   
 EXPOSE 3838
