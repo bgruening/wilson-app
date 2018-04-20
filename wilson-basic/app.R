@@ -553,8 +553,28 @@ server <- function(session, input, output) {
   })
   
   # geneviewer --------------------------------------------------------------
-  gene_static <- callModule(geneView, "geneviewer_static", data = reactive(fs()$data), metadata = reactive(parsed()$metadata), level = reactive(parsed()$metadata[level != "feature"][["level"]]), plot.method = "static", custom.label = reactive(fs()$data), width = reactive(input$width_geneviewer_static), height = reactive(input$height_geneviewer_static), scale = reactive(input$scale_geneviewer_static))
-  gene_interactive <- callModule(geneView, "geneviewer_interactive", data = reactive(fs()$data), metadata = reactive(parsed()$metadata), level = reactive(parsed()$metadata[level != "feature"][["level"]]), plot.method = "interactive", custom.label = reactive(fs()$data), width = reactive(input$width_geneviewer_interactive), height = reactive(input$height_geneviewer_interactive), scale = reactive(input$scale_geneviewer_interactive))
+  # prepare geneview data
+  prep_geneview_data <- shiny::reactive({
+    # metadata contains type column
+    if (is.element("type", names(parsed()$metadata))) {
+      unique_id <- parsed()$metadata[type == "unique_id"]$key
+      name <- parsed()$metadata[type == "name"]$key
+      # if name empty use unique_id
+      name <- ifelse(length(name) == 0, unique_id, name)
+    } else {
+      unique_id <- name <- parsed()$metadata[level == "feature"]$key[1]
+    }
+    
+    # reorder data columns to match geneview notation
+    data_cols <- names(fs()$data)
+    data_cols <- data_cols[-which(data_cols == c(unique_id, name))]
+    data_cols <- append(data_cols, c(unique_id, name), after = 0)
+    
+    fs()$data[, data_cols, with = FALSE]
+  })
+  
+  gene_static <- callModule(geneView, "geneviewer_static", data = prep_geneview_data, metadata = reactive(parsed()$metadata), level = reactive(parsed()$metadata[level != "feature"][["level"]]), plot.method = "static", custom.label = reactive(fs()$data), width = reactive(input$width_geneviewer_static), height = reactive(input$height_geneviewer_static), scale = reactive(input$scale_geneviewer_static))
+  gene_interactive <- callModule(geneView, "geneviewer_interactive", data = prep_geneview_data, metadata = reactive(parsed()$metadata), level = reactive(parsed()$metadata[level != "feature"][["level"]]), plot.method = "interactive", custom.label = reactive(fs()$data), width = reactive(input$width_geneviewer_interactive), height = reactive(input$height_geneviewer_interactive), scale = reactive(input$scale_geneviewer_interactive))
   
   output$geneviewer_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     gene_static()
