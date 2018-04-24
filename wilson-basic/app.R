@@ -567,7 +567,7 @@ server <- function(session, input, output) {
     
     # reorder data columns to match geneview notation
     data_cols <- names(fs()$data)
-    data_cols <- data_cols[-which(data_cols == c(unique_id, name))]
+    data_cols <- data_cols[-which(data_cols %in% c(unique_id, name))]
     data_cols <- append(data_cols, c(unique_id, name), after = 0)
     
     fs()$data[, data_cols, with = FALSE]
