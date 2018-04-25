@@ -1,9 +1,9 @@
 # Pulls debian:latest from dockerhub
 FROM debian
-  
+
 # Dockerfile questions go to
-MAINTAINER P. Hofmann / MPI-BN / IT Service Group / peter.hofmann@mpi-bn.mpg.de
-  
+MAINTAINER C. Kuenne / MPI-BN / Bioinformatics Core Unit / carsten.kuenne@mpi-bn.mpg.de
+
 #Some basic packages, updates and cleanup
 RUN apt-get -y update && apt-get -y upgrade && \
 apt-get -y install \
@@ -14,35 +14,44 @@ libssl-dev \
 libxml2-dev \
 libcurl4-openssl-dev \
 git \
+procps \
 gdebi-core && \
-apt-get clean && \
- 
+apt-get clean
+
 #Installs DEVTOOLS
-Rscript -e "install.packages(c('devtools'), \
-repos='https://cran.rstudio.com/')" && \
- 
+RUN Rscript -e "install.packages(c('devtools'), \
+repos='https://cran.rstudio.com/')"
+
 #Installs BIOCONDUCTOR/BiocInstaller
-Rscript -e 'source("https://bioconductor.org/biocLite.R")' && \
- 
+RUN Rscript -e 'source("https://bioconductor.org/biocLite.R")'
+
 #Install Shiny-Server
-wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.6.875-amd64.deb && \
+RUN wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.6.875-amd64.deb && \
 gdebi -n shiny-server-1.5.6.875-amd64.deb && \
 rm /srv/shiny-server/index.html && \
-rm -rf /srv/shiny-server/sample-apps && \
-  
+rm -rf /srv/shiny-server/sample-apps
+
 #Install WILSON
-Rscript -e 'devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")' && \
-  
+RUN Rscript -e 'devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")'
+
+#Install stackdump
+RUN Rscript -e 'devtools::install_github(repo = "jcheng5/stackdump")'
+
 #Install WILSON App
-git clone https://github.molgen.mpg.de/loosolab/wilson-apps /srv/shiny-server/tmp && \
+#RUN git clone https://github.molgen.mpg.de/loosolab/wilson-apps /srv/shiny-server/tmp && \
+RUN git clone -b stackdump https://github.molgen.mpg.de/loosolab/wilson-apps /srv/shiny-server/tmp && \
 cp -a /srv/shiny-server/tmp/wilson-basic/. /srv/shiny-server/ && \
-rm -rf /srv/shiny-server/tmp && \
-chown -R shiny:shiny /srv/shiny-server/
-  
+rm -rf /srv/shiny-server/tmp
+
 EXPOSE 3838
-  
-ADD wilson-key.sh /usr/bin/wilson-key.sh
 
-RUN chmod +x /usr/bin/wilson-key.sh
+ADD entrypoint.sh /usr/bin/entrypoint.sh
+RUN chmod +x /usr/bin/entrypoint.sh
 
-CMD ["/usr/bin/wilson-key.sh"]
+#switch shiny user uid to 1000 (previously docker user); set permissions
+RUN usermod -u 1000 shiny && \
+chown -R shiny:shiny /srv/shiny-server/ && \
+mkdir -p /srv/shiny-server/logs && \
+chmod ugo+wrX /srv/shiny-server/logs
+
+CMD ["/usr/bin/entrypoint.sh"]
