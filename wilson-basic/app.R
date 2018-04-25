@@ -131,7 +131,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_geneviewer_static", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_geneviewer_static", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_geneviewer_static", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                           sliderInput(inputId = "scale_geneviewer_static", label = "Scaling factor", min = 1, max = 10, value = 1, step = 0.1),
                                                            bsButton("geneviewer_static_log_b", label = "Toggle log", style = "default", size = "small"),
                                                            hidden(verbatimTextOutput("geneviewer_static_log"))
                                               ),
@@ -157,7 +157,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_geneviewer_interactive", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_geneviewer_interactive", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_geneviewer_interactive", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                           sliderInput(inputId = "scale_geneviewer_interactive", label = "Scaling factor", min = 1, max = 10, value = 1, step = 0.1),
                                                            bsButton("geneviewer_interactive_log_b", label = "Toggle log", style = "default", size = "small"),
                                                            hidden(verbatimTextOutput("geneviewer_interactive_log"))
                                               ),
@@ -189,7 +189,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_pca", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_pca", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_pca", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                           sliderInput(inputId = "scale_pca", label = "Scaling factor", min = 1, max = 10, value = 1, step = 0.1),
                                                            bsButton("pca_log_b", label = "Toggle log", style = "default", size = "small"),
                                                            hidden(verbatimTextOutput("pca_log"))
                                               ),
@@ -215,7 +215,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_global_cor_heatmap", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_global_cor_heatmap", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_global_cor_heatmap", label = "Scaling factor", min = 1, max = 10, value = 2),
+                                                           sliderInput(inputId = "scale_global_cor_heatmap", label = "Scaling factor", min = 1, max = 10, value = 2, step = 0.1),
                                                            bsButton("global_cor_heatmap_log_b", label = "Toggle log", style = "default", size = "small"),
                                                            hidden(verbatimTextOutput("global_cor_heatmap_log"))
                                               ),
@@ -247,7 +247,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h3("Global Parameters"),
                                                     numericInput(inputId = "width_simple_scatter_static", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_simple_scatter_static", label = "Height in cm", value = 0, min = 0),
-                                                    sliderInput(inputId = "scale_simple_scatter_static", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                    sliderInput(inputId = "scale_simple_scatter_static", label = "Scaling factor", min = 1, max = 10, value = 1, step = 0.1),
                                                     markerUI("marker_simple_scatter_static"),
                                                     bsButton("simple_scatter_static_log_b", label = "Toggle log", style = "default", size = "small"),
                                                     hidden(verbatimTextOutput("simple_scatter_static_log"))
@@ -275,7 +275,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h3("Global Parameters"),
                                                     numericInput(inputId = "width_duoscatter_static", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_duoscatter_static", label = "Height in cm", value = 0, min = 0),
-                                                    sliderInput(inputId = "scale_duoscatter_static", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                    sliderInput(inputId = "scale_duoscatter_static", label = "Scaling factor", min = 1, max = 10, value = 1, step = 0.1),
                                                     markerUI("marker_duoscatter_static"),
                                                     bsButton("duoscatter_static_log_b", label = "Toggle log", style = "default", size = "small"),
                                                     hidden(verbatimTextOutput("duoscatter_static_log"))
@@ -314,7 +314,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h3("Global Parameters"),
                                                     numericInput(inputId = "width_simple_scatter_interactive", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_simple_scatter_interactive", label = "Height in cm", value = 0, min = 0),
-                                                    sliderInput(inputId = "scale_simple_scatter_interactive", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                    sliderInput(inputId = "scale_simple_scatter_interactive", label = "Scaling factor", min = 1, max = 10, value = 1, step = 0.1),
                                                     markerUI("marker_simple_scatter_interactive"),
                                                     bsButton("simple_scatter_interactive_log_b", label = "Toggle log", style = "default", size = "small"),
                                                     hidden(verbatimTextOutput("simple_scatter_interactive_log"))
@@ -342,7 +342,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                     tags$h3("Global Parameters"),
                                                     numericInput(inputId = "width_duoscatter_interactive", label = "Width in cm", value = 0, min = 0),
                                                     numericInput(inputId = "height_duoscatter_interactive", label = "Height in cm", value = 0, min = 0),
-                                                    sliderInput(inputId = "scale_duoscatter_interactive", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                    sliderInput(inputId = "scale_duoscatter_interactive", label = "Scaling factor", min = 1, max = 10, value = 1, step = 0.1),
                                                     markerUI("marker_duoscatter_interactive"),
                                                     bsButton("duoscatter_interactive_log_b", label = "Toggle log", style = "default", size = "small"),
                                                     hidden(verbatimTextOutput("duoscatter_interactive_log"))
@@ -383,7 +383,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_heatmap_static", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_heatmap_static", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_heatmap_static", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                           sliderInput(inputId = "scale_heatmap_static", label = "Scaling factor", min = 1, max = 10, value = 1, step = 0.1),
                                                            bsButton("heatmap_static_log_b", label = "Toggle log", style = "default", size = "small"),
                                                            hidden(verbatimTextOutput("heatmap_static_log"))
                                               ),
@@ -409,7 +409,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                            tags$h3("Global Parameters"),
                                                            numericInput(inputId = "width_heatmap_interactive", label = "Width in cm", value = 0, min = 0),
                                                            numericInput(inputId = "height_heatmap_interactive", label = "Height in cm", value = 0, min = 0),
-                                                           sliderInput(inputId = "scale_heatmap_interactive", label = "Scaling factor", min = 1, max = 10, value = 1),
+                                                           sliderInput(inputId = "scale_heatmap_interactive", label = "Scaling factor", min = 1, max = 10, value = 1, step = 0.1),
                                                            bsButton("heatmap_interactive_log_b", label = "Toggle log", style = "default", size = "small"),
                                                            hidden(verbatimTextOutput("heatmap_interactive_log"))
                                               ),
