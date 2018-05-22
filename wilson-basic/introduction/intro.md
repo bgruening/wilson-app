@@ -196,43 +196,48 @@ Thanks to the plotly package, several plots are available as an interactive vers
 
 ### Case 1
 <p class="font">
-<b>Create a heatmap of significantly differentially expressed protein coding genes involved in BMP signaling pathway</b></br>
+<b>Dataset:</b> RNASeq Zhang 2015</br>
+<b>Task:</b> Create a heatmap comparing expression levels between wildtype (wt) and mutant (mt). Only select genes which are significantly differentially expressed and further use the top 10 regardging the mean over all samples (BaseMean).</br>
 </br>
- Whenever planning a plot it is vital to filter the available features/values down to the required set. By default the whole dataset will be used, which might result in a non-sensical plot and a warning message.
+ In order to filter, use the Feature Selection tab in a first step. For this example we want to filter for significantly differentially expressed genes, which is done on the <b>contrast</b> level. Set the following thresholds using inner/outer in combination with the range slider: fitted log2 fold change less than -2 <b>or</b> greater than 2 <b>and</b> p-value smaller than 0.1. As the latter might be difficult to select due to the tiny interval, change the max value of the slider using the box on the right side (essentially a zoom). Thereafter apply the filter by clicking on the select button above.
 </p>
-<img src="images/case1_1_no_filter.png" width="70%" height="70%"/>
+</p>
+<img src="images/use_case_1_filter.png" width="100%"/>
 
 <p class="font">
- In order to filter, use the Feature Selection tab in a first step. For this example we want to filter for significantly differentially expressed genes, which is done on the <b>contrast</b> level. Set the following thresholds using inner/outer in combination with the range slider: log2 fold change less than -1 <b>or</b> greater than 1 <b>and</b>  adjusted p-value smaller than 0.01. As the latter might be difficult to select due to the tiny interval, change the max value of the slider using the box on the right side (essentially a zoom).
+ Now the filtered table will be shown on top of the page. To select the genes with the <b>highest BaseMean</b> click on the BaseMean column until the columns values are descending (arrow down). Further narrow it down by utilising the slider directly below the table to select the <b>top 10</b> genes.
 </p>
-</p>
-<img src="images/case1_2_contrast2.png" width="70%" height="70%"/>
+<img src="images/use_case_1_filter_result.png" width="100%"/>
 
 <p class="font">
- In order to narrow down the selection further to <b>protein coding genes</b> involved in the <i>BMP signaling pathway</i>, select the <b>feature</b> level next and enter the desired annotation filters.
+ Now with this selection of features move on to the heatmap module (here not interactive). Select the <b>samples</b> and click on the plot button.
 </p>
-<img src="images/case1_2_feature.png" width="70%" height="70%"/>
+<img src="images/use_case_1_select_columns.png" width="100%"/>
+<img src="images/use_case_1_heatmap_1.png" width="100%"/>
 
 <p class="font">
- Finally click the select button to apply all filters and create the subset of interest, leading to the table below.
+ The resulting plot is troubled by the large range of the values (5000-25000) which can hinder the recognition of patterns. A row-wise z-score <b>Transformation</b> might help.
 </p>
-<img src="images/case1_3_table.png" width="70%" height="70%"/>
+<img src="images/use_case_1_transformation.png" with="100%"/>
+<img src="images/use_case_1_heatmap_2.png" width="100%"/>
 
 <p class="font">
- Now with this preselction of features move on to the heatmap module (here not interactive). Select the <b>samples</b> of interest and click on the plot button.
+ Since the z-score transformation leads to a diverging (2-sided: -x..0..+x) distribution of values, another color palette would be optimal. Set <b>Data distribution</b> to diverging and select the <i>spectral color</i> scheme.
 </p>
-<img src="images/case1_4_plot1.png"/>
+<img src="images/use_case_1_color_scheme.png" width="100%"/>
+<img src="images/use_case_1_heatmap_3.png" width="100%"/>
 
 <p class="font">
- The resulting plot is troubled by the large range of the values (0-7000) which can hinder the recognition of patterns. A row-wise z-score <b>Transformation</b> might help.
+ As the values are not evenly distributed the color legend is not centered at 0 to solve this <b>winsorize</b> to -1 and 1 for a nicely centered color legend.
 </p>
-<img src="images/case1_4_plot2.png"/>
+<img src="images/use_case_1_winsorize.png" width="100%"/>
+<img src="images/use_case_1_heatmap_4.png" width="100%"/>
 
 <p class="font">
- Since the z-score transformation leads to a diverging (2-sided: -x..0..+x) distribution of values, another color palette would be optimal. Set <b>Data distribution</b> to diverging and select the <i>spectral color</i> scheme. To simplify interpretation, a label should be set for the legend (e.g. z score).
+ For an easier interpretation set the <b>row labels</b> to show the Gene names rather than the Gene ID.
 </p>
-<img src="images/case1_4_ui.png" width="70%" height="70%" style="margin-bottom:20px"/>
-<img src="images/case1_4_plot3.png"/>
+<img src="images/use_case_1_column_label.png" width="100%"/>
+<img src="images/use_case_1_heatmap_finished.png" width="100%"/>
 
 ### Case 2
 <p class="font">
