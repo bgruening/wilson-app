@@ -193,7 +193,9 @@ Thanks to the plotly package, several plots are available as an interactive vers
 
 <hr>
 ## <a name="use_cases"></a> Use Cases
-
+<p class="font">
+ See example data used within the demo and the use cases <a href="https://github.molgen.mpg.de/loosolab/wilson-apps/tree/master/wilson-basic/data">here</a>.
+</p>
 ### Case 1
 <p class="font">
 <b>Dataset:</b> RNASeq Zhang 2015</br>
