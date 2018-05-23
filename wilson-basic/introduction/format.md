@@ -10,11 +10,11 @@ output: html_document
   <img src="images/clarion_excel_colored.png" width="100%">
   <br><br>
   <p class="font">
-  The format consists of three blocks of data with distinct structures:
+  The format consists of three blocks of tab-delimited data layered on top of each other. These follow distinct structures:
   <ul class="font">
     <li><b>Header</b> (blue): Parameters concerning the global experiment. Most of these are for connection to surrounding workflows and can be ignored.</li>
-    <li><b>Metadata</b> (red): Parameters describing the content of each data column (i.e. feature annotation = can only be used for filtering; numeric value = can be used for plotting). The numeric values can furthermore be attributed to three different levels to simplify later user selections inside the web interface.</li>
-    <li><b>Data</b> (green): Matrix of data columns bearing textual and numerical information per feature</li>
+    <li><b>Metadata</b> (red): Parameters describing the content of each data column. These sort the columns into 4 different levels: feature (= annotation; can only be used for filtering) and sample/condition/contrast ( = numeric value; can be used for filtering and plotting). The grouping of the numeric values is intended to simplify later user selections inside the web interface and has no further use as of now.</li>
+    <li><b>Data</b> (green): Matrix of data columns bearing textual and numerical information per feature.</li>
   </ul>
   </p>
 </p>
