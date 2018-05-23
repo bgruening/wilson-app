@@ -51,8 +51,16 @@ app.R		-> R code
 /www		-> WIlsON logo
 ```
 
+## CLARION input format
+
+CLARION: generiC fiLe formAt foR quantItative cOmparsions of high throughput screeNs
+
+CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features and their annotation (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, z-score, p-value). Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible without having to modify the code of WIlsON for each specific experiment.
+
+Please check the following link for details considering the [CLARION format](https://github.molgen.mpg.de/loosolab/wilson-apps/blob/master/wilson-basic/introduction/format.md).
+
 ## How do I load my own data?
-The CLARION format is explained in detail in the introduction of our official demonstration server [here](http://loosolab.mpi-bn.mpg.de/apps/wilson/) or [here](/wilson-basic/introduction/format.md). Add the file suffix *.clarion* or *.se*, and place it/them into the /data folder. Then you just have to reload the app or the server. That’s it! 
+Add the file suffix *.clarion* or *.se*, and place it/them into the /data folder. Then you reload the app or the R Shiny server. That’s it! 
 ```
 cp mydata.clarion /srv/shiny-server/sample-apps/data
 sudo systemctl stop shiny-server
