@@ -1,7 +1,7 @@
-
 ---
 output: html_document
 ---
+
 # Data Format
 <p class="font">
   <b>CLARION: generiC fiLe formAt foR quantItative cOmparsions of high throughput screeNs</b>
