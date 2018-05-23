@@ -9,7 +9,7 @@ output: html_document
    <br><br>It is suggested to use a spreadsheet software (e.g. Excel) to perform a manual reformat of the original tab-delimited table in order to avoid errors due to shifted columns etc.
   <br><br>
   <img src="images/clarion_excel_colored.png" width="100%">
-  <br><br>
+  <br>
   <p class="font">
   The format consists of three blocks of tab-delimited data layered on top of each other. These follow distinct structures:
   <ul class="font">
@@ -36,7 +36,7 @@ output: html_document
     <li><b>format</b>: Name of the file format (must be Clarion)</li>
     <li><b>version</b>: Version of the file format (1.0)</li>
     <li><b>experiment_id</b>: Unique id to be used for the experiment</li>
-    <li><b>delimiter(*)</b>: In-field delimiter for multi-value fields (e.g. multiple kegg pathways). Mandatory for multi-value fields. Multi-character delimiters are possible (e.g. ", ").</li>
+    <li><b>delimiter(*)</b>: In-field delimiter for multi-value fields (e.g. multiple KEGG pathways). Mandatory for multi-value fields. Multi-character delimiters are possible (e.g. ", ").</li>
   </ul>
 </p>
 
