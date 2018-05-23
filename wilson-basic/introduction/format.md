@@ -24,9 +24,9 @@ output: html_document
 <img src="images/header.png"/>
 <p class="font">
   <ul class="font">
-    <li>Line identifier '!'</li>
+    <li>Line identifier: '!'</li>
     <li>Syntax: name = value</li>
-    <li>Mandatory columns: *</li>
+    <li>Mandatory columns are marked with an asterisk (*).</li>
   </ul>
 </p>
 ### Parameters:
@@ -44,8 +44,8 @@ output: html_document
 <img src="images/metadata.png"/>
 <p class="font">
   <ul class="font">
-    <li>Line identifier '#'</li>
-    <li>Mandatory columns: *</li>
+    <li>Line identifier: '#'</li>
+    <li>Mandatory columns are marked with an asterisk (*).</li>
   </ul>
 </p>
 ### Columns:
