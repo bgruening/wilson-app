@@ -52,7 +52,7 @@ app.R		-> R code
 ```
 
 ## How do I load my own data?
-The CLARION format is explained in detail in the introduction of our official demonstration server [here](http://loosolab.mpi-bn.mpg.de/apps/wilson/) or [here](format.md). Add the file suffix *.clarion* or *.se*, and place it/them into the /data folder. Then you just have to reload the app or the server. That’s it! 
+The CLARION format is explained in detail in the introduction of our official demonstration server [here](http://loosolab.mpi-bn.mpg.de/apps/wilson/) or [here](/wilson-basic/introduction/format.md). Add the file suffix *.clarion* or *.se*, and place it/them into the /data folder. Then you just have to reload the app or the server. That’s it! 
 ```
 cp mydata.clarion /srv/shiny-server/sample-apps/data
 sudo systemctl stop shiny-server
