@@ -5,7 +5,7 @@ output: html_document
 <p class="font">
   <b>CLARION: generiC fiLe formAt foR quantItative cOmparsions of high throughput screeNs</b>
   <br><br>
-   CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, zscore, pvalue). Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible, without having to modify the code of WIlsON for each specific experiment.
+   CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features and their annotation (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, zscore, pvalue). Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible, without having to modify the code of WIlsON for each specific experiment.
   <br><br>
   <img src="images/clarion_excel_colored.png" width="100%">
   <br><br>
