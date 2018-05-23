@@ -14,8 +14,8 @@ output: html_document
   The format consists of three blocks of tab-delimited data layered on top of each other. These follow distinct structures:
   <ul class="font">
     <li><b>Header</b> (blue): Parameters concerning the global experiment. Most of these are for connection to surrounding workflows and can be ignored.</li>
-    <li><b>Metadata</b> (red): Parameters describing the content of each data column. These sort the columns into 4 different levels: feature (= annotation; can only be used for filtering) and sample/condition/contrast ( = numeric values; can be used for filtering and plotting). The grouping of the numeric values into multiple levels is intended to simplify later user selections inside the web interface and has no further use as of now.</li>
-    <li><b>Data</b> (green): Matrix of data columns bearing textual and numerical information per feature.</li>
+    <li><b>Metadata</b> (red): Parameters describing the content of each data column. These sort the columns into 4 different levels: feature (= annotation; can only be used for filtering) and sample/condition/contrast ( = numeric values; can be used for filtering and plotting). The grouping of the numeric values into multiple levels is intended to simplify later user selections inside the web interface and has no further use as of now. The remaining designators (factor/type/label/sub_label) are optional.</li>
+    <li><b>Data</b> (green): Matrix of tab-delimited data columns bearing textual and numerical information per feature (= the original table).</li>
   </ul>
   </p>
 </p>
