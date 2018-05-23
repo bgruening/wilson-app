@@ -197,12 +197,12 @@ Thanks to the plotly package, several plots are available as an interactive vers
 ### Case 1
 <p class="font">
 <b>Dataset:</b> RNASeq Zhang 2015</br>
-<b>Task:</b> Create a heatmap comparing expression levels between wildtype (wt) and mutant (mt). Only select genes which are significantly differentially expressed and further use the top 10 regardging the mean over all samples (BaseMean).</br>
+<b>Task:</b> Create a heatmap comparing expression levels between wildtype (wt) and mutant (mt). Only select genes which are significantly differentially expressed and further use the top 10 regarding the mean over all samples (BaseMean).</br>
 </br>
  In order to filter, use the Feature Selection tab in a first step. For this example we want to filter for significantly differentially expressed genes, which is done on the <b>contrast</b> level. Set the following thresholds using inner/outer in combination with the range slider: fitted log2 fold change less than -2 <b>or</b> greater than 2 <b>and</b> p-value smaller than 0.1. As the latter might be difficult to select due to the tiny interval, change the max value of the slider using the box on the right side (essentially a zoom). Thereafter apply the filter by clicking on the select button above.
 </p>
 </p>
-<img src="images/use_case_1_filter.png" width="100%"/>
+<img src="images/use_case_1_filter.png"/>
 
 <p class="font">
  Now the filtered table will be shown on top of the page. To select the genes with the <b>highest BaseMean</b> click on the BaseMean column until the columns values are descending (arrow down). Further narrow it down by utilising the slider directly below the table to select the <b>top 10</b> genes.
@@ -212,79 +212,113 @@ Thanks to the plotly package, several plots are available as an interactive vers
 <p class="font">
  Now with this selection of features move on to the heatmap module (here not interactive). Select the <b>samples</b> and click on the plot button.
 </p>
-<img src="images/use_case_1_select_columns.png" width="100%"/>
-<img src="images/use_case_1_heatmap_1.png" width="100%"/>
+<img src="images/use_case_1_select_columns.png"/>
+<img src="images/use_case_1_heatmap_1.png"/>
 
 <p class="font">
  The resulting plot is troubled by the large range of the values (5000-25000) which can hinder the recognition of patterns. A row-wise z-score <b>Transformation</b> might help.
 </p>
-<img src="images/use_case_1_transformation.png" with="100%"/>
-<img src="images/use_case_1_heatmap_2.png" width="100%"/>
+<img src="images/use_case_1_transformation.png"/>
+<img src="images/use_case_1_heatmap_2.png"/>
 
 <p class="font">
  Since the z-score transformation leads to a diverging (2-sided: -x..0..+x) distribution of values, another color palette would be optimal. Set <b>Data distribution</b> to diverging and select the <i>spectral color</i> scheme.
 </p>
-<img src="images/use_case_1_color_scheme.png" width="100%"/>
-<img src="images/use_case_1_heatmap_3.png" width="100%"/>
+<img src="images/use_case_1_color_scheme.png"/>
+<img src="images/use_case_1_heatmap_3.png"/>
 
 <p class="font">
  As the values are not evenly distributed the color legend is not centered at 0 to solve this <b>winsorize</b> to -1 and 1 for a nicely centered color legend.
 </p>
-<img src="images/use_case_1_winsorize.png" width="100%"/>
-<img src="images/use_case_1_heatmap_4.png" width="100%"/>
+<img src="images/use_case_1_winsorize.png"/>
+<img src="images/use_case_1_heatmap_4.png"/>
 
 <p class="font">
  For an easier interpretation set the <b>row labels</b> to show the Gene names rather than the Gene ID.
 </p>
-<img src="images/use_case_1_column_label.png" width="100%"/>
-<img src="images/use_case_1_heatmap_finished.png" width="100%"/>
+<img src="images/use_case_1_column_label.png"/>
+<img src="images/use_case_1_heatmap_finished.png"/>
 
 ### Case 2
 <p class="font">
-<b>Plot Top15 most highly expressed genes, which are significantly differentially expressed, and involved in apoptosis</b></br>
+<b>Dataset:</b> RNASeq Zhang 2015</br>
+<b>Task:</b> Compare wildtype (wt) versus mutant (mt) and show the significance. Also highlight/ label all genes which highly differentiate between conditions.</br>
 </br>
-To accomplish this task the first step is to create a suitable subset. Use the feature selector to filter for significant genes by setting the threshold of the multiple testing adjusted p-value (padj) to <= 0.01. This is done in the <b>contrast</b> level.
+ As this example is about a comparison on the whole dataset there is no need for filtering so far. Simply load up the correct dataset and proceed to the scatterplot (here static simple scatter). Now select from the column type condition for the x-axis wildtype (wt) and the y-axis mutant (mt).
 </p>
-<img src="images/case2_1_pvalue.png"/>
+<img src="images/use_case_2_select_xy.png" style="margin-bottom: 20px"/>
+<img src="images/use_case_2_scatterplot_1.png"/>
 
 <p class="font">
-Further filter for the <i>apoptosis pathway</i> within the <b>feature</b> level.
+ With most of the genes being located in the lower part of the range there is a lot of overlapping. A log2 <b>Transformation</b> applied on both x- and y-axis will solve this.
 </p>
-<img src="images/case2_2_pathway.png"/>
+<img src="images/use_case_2_transformation.png" style="margin-bottom: 20px"/>
+<img src="images/use_case_2_scatterplot_2.png"/>
 
 <p class="font">
-The following line plot shows the counts per condition per gene using a random order and including also genes with a low expression on average.
+ This plot already shows a comparison between wt and mt so the next step is adding the significance via <b>z-axis color mapping</b>. To achieve this select the p-adjusted value (Padj) from the column type contrast.
 </p>
-<img src="images/case2_3_lineplot.png" width="40%" height="40%"/>
+<img src="images/use_case_2_select_z.png" style="margin-bottom: 20px"/>
+<img src="images/use_case_2_scatterplot_3.png"/>
 
 <p class="font">
-To only select genes with a relatively high expression, reorder the table by clicking the desired column name. In this case we reorder the table descending after the <b>baseMean</b> column (=average counts of both conditions). Furthermore the amount of features is limited to the top 15 with the slider below. Now the first 15 rows will be highlighted and are forwarded for plotting.
+ In addition select a fitting <b>color scheme</b> in this example inferno is used.
 </p>
-<img src="images/case2_4_fin_subset.png" style="margin-bottom:20px"/>
-<img src="images/case2_5_lineplot.png" width="40%" height="40%"/>
+<img src="images/use_case_2_color_scheme.png" style="margin-bottom: 20px"/>
+<img src="images/use_case_2_scatterplot_4.png"/>
+
+<p class="font">
+ Set the <b>pointsize</b> to 1.6 for a better distinction between points.
+</p>
+<img src="images/use_case_2_pointsize.png" style="margin-bottom: 20px"/>
+<img src="images/use_case_2_scatterplot_5.png"/>
+
+<p class="font">
+ For more insides about the datas distribution enable a <b>2D kernel density estimate</b> and disable the <b>reference line</b> aswell.
+</p>
+<img src="images/use_case_2_density.png" style="margin-bottom: 20px"/>
+<img src="images/use_case_2_scatterplot_6.png"/>
+
+<p class="font">
+ Regarding the comparison between wt and mt the scatterplot is done. The last missing part is to add the highlighting of highly differentiated genes between conditions. To do so go back to <b>featureSelection</b>, select the <b>highlight-tab</b> and filter for the respecting features.
+</p>
+<img src="images/use_case_2_highlight_tab.png" width="35%"/>
+
+<p class="font">
+ Filter for highly differentiated genes between conditions by first expanding the contrast box and second setting the Fitted Log2FoldChange to select values less than -3 or higher than 3. Apply the filter by clicking the filter button.</br>
+ Note: The filter will display an empty table on default meaning there is nothing highlighted.
+</p>
+<img src="images/use_case_2_highlight_filter.png"/>
+
+<p class="font">
+ Return back to the scatterplot. Set the highlight/ label options in <b>Global Parameters</b> (left side) choose Highlight to enable highlighting based on the beforehand filtered features, select a specific color for the respecting points (here green) and define a label (here Ensemble gene).
+</p>
+<img src="images/use_case_2_highlight_options.png" style="margin-bottom: 20px"/>
+<img src="images/use_case_2_scatterplot_final.png"/>
 
 ### Case 3
 <p class="font">
-<b>Create scatterplot of non-coding RNAs including labeling of those with the most prominent up-regulation</b></br>
+ <b>Dataset:</b> RNASeq Zhang 2015</br>
+<b>Task:</b> Create scatterplot of non-coding RNAs including labeling of those with the most prominent up-regulation</br>
 </br>
-<b>Data set</b>: <i>RNAseq_Zhang_2015.se</i>. First select non-coding RNAs on the <b>feature</b> level: <b>Ensembl biotype</b> = <i>miRNA, lincRNA, antisense</i>. Then switch to the <b>Scatterplot/Simple Scatter</b> tab: choose the <b>X-axis</b> data to be type <i>condition</i>, column <i>wt</i>, transformation <i>log2</i>, and <b>Y-axis</b> data to be type <i>condition</i>, column <i>mt</i>, transformation <i>log2</i>. This will compare the mean normalized counts per condition of the selected non-coding RNAs.
+ First select non-coding RNAs on the <b>feature</b> level: <b>Ensembl biotype</b> = <i>miRNA, lincRNA, antisense</i>. Then switch to the <b>Scatterplot/Simple Scatter</b> tab: choose the <b>X-axis</b> data to be type <i>condition</i>, column <i>wt</i>, transformation <i>log2</i>, and <b>Y-axis</b> data to be type <i>condition</i>, column <i>mt</i>, transformation <i>log2</i>. This will compare the mean normalized counts per condition of the selected non-coding RNAs.
 </p>
-<img src="images/case3_1_uncolored.png" width="40%" height="40%"/>
+<img src="images/case3_1_uncolored.png"/>
 
 <p class="font">
 In order to color the scatterplot by Log2FC please choose Z-axis to be type <b>contrast</b> and column <i>Unfitted Log2FoldChange (mt/wt)</i>. Furthermore set the <b>Color scheme</b> to <i>Diverging/BuWtRd</i>. The resulting plot shows RNAs up-regulated in the <i>mt</i> condition using red dots. But the colors are slightly pale and do not seem to be centered around 0.
 </p>
-<img src="images/case3_2_pale.png" width="40%" height="40%"/>
+<img src="images/case3_2_pale.png"/>
 
 <p class="font">
 Tick <b>Winsorize to upper/lower</b>, then set <b>Lower limit</b> to <i>-1</i> and <b>Upper limit</b> to <i>1</i> to modify the color palette range to be more intense and centered around 0.
 </p>
-<img src="images/case3_3_intense.png" width="40%" height="40%"/>
+<img src="images/case3_3_intense.png"/>
 
 <p class="font">
 Next please go back to the <b>Feature Selection</b> tab and switch from the Data to the <b>Highlight</b> sub-tab to select a subset of features to be labeled inside the plot. Open the <b>contrast</b> level and select <b>BaseMean</b> <i>>= 100</i> and <b>Unfitted Log2FoldChange (mt/wt)</b> <i>>= 0.5</i> to get RNAs with a certain minimum expression and up-regulated in the mutant. Now switch to the <b>Scatterplot/Simple Scatter</b> tab again and set the <b>Highlight/Label Selected Features</b> on the side bar to <i>Highlight</i>. Furthermore change <b>Select label column</b> to <i>Ensembl gene</i> to use the gene symbol for display as a label.
 </p>
-<img src="images/case3_4_label.png" width="40%" height="40%"/>
+<img src="images/case3_4_label.png"/>
 
 
 
