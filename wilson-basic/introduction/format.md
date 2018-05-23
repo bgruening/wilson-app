@@ -36,7 +36,7 @@ output: html_document
     <li><b>format</b>: Name of the file format (must be Clarion)</li>
     <li><b>version</b>: Version of the file format (1.0)</li>
     <li><b>experiment_id</b>: Unique id to be used for the experiment</li>
-    <li><b>delimiter(*)</b>: In-field delimiter for multi-value fields (e.g. multiple KEGG pathways). Mandatory for multi-value fields. Multi-character delimiters are possible (e.g. ", ").</li>
+    <li><b>delimiter(*)</b>: In-field delimiter for multi-value fields (e.g. multiple KEGG pathways). Multi-character delimiters are possible (e.g. ", "). This permits filtering according to the single elements found in this column (e.g. "regulation of transcription, transporter activity" would be interpreted as having the separate values "regulation of transcription" and "transporter activity").</li>
   </ul>
 </p>
 
