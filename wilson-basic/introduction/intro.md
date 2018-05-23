@@ -303,22 +303,22 @@ Thanks to the plotly package, several plots are available as an interactive vers
 </br>
  First select non-coding RNAs on the <b>feature</b> level: <b>Ensembl biotype</b> = <i>miRNA, lincRNA, antisense</i>. Then switch to the <b>Scatterplot/Simple Scatter</b> tab: choose the <b>X-axis</b> data to be type <i>condition</i>, column <i>wt</i>, transformation <i>log2</i>, and <b>Y-axis</b> data to be type <i>condition</i>, column <i>mt</i>, transformation <i>log2</i>. This will compare the mean normalized counts per condition of the selected non-coding RNAs.
 </p>
-<img src="images/case3_1_uncolored.png"/>
+<img src="images/use_case_3_1_uncolored.png"/>
 
 <p class="font">
 In order to color the scatterplot by Log2FC please choose Z-axis to be type <b>contrast</b> and column <i>Unfitted Log2FoldChange (mt/wt)</i>. Furthermore set the <b>Color scheme</b> to <i>Diverging/BuWtRd</i>. The resulting plot shows RNAs up-regulated in the <i>mt</i> condition using red dots. But the colors are slightly pale and do not seem to be centered around 0.
 </p>
-<img src="images/case3_2_pale.png"/>
+<img src="images/use_case_3_2_pale.png"/>
 
 <p class="font">
 Tick <b>Winsorize to upper/lower</b>, then set <b>Lower limit</b> to <i>-1</i> and <b>Upper limit</b> to <i>1</i> to modify the color palette range to be more intense and centered around 0.
 </p>
-<img src="images/case3_3_intense.png"/>
+<img src="images/use_case_3_3_intense.png"/>
 
 <p class="font">
 Next please go back to the <b>Feature Selection</b> tab and switch from the Data to the <b>Highlight</b> sub-tab to select a subset of features to be labeled inside the plot. Open the <b>contrast</b> level and select <b>BaseMean</b> <i>>= 100</i> and <b>Unfitted Log2FoldChange (mt/wt)</b> <i>>= 0.5</i> to get RNAs with a certain minimum expression and up-regulated in the mutant. Now switch to the <b>Scatterplot/Simple Scatter</b> tab again and set the <b>Highlight/Label Selected Features</b> on the side bar to <i>Highlight</i>. Furthermore change <b>Select label column</b> to <i>Ensembl gene</i> to use the gene symbol for display as a label.
 </p>
-<img src="images/case3_4_label.png"/>
+<img src="images/use_case_3_4_label.png"/>
 
 
 
