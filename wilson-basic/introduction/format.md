@@ -5,15 +5,15 @@ output: html_document
 <p class="font">
   <b>CLARION: generiC fiLe formAt foR quantItative cOmparsions of high throughput screeNs</b>
   <br><br>
-   CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features and their annotation (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, zscore, pvalue). Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible, without having to modify the code of WIlsON for each specific experiment.
+   CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features and their annotation (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, zscore, pvalue). Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible (e.g. using Excel or other spreadsheet software), without having to modify the code of WIlsON for each specific experiment.
   <br><br>
   <img src="images/clarion_excel_colored.png" width="100%">
   <br><br>
   <p class="font">
   The format consists of three blocks of data with distinct structures:
   <ul class="font">
-    <li><b>Header</b> (blue): Parameters concerning the global experiment</li>
-    <li><b>Metadata</b> (red): Parameters describing the content of each data column</li>
+    <li><b>Header</b> (blue): Parameters concerning the global experiment. Most of these are for connection to surrounding workflows and can be ignored.</li>
+    <li><b>Metadata</b> (red): Parameters describing the content of each data column (i.e. feature annotation = can only be used for filtering; numeric value = can be used for plotting). The numeric values can furthermore be attributed to three different levels to simplify later user selections inside the web interface.</li>
     <li><b>Data</b> (green): Matrix of data columns bearing textual and numerical information per feature</li>
   </ul>
   </p>
