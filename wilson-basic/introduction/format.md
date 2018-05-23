@@ -5,7 +5,7 @@ output: html_document
 <p class="font">
   <b>CLARION: generiC fiLe formAt foR quantItative cOmparsions of high throughput screeNs</b>
   <br><br>
-   CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features and their annotation (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, zscore, pvalue). Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible without having to modify the code of WIlsON for each specific experiment.
+   CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features and their annotation (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, zscore, pvalue). Minimally, a row in such a table must contain a unique identifier (e.g. accession) and one numerical value. Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible without having to modify the code of WIlsON for each specific experiment.
    <br><br>It is suggested to use a spreadsheet software (e.g. Excel) to perform a manual reformat of the original tab-delimited table in order to avoid errors due to shifted columns etc.
   <br><br>
   <img src="images/clarion_excel_colored.png" width="100%">
@@ -14,7 +14,8 @@ output: html_document
   The format consists of three blocks of tab-delimited data layered on top of each other. These follow distinct structures:
   <ul class="font">
     <li><b>Header</b> (blue): Parameters concerning the global experiment. Most of these are for connection to surrounding workflows and can be ignored.</li>
-    <li><b>Metadata</b> (red): Parameters describing the content of each data column. These sort the columns into 4 different levels: feature (= annotation; can only be used for filtering) and sample/condition/contrast ( = numeric values; can be used for filtering and plotting). The grouping of the numeric values into multiple levels is intended to simplify later user selections inside the web interface and has no further use as of now. The remaining designators (factor/type/label/sub_label) are optional.</li>
+    <li><b>Metadata</b> (red): Parameters describing the content of each data column. Most importantly, these categorize the columns into 4 different <b>levels</b>: feature (= annotation; can only be used for filtering) and sample/condition/contrast ( = numeric values; can be used for filtering and plotting). The grouping of the numeric values into multiple levels is intended to simplify later user selections inside the web interface and has no further use as of now. The <b>type</b> category designates additional 
+    The remaining categories (factor/label/sub_label) can optionally be left empty.</li>
     <li><b>Data</b> (green): Matrix of tab-delimited data columns bearing textual and numerical information per feature (= the original table).</li>
   </ul>
   </p>
