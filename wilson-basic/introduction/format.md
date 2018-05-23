@@ -12,9 +12,9 @@ output: html_document
   <p class="font">
   The format consists of three blocks of data with distinct structures:
   <ul class="font">
-    <li><b>Header</b>: Parameters concerning the global experiment</li>
-    <li><b>Metadata</b>: Parameters describing the content of each data column</li>
-    <li><b>Data</b>: Matrix of data columns bearing textual and numerical information per feature</li>
+    <li><b>Header</b> (blue): Parameters concerning the global experiment</li>
+    <li><b>Metadata</b> (red): Parameters describing the content of each data column</li>
+    <li><b>Data</b> (green): Matrix of data columns bearing textual and numerical information per feature</li>
   </ul>
   </p>
 </p>
