@@ -35,7 +35,7 @@ output: html_document
     <li><b>format</b>: Name of the file format (must be Clarion)</li>
     <li><b>version</b>: Version of the file format (1.0)</li>
     <li><b>experiment_id</b>: Unique id to be used for the experiment</li>
-    <li><b>delimiter(*)</b>: In-field delimiter for multi-value fields (e.g. multiple kegg pathways). Mandatory for multi-value fields. Multi-character delimiters are possible (e.g. \" ,\").</li>
+    <li><b>delimiter(*)</b>: In-field delimiter for multi-value fields (e.g. multiple kegg pathways). Mandatory for multi-value fields. Multi-character delimiters are possible (e.g. " ,").</li>
   </ul>
 </p>
 
