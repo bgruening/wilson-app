@@ -32,7 +32,7 @@ output: html_document
 # WIlsON: Webbased Interactive Omics visualizatioN
 
 <p class="font" class="justify">
- The WIlsON app is based on a tab-delimited input file format derived from a "summarized experiment" of interest (format is called CLARION, see Introduction-->Data Format). All types of data which can be broken down to a feature with assigned numerical values can be deployed on the WIlsON server (e.g. multi-omics). A user can then generate various plots following four basic steps:</br>
+ The WIlsON app is based on a tab-delimited input file format called <a href="https://github.molgen.mpg.de/loosolab/wilson-apps/edit/master/wilson-basic/introduction/format.md">CLARION</a> derived from the "summarized experiment" format. All types of data which can be broken down to a feature with assigned numerical values can be deployed on the WIlsON server (e.g. multi-omics). A user can then generate various plots following four basic steps:</br>
  
  <ol class="font">
  <li>Filter for features of interest based on categorical or numerical values (e.g. transcripts, genes, proteins, probes)</li>
@@ -58,6 +58,9 @@ output: html_document
 <img src="images/example_heatmap2.png" class="example"/>
 
 <hr>
+
+## <a name="clarion_format"></a> Basic Structure
+
 ## <a name="basic_structure"></a> Basic Structure
 
 <p class="font" class="justify">
