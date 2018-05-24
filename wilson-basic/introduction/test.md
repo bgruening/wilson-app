@@ -18,7 +18,7 @@ The format consists of three blocks of tab-delimited data layered on top of each
 
 
 ## Header:
-![CLARION Header](images/header.png)
+![Header](images/header.png)
 * Line identifier: '!'
 * Syntax: name = value
 * Mandatory columns are marked with an asterisk (*) in the following description.
@@ -30,7 +30,7 @@ The format consists of three blocks of tab-delimited data layered on top of each
 * **delimiter**(*): In-field delimiter for multi-value fields (e.g. multiple KEGG pathways). Multi-character delimiters are possible (e.g. ", "). This permits filtering according to the single elements found in this column (e.g. "regulation of transcription, transporter activity" would be interpreted as having the separate values "regulation of transcription" and "transporter activity").
 
 ## Metadata:
-![CLARION metadata](images/metadata.png)
+![Metadata](images/metadata.png)
 * Line identifier: '#'
 * Mandatory columns are marked with an asterisk (*) in the following description.
 
@@ -53,12 +53,12 @@ The format consists of three blocks of tab-delimited data layered on top of each
   * Mandatory for multi-value fields
   * Further classify content level
   * Must be one of:
-  * For level = feature = values to be filtered for
+  * For level = *feature* = values to be filtered for
     * *unique_id:* Unique identifier (e.g. ENSMUSG00000023944)
     * *name:* Main feature name / symbol / label (e.g. Hsp90ab1)
     * *category:* Single value per field; categorical data (e.g. protein_coding)
     * *array:* Multiple delimited values per field; categorical data (e.g. Cholinergic synapse|Choline metabolism in cancer)
-  * For levels = sample, condition, contrast = values to be plotted
+  * For levels = **sample**, **condition**, **contrast** = values to be plotted
     * *score:* count, intensity, ...
     * *ratio:* foldchange, log2foldchange, ...
     * *probability:* pvalue, padj, ...
@@ -69,19 +69,11 @@ The format consists of three blocks of tab-delimited data layered on top of each
   * Can be used for plotting
   * Should be unique
   * For level = contrast delimited by '|' (condition1|condition2)
-      
-    <li>**sub_label**:</li>
-      <ul class="font"><li>Optional more detailed label to offer a logical subselection of a column using the interface</li></ul>
-  </ul>
-</p>
+* **sub_label**:
+  * Optional more detailed label to offer a logical subselection of a column using the interface
 
-</br>
-## <a name="data"></a> Data:
-<img src="images/data.png"/>
-<p class="font">
-  <ul class="font">
-    <li>Traditional tab-delimited data matrix</li>
-    <li>Minimum: one column with a unique id; one column with a numerical value</li>
-    <li>If types are missing first column will be treated as unique_id</li>
-  </ul>
-</p>
+## Data:
+![Data](images/data.png)
+* Original tab-delimited data matrix
+  * Minimum: one column with a unique id; one column with a numerical value
+  * If types are missing first column will be treated as unique_id
