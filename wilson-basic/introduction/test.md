@@ -11,8 +11,8 @@ It is suggested to use a spreadsheet software (e.g. Excel) to perform a manual r
 <img src="images/clarion_excel_colored.png" width="100%">
 
 The format consists of three blocks of tab-delimited data layered on top of each other. These follow distinct structures:
-  <ul class="font">
-    <li><b>Header</b> (blue): Parameters concerning the global experiment. Most of these are for connection to surrounding workflows and can be ignored.</li>
+  
+* **Header** (blue): Parameters concerning the global experiment. Most of these are for connection to surrounding workflows and can be ignored.
     <li><b>Metadata</b> (red): Parameters describing the content of each data column. Most importantly, these categorize the columns into 4 different <b>levels</b>: feature (= annotation; can only be used for filtering and plot labeling) and sample/condition/contrast (= numeric values; can be used for filtering and plotting). The grouping of the numeric values into multiple levels is intended to simplify later user selections inside the web interface and has no further use as of now. The <b>type</b> category designates e.g. the unique identifier column (<i>unique_id</i>) and the column having the default name for the feature (<i>name</i>). The remaining categories (<b>factor</b>/<b>label</b>/<b>sub_label</b>) are optional and mostly change the labels shown inside the web interface.</li>
     <li><b>Data</b> (green): Matrix of tab-delimited data columns bearing textual and numerical information per feature (= the original table).</li>
   </ul>
