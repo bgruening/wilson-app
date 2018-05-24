@@ -43,17 +43,13 @@ The format consists of three blocks of tab-delimited data layered on top of each
     * One or more columns (factor1, factor2, ..., factorN)
     * Used for grouping
 * **level***:
-      <ul class="font">
-        <li>Classifies content of column</li>
-        <li>Must be one of:</li>
-        <ul class="font">
-          <li>*sample:* Data relating to a single sample</li>
-          <li>*condition:* Data relating to a single condition (combination of all samples; e.g. average count)</li>
-          <li>*contrast:* Data relating to a single contrast (pairwise comparison of conditions)</li>
-          <li>*feature:* Annotation relating to a feature (e.g. gene, transcript, probe, protein, ...)</li>
-        </ul>
-      </ul>
-    <li>**type(*)**:</li>
+  * Classifies content of column
+  * Must be one of:
+    * *sample:* Data relating to a single sample
+    * *condition:* Data relating to a single condition (combination of all samples; e.g. average count)
+    * *contrast:* Data relating to a single contrast (pairwise comparison of conditions)
+    * *feature:* Annotation relating to a feature (e.g. gene, transcript, probe, protein, ...)
+* **type(*)**:
       <ul class="font">
         <li>Mandatory for multi-value fields</li>
         <li>Further classify content level</li>
