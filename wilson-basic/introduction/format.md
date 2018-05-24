@@ -3,14 +3,14 @@ output: github_document
 ---
 
 # Table of Contents  
-[Overview](#overview)  
+[CLARION Data Format Overview](#overview)  
 [Header](#header)  
 [Metadatax](#metadata)  
 [Data](#data)  
 
 <a name="overview"/>
 
-# Data Format
+# CLARION Data Format Overview
 **CLARION: generiC fiLe formAt foR quantItative cOmparsions of high throughput screeNs**
 
 CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features and their annotation (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, z-score, p-value). The feature annotations (e.g. symbol, GO category, KEGG pathways, etc.) and numerical values can later be used for filtering and plotting. Minimally, a row in such a table has to contain a unique identifier for the feature (e.g. accession) and one numerical value. Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible without having to modify the code of WIlsON for each specific experiment.
@@ -25,6 +25,8 @@ The format consists of three blocks of tab-delimited data layered on top of each
 * **Metadata** (red): Parameters describing the content of each data column. Most importantly, these categorize the columns into 4 different **levels**: feature (= annotation; can only be used for filtering and plot labeling) and sample/condition/contrast (= numeric values; can be used for filtering and plotting). The grouping of the numeric values into multiple levels is intended to simplify later user selections inside the web interface and has no further use as of now. The **type** category designates e.g. the unique identifier column (*unique_id*) and the column having the default name for the feature (*name*). The remaining categories (**factor**/**label**/**sub_label**) are optional and mostly change the labels shown inside the web interface.
 * **Data** (green): Matrix of tab-delimited data columns bearing textual and numerical information per feature (= the original table).
 
+<a name="header"/>
+
 ## Header:
 ![Header](images/header.png)
 * Line identifier: '!'
@@ -36,6 +38,8 @@ The format consists of three blocks of tab-delimited data layered on top of each
 * **version**: Version of the file format (1.0)
 * **experiment_id**: Unique id to be used for the experiment
 * **delimiter**(*): In-field delimiter for multi-value fields (e.g. multiple KEGG pathways). Multi-character delimiters are possible (e.g. ", "). This permits filtering according to the single elements found in this column (e.g. "regulation of transcription, transporter activity" would be interpreted as having the separate values "regulation of transcription" and "transporter activity").
+
+<a name="metadata"/>
 
 ## Metadata:
 ![Metadata](images/metadata.png)
@@ -79,6 +83,8 @@ The format consists of three blocks of tab-delimited data layered on top of each
   * For level = contrast delimited by '|' (condition1|condition2)
 * **sub_label**:
   * Optional more detailed label to offer a logical subselection of a column using the interface
+
+<a name="data"/>
 
 ## Data:
 ![Data](images/data.png)
