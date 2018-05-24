@@ -27,10 +27,10 @@ The format consists of three blocks of tab-delimited data layered on top of each
 * **format**: Name of the file format (must be Clarion)
 * **version**: Version of the file format (1.0)
 * **experiment_id**: Unique id to be used for the experiment
-* **delimiter(*)**: In-field delimiter for multi-value fields (e.g. multiple KEGG pathways). Multi-character delimiters are possible (e.g. ", "). This permits filtering according to the single elements found in this column (e.g. "regulation of transcription, transporter activity" would be interpreted as having the separate values "regulation of transcription" and "transporter activity").
+* **delimiter**(*): In-field delimiter for multi-value fields (e.g. multiple KEGG pathways). Multi-character delimiters are possible (e.g. ", "). This permits filtering according to the single elements found in this column (e.g. "regulation of transcription, transporter activity" would be interpreted as having the separate values "regulation of transcription" and "transporter activity").
 
-## <a name="metadata"></a> Metadata:
-<img src="images/metadata.png"/>
+## Metadata:
+![CLARION metadata](images/metadata.png)
 <p class="font">
   <ul class="font">
     <li>Line identifier: '#'</li>
