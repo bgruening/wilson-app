@@ -42,6 +42,9 @@ wilson_auto_reload_pattern <- ".*\\.(r|se|R|clarion)$"
 # Sets the auto reload polling interval in milliseconds
 wilson_auto_reload_interval <- 3000
 
+# Sets the max file upload size in mb
+wilson_max_upload_size <- 300
+
 #
 # WIlsON application logic
 #
@@ -52,6 +55,7 @@ if (wilson_enable_auto_reload) {
 	options(shiny.autoreload.pattern = wilson_auto_reload_pattern)
 	options(shiny.autoreload.interval = wilson_auto_reload_interval)
 }
+options(shiny.maxRequestSize = wilson_max_upload_size * 1024^2)
 
 # Redirect stdout to stderr when running on server. All output will end up in the log file
 if (wilson_redirect_stdout & !interactive() ) {
@@ -102,6 +106,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                          tags$h6("Highlighted Features"),
                                                          verbatimTextOutput("filter_h1"),
                                                          tags$h3("Global Parameters"),
+                                                         radioButtons(inputId = "data_origin", label = "Choose data origin:", choices = c("Preloaded", "Upload")),
                                                          uiOutput(outputId = "fileLoader"),
                                                          bsButton("filter_log_b", label = "Toggle log", style = "default", size = "small"),
                                                          hidden(verbatimTextOutput("filter_log"))
@@ -485,20 +490,49 @@ server <- function(session, input, output) {
   load <- sapply(list.files(path = "data/", pattern = "\\.se|\\.clarion"), function(x){ paste0("data/", x)})
   
   output$fileLoader <- renderUI({
-    selectizeInput(inputId = "fileLoader", label = "Select data set", choices = load)
+    shiny::req(input$data_origin)
+    
+    if (input$data_origin == "Preloaded") {
+      return(selectizeInput(inputId = "fileLoader", label = "Select data set", choices = load, selected = input$fileLoader))
+    } else if (input$data_origin == "Upload") {
+      return(fileInput(inputId = "fileLoader2", label = "Upload clarion file", accept = c(".se", ".clarion")))
+    }
+  })
+  
+  # last upload filepath; prevents loading of last upload
+  last_upload <- reactiveVal(value = "")
+  # returns filepath
+  file_path <- eventReactive({
+    if (isTruthy(input$fileLoader) && input$data_origin == "Preloaded") {
+      return(TRUE)
+    } else if (isTruthy(input$fileLoader2$datapath) && input$data_origin == "Upload" && input$fileLoader2$datapath != isolate(last_upload())) {
+      last_upload(input$fileLoader2$datapath)
+      
+      return(TRUE)
+    }
+  }, {
+    if (input$data_origin == "Preloaded") {
+      shiny::req(input$fileLoader)
+      
+      return(input$fileLoader)
+    } else if (input$data_origin == "Upload") {
+      shiny::req(input$fileLoader2$datapath)
+      
+      return(input$fileLoader2$datapath)
+    }
   })
   
   # Load and parse data
   parsed <- reactive({
-    shiny::req(input$fileLoader)
+    shiny::req(file_path())
     
-    file <- try(parser(input$fileLoader))
+    file <- try(parser(file_path()))
     
     if(!isTruthy(file)) {
-      error(logger, paste("Couldn't parse", input$fileLoader, file))
+      error(logger, paste("Couldn't parse", file_path(), file))
       showNotification(
                       id = "parsing-error",
-                      paste0("Error parsing file ", input$fileLoader, "."),
+                      paste0("Error parsing file ", file_path(), "."),
                       file,
                       duration = NULL,
                       type = "error"
@@ -506,7 +540,7 @@ server <- function(session, input, output) {
       
       shinyjs::addClass(selector = "#shiny-notification-parsing-error", class = "notification-position-center")
     } else {
-      info(logger, paste("Parsing file", input$fileLoader))
+      info(logger, paste("Parsing file", file_path()))
       removeNotification(id = "parsing-error")
     }
     
