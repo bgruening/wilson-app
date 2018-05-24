@@ -35,14 +35,14 @@ The format consists of three blocks of tab-delimited data layered on top of each
 * Mandatory columns are marked with an asterisk (*) in the following description.
 
 ### Columns:
-* **key***:
+* **key**(*):
   * Reference to data matrix (column headline)
   * Must be unique
     * **factor1 - factorN**:
     * Denotes experimental factors (e.g. wildtype, mutant, time point) per sample and condition
     * One or more columns (factor1, factor2, ..., factorN)
     * Used for grouping
-* **level***:
+* **level**(*):
   * Classifies content of column
   * Must be one of:
     * *sample:* Data relating to a single sample
