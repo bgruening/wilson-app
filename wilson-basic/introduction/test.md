@@ -8,7 +8,7 @@ CLARION is a data format especially developed to be used with WIlsON, which reli
 
 It is suggested to use a spreadsheet software (e.g. Excel) to perform a manual reformat of the original tab-delimited table (shown in green in the following figure) in order to avoid errors due to shifted columns. In order to become CLARION, two blocks of descriptive information have to be inserted above the original table called header (red) and metadata (blue).
 
-<img src="images/clarion_excel_colored.png" width="100%">
+![XX](images/clarion_excel_colored.png)
 
 The format consists of three blocks of tab-delimited data layered on top of each other. These follow distinct structures:
   
