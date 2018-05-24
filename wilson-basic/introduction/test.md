@@ -36,10 +36,10 @@ The format consists of three blocks of tab-delimited data layered on top of each
 
 ### Columns:
 * **key***:
-* Reference to data matrix (column headline)
-* Must be unique
-  * **factor1 - factorN**:
-  * Denotes experimental factors (e.g. wildtype, mutant, time point) per sample and condition
+  * Reference to data matrix (column headline)
+  * Must be unique
+    * **factor1 - factorN**:
+    * Denotes experimental factors (e.g. wildtype, mutant, time point) per sample and condition
       <ul class="font"><li>One or more columns (factor1, factor2, ..., factorN)</li></ul>
       <ul class="font"><li>Used for grouping</li></ul>
     <li>**level***:</li>
