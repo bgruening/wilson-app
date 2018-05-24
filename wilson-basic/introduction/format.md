@@ -5,7 +5,7 @@ output: github_document
 # Table of Contents  
 [CLARION Data Format Overview](#overview)  
 [Header](#header)  
-[Metadatax](#metadata)  
+[Metadata](#metadata)  
 [Data](#data)  
 
 <a name="overview"/>
