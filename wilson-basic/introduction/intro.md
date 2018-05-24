@@ -32,7 +32,7 @@ output: html_document
 # WIlsON: Webbased Interactive Omics visualizatioN
 
 <p class="font" class="justify">
- The WIlsON app is based on a tab-delimited input file format called <a href="https://github.molgen.mpg.de/loosolab/wilson-apps/edit/master/wilson-basic/introduction/format.md">CLARION</a> derived from the "summarized experiment" format. All types of data which can be broken down to a feature with assigned numerical values can be deployed on the WIlsON server (e.g. multi-omics). A user can then generate various plots following four basic steps:</br>
+ The WIlsON app is based on a tab-delimited input file format called <a href="https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/CLARION-Format">CLARION</a> derived from the "summarized experiment" format. All types of data which can be broken down to a feature with assigned numerical values can be deployed on the WIlsON server (e.g. multi-omics). A user can then generate various plots following four basic steps:</br>
  
  <ol class="font">
  <li>Filter for features of interest based on categorical or numerical values (e.g. transcripts, genes, proteins, probes)</li>
@@ -65,7 +65,7 @@ CLARION: generiC fiLe formAt foR quantItative cOmparsions of high throughput scr
 
 CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features and their annotation (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, z-score, p-value). Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible without having to modify the code of WIlsON for each specific experiment.
 
-Please check the following link for details considering the [CLARION format](https://github.molgen.mpg.de/loosolab/wilson-apps/blob/master/wilson-basic/introduction/format.md).
+Please check the following link for details considering the [CLARION format](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/CLARION-Format).
 
 ## <a name="basic_structure"></a> Basic Structure
 
