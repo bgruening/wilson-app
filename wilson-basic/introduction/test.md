@@ -7,11 +7,10 @@ output: github_document
 CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features and their annotation (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, z-score, p-value). The feature annotations (e.g. symbol, GO category, KEGG pathways, etc.) and numerical values can later be used for filtering and plotting. Minimally, a row in such a table has to contain a unique identifier for the feature (e.g. accession) and one numerical value. Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible without having to modify the code of WIlsON for each specific experiment.
 
 It is suggested to use a spreadsheet software (e.g. Excel) to perform a manual reformat of the original tab-delimited table (shown in green in the following figure) in order to avoid errors due to shifted columns. In order to become CLARION, two blocks of descriptive information have to be inserted above the original table called header (red) and metadata (blue).
-  <br><br>
-  <img src="images/clarion_excel_colored.png" width="100%">
-  <br>
-  <p class="font">
-  The format consists of three blocks of tab-delimited data layered on top of each other. These follow distinct structures:
+
+<img src="images/clarion_excel_colored.png" width="100%">
+
+The format consists of three blocks of tab-delimited data layered on top of each other. These follow distinct structures:
   <ul class="font">
     <li><b>Header</b> (blue): Parameters concerning the global experiment. Most of these are for connection to surrounding workflows and can be ignored.</li>
     <li><b>Metadata</b> (red): Parameters describing the content of each data column. Most importantly, these categorize the columns into 4 different <b>levels</b>: feature (= annotation; can only be used for filtering and plot labeling) and sample/condition/contrast (= numeric values; can be used for filtering and plotting). The grouping of the numeric values into multiple levels is intended to simplify later user selections inside the web interface and has no further use as of now. The <b>type</b> category designates e.g. the unique identifier column (<i>unique_id</i>) and the column having the default name for the feature (<i>name</i>). The remaining categories (<b>factor</b>/<b>label</b>/<b>sub_label</b>) are optional and mostly change the labels shown inside the web interface.</li>
