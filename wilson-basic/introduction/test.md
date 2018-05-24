@@ -55,26 +55,21 @@ The format consists of three blocks of tab-delimited data layered on top of each
   * Must be one of:
   * For level = feature = values to be filtered for
     * *unique_id:* Unique identifier (e.g. ENSMUSG00000023944)
-    * *name:* Main feature name / symbol / label (e.g. Hsp90ab1)</li>
-          <li>*category:* Single value per field; categorical data (e.g. protein_coding)</li>
-          <li>*array:* Multiple delimited values per field; categorical data (e.g. Cholinergic synapse|Choline metabolism in cancer)</li>
-        </ul>
-        <li>For levels = sample, condition, contrast = values to be plotted</li>
-        <ul class="font">
-          <li>*score:* count, intensity, ...</li>
-          <li>*ratio:* foldchange, log2foldchange, ...</li>
-          <li>*probability:* pvalue, padj, ...</li>
-          <li>*array:* Multiple numeric values per field; e.g. coverage/windows, ...</li>
-        </ul>
-        <li>Attention: if the type is not given, the first feature column is expected to hold a unique identifier!</li>
-      </ul>
-    <li>**label**:</li>
-      <ul class="font">
-        <li>Optional label alternative to column name</li>
-        <li>Can be used for plotting</li>
-        <li>Should be unique</li>
-        <li>For level = contrast delimited by '|' (condition1|condition2)</li>
-      </ul>
+    * *name:* Main feature name / symbol / label (e.g. Hsp90ab1)
+    * *category:* Single value per field; categorical data (e.g. protein_coding)
+    * *array:* Multiple delimited values per field; categorical data (e.g. Cholinergic synapse|Choline metabolism in cancer)
+  * For levels = sample, condition, contrast = values to be plotted
+    * *score:* count, intensity, ...
+    * *ratio:* foldchange, log2foldchange, ...
+    * *probability:* pvalue, padj, ...
+    * *array:* Multiple numeric values per field; e.g. coverage/windows, ...
+  * Attention: if the type is not given, the first feature column is expected to hold a unique identifier!
+* **label**:
+  * Optional label alternative to column name
+  * Can be used for plotting
+  * Should be unique
+  * For level = contrast delimited by '|' (condition1|condition2)
+      
     <li>**sub_label**:</li>
       <ul class="font"><li>Optional more detailed label to offer a logical subselection of a column using the interface</li></ul>
   </ul>
