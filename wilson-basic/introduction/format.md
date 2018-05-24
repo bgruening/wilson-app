@@ -1,7 +1,3 @@
----
-output: github_document
----
-
 # Table of Contents  
 [CLARION Data Format Overview](#overview)  
 [Header](#header)  
