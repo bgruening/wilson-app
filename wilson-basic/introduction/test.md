@@ -8,7 +8,7 @@ CLARION is a data format especially developed to be used with WIlsON, which reli
 
 It is suggested to use a spreadsheet software (e.g. Excel) to perform a manual reformat of the original tab-delimited table (shown in green in the following figure) in order to avoid errors due to shifted columns. In order to become CLARION, two blocks of descriptive information have to be inserted above the original table called header (red) and metadata (blue).
 
-![XX](images/clarion_excel_colored.png)
+![CLARION Overview](images/clarion_excel_colored.png)
 
 The format consists of three blocks of tab-delimited data layered on top of each other. These follow distinct structures:
   
@@ -17,15 +17,12 @@ The format consists of three blocks of tab-delimited data layered on top of each
 * **Data** (green): Matrix of tab-delimited data columns bearing textual and numerical information per feature (= the original table).
 
 
-## <a name="header"></a> Header:
-<img src="images/header.png"/>
-<p class="font">
-  <ul class="font">
-    <li>Line identifier: '!'</li>
-    <li>Syntax: name = value</li>
-    <li>Mandatory columns are marked with an asterisk (*) in the following description.</li>
-  </ul>
-</p>
+## Header:
+![CLARION Header](images/header.png)
+* Line identifier: '!'
+* Syntax: name = value
+* Mandatory columns are marked with an asterisk (*) in the following description.
+
 ### Parameters:
 <p class="font">
   <ul class="font">
