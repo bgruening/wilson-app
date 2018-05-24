@@ -37,7 +37,7 @@ The format consists of three blocks of tab-delimited data layered on top of each
 * **format**: Name of the file format (must be Clarion)
 * **version**: Version of the file format (1.0)
 * **experiment_id**: Unique id to be used for the experiment
-* **delimiter**(*): In-field delimiter for multi-value fields (e.g. multiple KEGG pathways). Multi-character delimiters are possible (e.g. ", "). This permits filtering according to the single elements found in this column (e.g. "regulation of transcription, transporter activity" would be interpreted as having the separate values "regulation of transcription" and "transporter activity").
+* **delimiter** (*): In-field delimiter for multi-value fields (e.g. multiple KEGG pathways). Multi-character delimiters are possible (e.g. ", "). This permits filtering according to the single elements found in this column (e.g. "regulation of transcription, transporter activity" would be interpreted as having the separate values "regulation of transcription" and "transporter activity").
 
 <a name="metadata"/>
 
@@ -47,21 +47,21 @@ The format consists of three blocks of tab-delimited data layered on top of each
 * Mandatory columns are marked with an asterisk (*) in the following description.
 
 ### Columns:
-* **key**(*):
+* **key** (*):
   * Reference to data matrix (column headline)
   * Must be unique
     * **factor1 - factorN**:
     * Denotes experimental factors (e.g. wildtype, mutant, time point) per sample and condition
     * One or more columns (factor1, factor2, ..., factorN)
     * Used for grouping
-* **level**(*):
+* **level** (*):
   * Classifies content of column
   * Must be one of:
     * *sample:* Data relating to a single sample
     * *condition:* Data relating to a single condition (combination of all samples; e.g. average count)
     * *contrast:* Data relating to a single contrast (pairwise comparison of conditions)
     * *feature:* Annotation relating to a feature (e.g. gene, transcript, probe, protein, ...)
-* **type**(*):
+* **type** (*):
   * Mandatory for multi-value fields
   * Further classify content level
   * Must be one of:
