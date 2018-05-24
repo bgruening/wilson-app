@@ -40,9 +40,9 @@ The format consists of three blocks of tab-delimited data layered on top of each
   * Must be unique
     * **factor1 - factorN**:
     * Denotes experimental factors (e.g. wildtype, mutant, time point) per sample and condition
-      <ul class="font"><li>One or more columns (factor1, factor2, ..., factorN)</li></ul>
-      <ul class="font"><li>Used for grouping</li></ul>
-    <li>**level***:</li>
+    * One or more columns (factor1, factor2, ..., factorN)
+    * Used for grouping
+* **level***:
       <ul class="font">
         <li>Classifies content of column</li>
         <li>Must be one of:</li>
