@@ -49,15 +49,13 @@ The format consists of three blocks of tab-delimited data layered on top of each
     * *condition:* Data relating to a single condition (combination of all samples; e.g. average count)
     * *contrast:* Data relating to a single contrast (pairwise comparison of conditions)
     * *feature:* Annotation relating to a feature (e.g. gene, transcript, probe, protein, ...)
-* **type(*)**:
-      <ul class="font">
-        <li>Mandatory for multi-value fields</li>
-        <li>Further classify content level</li>
-        <li>Must be one of:</li>
-        <li>For level = feature = values to be filtered for</li>
-        <ul class="font">
-          <li>*unique_id:* Unique identifier (e.g. ENSMUSG00000023944)</li>
-          <li>*name:* Main feature name / symbol / label (e.g. Hsp90ab1)</li>
+* **type**(*):
+  * Mandatory for multi-value fields
+  * Further classify content level
+  * Must be one of:
+  * For level = feature = values to be filtered for
+    * *unique_id:* Unique identifier (e.g. ENSMUSG00000023944)
+    * *name:* Main feature name / symbol / label (e.g. Hsp90ab1)</li>
           <li>*category:* Single value per field; categorical data (e.g. protein_coding)</li>
           <li>*array:* Multiple delimited values per field; categorical data (e.g. Cholinergic synapse|Choline metabolism in cancer)</li>
         </ul>
