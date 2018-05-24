@@ -14,12 +14,9 @@ The format consists of three blocks of tab-delimited data layered on top of each
   
 * **Header** (blue): Parameters concerning the global experiment. Most of these are for connection to surrounding workflows and can be ignored.
 * **Metadata** (red): Parameters describing the content of each data column. Most importantly, these categorize the columns into 4 different **levels**: feature (= annotation; can only be used for filtering and plot labeling) and sample/condition/contrast (= numeric values; can be used for filtering and plotting). The grouping of the numeric values into multiple levels is intended to simplify later user selections inside the web interface and has no further use as of now. The **type** category designates e.g. the unique identifier column (*unique_id*) and the column having the default name for the feature (*name*). The remaining categories (**factor**/**label**/**sub_label**) are optional and mostly change the labels shown inside the web interface.</li>
-    <li>**Data** (green): Matrix of tab-delimited data columns bearing textual and numerical information per feature (= the original table).</li>
-  </ul>
-  </p>
-</p>
+* **Data** (green): Matrix of tab-delimited data columns bearing textual and numerical information per feature (= the original table).
 
-</br>
+
 ## <a name="header"></a> Header:
 <img src="images/header.png"/>
 <p class="font">
