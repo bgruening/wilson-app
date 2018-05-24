@@ -42,14 +42,14 @@ The format consists of three blocks of tab-delimited data layered on top of each
     * Denotes experimental factors (e.g. wildtype, mutant, time point) per sample and condition
     * One or more columns (factor1, factor2, ..., factorN)
     * Used for grouping
-* **level** (*):
+* **level** *:
   * Classifies content of column
   * Must be one of:
     * *sample:* Data relating to a single sample
     * *condition:* Data relating to a single condition (combination of all samples; e.g. average count)
     * *contrast:* Data relating to a single contrast (pairwise comparison of conditions)
     * *feature:* Annotation relating to a feature (e.g. gene, transcript, probe, protein, ...)
-* **type**(*):
+* **type** *:
   * Mandatory for multi-value fields
   * Further classify content level
   * Must be one of:
