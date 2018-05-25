@@ -106,7 +106,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                          tags$h6("Highlighted Features"),
                                                          verbatimTextOutput("filter_h1"),
                                                          tags$h3("Global Parameters"),
-                                                         radioButtons(inputId = "data_origin", label = "Choose data origin:", choices = c("Preloaded", "Upload")),
+                                                         radioButtons(inputId = "data_origin", label = "Choose data origin:", choices = c("Examples", "Upload")),
                                                          uiOutput(outputId = "fileLoader"),
                                                          bsButton("filter_log_b", label = "Toggle log", style = "default", size = "small"),
                                                          hidden(verbatimTextOutput("filter_log"))
@@ -492,7 +492,7 @@ server <- function(session, input, output) {
   output$fileLoader <- renderUI({
     shiny::req(input$data_origin)
     
-    if (input$data_origin == "Preloaded") {
+    if (input$data_origin == "Examples") {
       return(selectizeInput(inputId = "fileLoader", label = "Select data set", choices = load, selected = input$fileLoader))
     } else if (input$data_origin == "Upload") {
       return(fileInput(inputId = "fileLoader2", label = "Upload clarion file", accept = c(".se", ".clarion")))
@@ -503,7 +503,7 @@ server <- function(session, input, output) {
   last_upload <- reactiveVal(value = "")
   # returns filepath
   file_path <- eventReactive({
-    if (isTruthy(input$fileLoader) && input$data_origin == "Preloaded") {
+    if (isTruthy(input$fileLoader) && input$data_origin == "Examples") {
       return(TRUE)
     } else if (isTruthy(input$fileLoader2$datapath) && input$data_origin == "Upload" && input$fileLoader2$datapath != isolate(last_upload())) {
       last_upload(input$fileLoader2$datapath)
@@ -511,7 +511,7 @@ server <- function(session, input, output) {
       return(TRUE)
     }
   }, {
-    if (input$data_origin == "Preloaded") {
+    if (input$data_origin == "Examples") {
       shiny::req(input$fileLoader)
       
       return(input$fileLoader)
