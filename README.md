@@ -5,11 +5,13 @@ This repository contains the reference application of the [WIlsON R package]( ht
 ## Availability
 WIlsON can be tested on our [official demonstration server](http://loosolab.mpi-bn.mpg.de/apps/wilson/). 
 
+If you need help, please check the extensive [documentation](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki).
+
 Get a Docker container [here](https://hub.docker.com/r/loosolab/wilson/).
 
 The underlying WIlsON R package can be downloaded [here](https://github.molgen.mpg.de/loosolab/wilson). 
 
-Please make sure to check our other projects at http://loosolab.mpi-bn.mpg.de/.
+Please make sure to check our other projects at [loosolab](http://loosolab.mpi-bn.mpg.de/).
 
 ## Installation of R Shiny server in “virgin” Debian 9 Linux
 Update and install the following Debian packages.
