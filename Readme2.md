@@ -8,8 +8,6 @@ The WIlsON app can be applied either via a [centralized R Shiny server](#shiny),
 
 WIlsON can be tested on our [official demonstration server](http://loosolab.mpi-bn.mpg.de/apps/wilson/). 
 
-Usage instructions can be found in the extensive [documentation](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki).
-
 The underlying WIlsON R package can be downloaded [here](https://github.molgen.mpg.de/loosolab/wilson). 
 
 Please make sure to check our other projects at [loosolab](http://loosolab.mpi-bn.mpg.de/).
