@@ -13,7 +13,7 @@ The underlying WIlsON R package can be downloaded [here](https://github.molgen.m
 Please make sure to check our other projects at http://loosolab.mpi-bn.mpg.de/.
 
 ## How to use it?
-A detailed manual on the WIlsON app can be found [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/Introduction). For a quick start without further reading, a set of step by step use cases are provided [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki#use_cases) or within the App.
+A detailed manual on the WIlsON app can be found [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki). For a quick start without further reading, a set of step by step use cases are provided [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki#use_cases) or within the App.
 
 <a name="clarion"/></a>
 ## Data import and our data format CLARION
@@ -36,7 +36,7 @@ app.R		-> R code
 
 
 ### How do I load my own data?
-Add the file suffix *.clarion* or *.se*, and place it/them into the /data folder. Then you reload the app or the R Shiny server. That’s it! 
+Add the file suffix *.clarion* or *.se*, and place it/them into the /data folder. Then you reload the app or the R Shiny server. The new dataset can be selected from the apps drop down menue in the feature selection pane! 
 ```
 cp mydata.clarion /srv/shiny-server/sample-apps/data
 sudo systemctl stop shiny-server
@@ -60,7 +60,7 @@ Start R and install the **WIlsON R** package and dependencies (make sure to inst
 ```
 R
 install.packages("devtools")
-devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
+devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3", auth_token = "")
 ```
 
 Download the **WIlsON R application** archive from https://github.molgen.mpg.de/loosolab/wilson-apps and unzip. Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
@@ -83,7 +83,7 @@ sudo systemctl start shiny-server
 To run this app in your local RStudio you have to install the **WIlsON R package** and it's dependencies.
 ```
 install.packages("devtools")
-devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")
+devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3", auth_token = "")
 ```
 Now either clone the repository and use ``runApp()``:
 ```
