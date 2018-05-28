@@ -437,6 +437,9 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
 )
 
 server <- function(session, input, output) {
+  # Session token
+  message("Session: ", session$token)
+  
   # logging
   if(!dir.exists("logs")) {
     dir.create("logs")
@@ -514,11 +517,11 @@ server <- function(session, input, output) {
     if (input$data_origin == "Examples") {
       shiny::req(input$fileLoader)
       
-      return(input$fileLoader)
+      return(list(path = input$fileLoader, name = input$fileLoader))
     } else if (input$data_origin == "Upload") {
       shiny::req(input$fileLoader2$datapath)
       
-      return(input$fileLoader2$datapath)
+      return(list(path = input$fileLoader2$datapath, name = input$fileLoader2$name))
     }
   })
   
@@ -526,13 +529,13 @@ server <- function(session, input, output) {
   parsed <- reactive({
     shiny::req(file_path())
     
-    file <- try(parser(file_path()))
+    file <- try(parser(file_path()$path))
     
     if(!isTruthy(file)) {
-      error(logger, paste("Couldn't parse", file_path(), file))
+      error(logger, paste("Couldn't parse", file_path()$name, file))
       showNotification(
                       id = "parsing-error",
-                      paste0("Error parsing file ", file_path(), "."),
+                      paste0("Error parsing file ", file_path()$name, "."),
                       file,
                       duration = NULL,
                       type = "error"
@@ -540,7 +543,7 @@ server <- function(session, input, output) {
       
       shinyjs::addClass(selector = "#shiny-notification-parsing-error", class = "notification-position-center")
     } else {
-      info(logger, paste("Parsing file", file_path()))
+      info(logger, paste("Parsing file", file_path()$name))
       removeNotification(id = "parsing-error")
     }
     
