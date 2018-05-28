@@ -16,7 +16,7 @@ Please make sure to check our other projects at http://loosolab.mpi-bn.mpg.de/.
 A detailed manual on the WIlsON app can be found [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/Introduction). For a quick start without further reading, a set of step by step use cases are provided [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/Introduction#use_cases) or within the App.
 
 <a name="clarion"/></a>
-## Data format CLARION and data import
+## Data import and our data format CLARION
 
 CLARION: generiC fiLe formAt foR quantItative cOmparsions of high throughput screeNs
 
@@ -24,7 +24,7 @@ CLARION is a data format especially developed to be used with WIlsON, which reli
 
 Please check the following link for details considering the [CLARION format](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/CLARION-Format).
 
-### Server structure
+### Folder structure and data location
 The R Shiny WIlsON application consists of the following components.
 ```
 app.R		-> R code
