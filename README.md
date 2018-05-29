@@ -13,7 +13,7 @@ The underlying WIlsON R package can be downloaded [here](https://github.molgen.m
 Please make sure to check our other projects at [loosolab](http://loosolab.mpi-bn.mpg.de/).
 
 ## How to use it?
-A detailed manual on the WIlsON app can be found [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki). For a quick start without further reading, a set of step by step use cases are provided [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki#use_cases) or within the App.
+A detailed manual on the WIlsON app can be found [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki). For a quick start without further reading, a set of step by step use cases are provided [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki#use_cases).
 
 <a name="clarion"/></a>
 ## Data import and our data format CLARION
