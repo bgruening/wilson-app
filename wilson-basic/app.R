@@ -8,7 +8,7 @@ library(wilson)
 library(log4r)
 library(shinyBS)
 library(data.table)
-source("introduction/introduction.R")
+library(htmltools)
 
 #
 # UI options
@@ -95,10 +95,13 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                       titlePanel(title = "", windowTitle = "WIlsON"),
                       navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;")), theme = shinytheme("sandstone"), position = "fixed-top", id = "top-menu",
                                  # introduction ------------------------------------------------------------
-                                 navbarMenu(
+                                 tabPanel(
                                     title = "Introduction",
-                                    start(),
-                                    format()
+                                    column(
+                                      width = 7,
+                                      offset = 2,
+                                      includeMarkdown("introduction/intro.md")
+                                    )
                                   ),
                                  # feature Selection -------------------------------------------------------
                                  tabPanel(title = "Feature Selection",
