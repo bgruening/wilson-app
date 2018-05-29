@@ -43,7 +43,7 @@ wilson_auto_reload_pattern <- ".*\\.(r|se|R|clarion)$"
 wilson_auto_reload_interval <- 3000
 
 # Sets the max file upload size in mb
-wilson_max_upload_size <- 300
+wilson_max_upload_size <- 100
 
 # Allow logging of uploaded files for debugging purposes
 wilson_log_upload <- TRUE
