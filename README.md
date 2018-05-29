@@ -44,6 +44,8 @@ sudo systemctl daemon-reload
 sudo systemctl start shiny-server
 ```
 
+For an overview, see also [here].(https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/CLARION-Format2#import-data-into-the-app)
+
 
 <a name="shiny"/></a>
 ## Installation of R Shiny server in “virgin” Debian 9 Linux
