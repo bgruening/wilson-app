@@ -51,7 +51,7 @@ EXPOSE 3838
 #check current directory for the presence of clarion input files (*.se, *.clarion) -> include in container
 #add pointless additional copy of entrypoint.sh because otherwise the building will fail if no clarion files exist in the current folder
 ADD entrypoint.sh *.se *.clarion /srv/shiny-server/data
-RUN rm -rf /srv/shiny-server/data/entrypoint.sh
+RUN rm /srv/shiny-server/data/entrypoint.sh
 
 ADD entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod +x /usr/bin/entrypoint.sh
