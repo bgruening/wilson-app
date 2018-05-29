@@ -45,6 +45,9 @@ wilson_auto_reload_interval <- 3000
 # Sets the max file upload size in mb
 wilson_max_upload_size <- 300
 
+# Allow logging of uploaded files for debugging purposes
+wilson_log_upload <- TRUE
+
 #
 # WIlsON application logic
 #
@@ -520,6 +523,13 @@ server <- function(session, input, output) {
       return(list(path = input$fileLoader, name = input$fileLoader))
     } else if (input$data_origin == "Upload") {
       shiny::req(input$fileLoader2$datapath)
+      
+      # copy for debugging
+      if (wilson_log_upload) {
+        # file name = session_date_filename
+        date <- strftime(x = Sys.time(), format = "%Y%m%d-%H%M%S")
+        file.copy(from = input$fileLoader2$datapath, to = file.path("logs", paste(session$token, date, input$fileLoader2$name, sep = "_")))
+      }
       
       return(list(path = input$fileLoader2$datapath, name = input$fileLoader2$name))
     }
