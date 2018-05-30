@@ -25,7 +25,9 @@ output: html_document
 # WIlsON: Webbased Interactive Omics visualizatioN
 
 <p class="font" class="justify">
- The WIlsON app is based on a specialized tab-delimited input file format called <a href="https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/CLARION-Format">CLARION</a>. All types of data which can be broken down to a feature with assigned numerical values can be deployed on the WIlsON server (e.g. multi-omics). A user can then generate various plots following four basic steps:</br>
+ The WIlsON app is intended to interpret all types of quantitative data (e.g. multi-omics) which can be broken down to a key feature (such as genes or proteins) and assigned text columns and/or numeric values. It is designed to support common experimental designs by making use of individual data levels resulting from primary analysis.</br>
+ </br>
+ Once the experimental data is loaded into the app, the user can generate various plots following four basic steps:</br>
  
  <ol class="font">
  <li>Filter for features of interest based on categorical (annotation) or numerical values (e.g. transcripts, genes, proteins, probes)</li>
