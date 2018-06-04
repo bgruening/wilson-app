@@ -26,8 +26,10 @@ repos='https://cran.rstudio.com/')"
 RUN Rscript -e 'source("https://bioconductor.org/biocLite.R")'
 
 #Install Shiny-Server
-RUN wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.6.875-amd64.deb && \
-gdebi -n shiny-server-1.5.6.875-amd64.deb && \
+#RUN wget https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.6.875-amd64.deb && \
+#gdebi -n shiny-server-1.5.6.875-amd64.deb && \
+RUN wget https://download3.rstudio.org/ubuntu-14.04/x86_64/shiny-server-1.5.7.907-amd64.deb && \
+gdebi -n shiny-server-1.5.7.907-amd64.deb && \
 rm /srv/shiny-server/index.html && \
 rm -rf /srv/shiny-server/sample-apps
 
@@ -35,15 +37,21 @@ rm -rf /srv/shiny-server/sample-apps
 RUN Rscript -e 'devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3")'
 
 #Install stackdump
-RUN Rscript -e 'devtools::install_github(repo = "jcheng5/stackdump")'
+#RUN Rscript -e 'devtools::install_github(repo = "jcheng5/stackdump")'
 
 #Install WILSON App
-#RUN git clone https://github.molgen.mpg.de/loosolab/wilson-apps /srv/shiny-server/tmp && \
-RUN git clone -b stackdump https://github.molgen.mpg.de/loosolab/wilson-apps /srv/shiny-server/tmp && \
+#RUN git clone -b stackdump https://github.molgen.mpg.de/loosolab/wilson-apps /srv/shiny-server/tmp && \
+RUN git clone https://github.molgen.mpg.de/loosolab/wilson-apps /srv/shiny-server/tmp && \
 cp -a /srv/shiny-server/tmp/wilson-basic/. /srv/shiny-server/ && \
 rm -rf /srv/shiny-server/tmp
 
+
 EXPOSE 3838
+
+#check current directory for the presence of clarion input files (*.se, *.clarion) -> include in container
+#add pointless additional copy of entrypoint.sh because otherwise the building will fail if no clarion files exist
+ADD entrypoint.sh *.se *.clarion /srv/shiny-server/data
+RUN rm /srv/shiny-server/data/entrypoint.sh
 
 ADD entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod +x /usr/bin/entrypoint.sh
