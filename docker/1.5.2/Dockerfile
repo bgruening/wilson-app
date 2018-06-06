@@ -48,6 +48,11 @@ rm -rf /srv/shiny-server/tmp
 RUN rm -rf /srv/shiny-server/data && \
 mkdir /srv/shiny-server/data
 
+#Install webshot/phantomjs to permit download of interactive plots
+RUN Rscript -e 'install.packages("webshot", repos="http://cran.wustl.edu")'
+RUN Rscript -e 'webshot::install_phantomjs()'
+RUN cp /root/bin/phantomjs /usr/local/bin
+
 EXPOSE 3838
 
 #check current directory for the presence of clarion input files (*.se, *.clarion) -> include in container
