@@ -52,7 +52,7 @@ wilson_log_upload <- TRUE
 # WIlsON application logic
 #
 if (wilson_logging) options(shiny.trace = TRUE)
-if (wilson_enable_reactive_event_logging) options(shiny.reactlog=TRUE)
+if (wilson_enable_reactive_event_logging) options(shiny.reactlog = TRUE)
 if (wilson_enable_auto_reload) {
   options(shiny.autoreload = TRUE)
 	options(shiny.autoreload.pattern = wilson_auto_reload_pattern)
@@ -62,15 +62,15 @@ options(shiny.maxRequestSize = wilson_max_upload_size * 1024^2)
 
 # Redirect stdout to stderr when running on server. All output will end up in the log file
 if (wilson_redirect_stdout & !interactive() ) {
-	sink(stderr(), type="output")
+	sink(stderr(), type = "output")
 }
 
 # Define the UI
 ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboardSidebar(disable = TRUE),
                     body = dashboardBody(
                       useShinyjs(),
-                      tags$style(type="text/css", "body {padding-top: 60px;}"),
-                      tags$style(type="text/css",
+                      tags$style(type = "text/css", "body {padding-top: 60px;}"),
+                      tags$style(type = "text/css",
                                  "pre[id*='filter'] {font-size: 10px;}
                                   pre[id*='log'] {height: 200px; font-size: 10px}"),
                       tags$head(tags$link(rel = "icon", type = "image/png", href = "wilson_icon.png"),
@@ -447,7 +447,7 @@ server <- function(session, input, output) {
   message("Session: ", session$token)
   
   # logging
-  if(!dir.exists("logs")) {
+  if (!dir.exists("logs")) {
     dir.create("logs")
   }
   
@@ -544,7 +544,7 @@ server <- function(session, input, output) {
     
     file <- try(parser(file_path()$path))
     
-    if(!isTruthy(file)) {
+    if (!isTruthy(file)) {
       error(logger, paste("Couldn't parse", file_path()$name, file))
       showNotification(
                       id = "parsing-error",
@@ -563,39 +563,9 @@ server <- function(session, input, output) {
     shiny::req(file)
   })
   
-  # fetch delimiter
-  delimiter <- reactive({
-    header <- parsed()$header
-    
-    if(!is.element("delimiter", names(header)) || nchar(header$delimiter) < 1) {
-      "|"
-    } else {
-      header$delimiter
-    }
-  })
-  
-  # prepare metadata
-  # set columns if not existing
-  needed_cols <- c("key", "factor1", "level", "label", "sub_label")
-  metadata <- reactive({
-    col_names <- names(parsed()$metadata)
-    cols_to_add <- setdiff(needed_cols, col_names)
-    
-    if (length(cols_to_add) == 0) {
-      return(parsed()$metadata)
-    } else {
-      copy <- copy(parsed()$metadata)
-      
-      # add columns
-      copy[, (cols_to_add) := ""]
-      
-      return(copy)      
-    }
-  })
-  
   # featureSelection --------------------------------------------------------
-  fs <- callModule(featureSelector, "featureSelector", data = reactive(parsed()$data), feature.grouping = reactive(metadata()[, c("key", "level")]), step = 100, delimiter = delimiter)
-  fsh <- callModule(featureSelector, "featureSelector_h", data = reactive(fs()$data), feature.grouping = reactive(metadata()[, c("key", "level")]), selection.default = "none", delimiter = delimiter)
+  fs <- callModule(featureSelector, "featureSelector", clarion = parsed)
+  fsh <- callModule(featureSelector, "featureSelector_h", clarion = reactive(fs()$object), selection.default = "none")
   
   # show filter selection
   text <- reactive(paste(fs()$filter, collapse = "\n"))
@@ -606,7 +576,7 @@ server <- function(session, input, output) {
   
   # enable/ disable tabs
   observe({
-    if(isTruthy(fs()$data)) {
+    if (isTruthy(fs()$object)) {
       runjs(
         "$('#top-menu a:contains(\"Geneview\")').removeClass('disabled').parent().removeClass('disabled');
          $('#top-menu a:contains(\"Data Reduction\")').removeClass('disabled').parent().removeClass('disabled');
@@ -624,28 +594,8 @@ server <- function(session, input, output) {
   })
   
   # geneviewer --------------------------------------------------------------
-  # prepare geneview data
-  prep_geneview_data <- shiny::reactive({
-    # metadata contains type column
-    if (is.element("type", names(metadata()))) {
-      unique_id <- metadata()[type == "unique_id"]$key
-      name <- metadata()[type == "name"]$key
-      # if name empty use unique_id
-      name <- ifelse(length(name) == 0, unique_id, name)
-    } else {
-      unique_id <- name <- metadata()[level == "feature"]$key[1]
-    }
-    
-    # reorder data columns to match geneview notation
-    data_cols <- names(fs()$data)
-    data_cols <- data_cols[-which(data_cols %in% c(unique_id, name))]
-    data_cols <- append(data_cols, c(unique_id, name), after = 0)
-    
-    fs()$data[, data_cols, with = FALSE]
-  })
-  
-  gene_static <- callModule(geneView, "geneviewer_static", data = prep_geneview_data, metadata = reactive(metadata()[, c("key", "factor1", "level")]), level = reactive(metadata()[level != "feature"][["level"]]), plot.method = "static", custom.label = reactive(fs()$data), width = reactive(input$width_geneviewer_static), height = reactive(input$height_geneviewer_static), scale = reactive(input$scale_geneviewer_static))
-  gene_interactive <- callModule(geneView, "geneviewer_interactive", data = prep_geneview_data, metadata = reactive(metadata()[, c("key", "factor1", "level")]), level = reactive(metadata()[level != "feature"][["level"]]), plot.method = "interactive", custom.label = reactive(fs()$data), width = reactive(input$width_geneviewer_interactive), height = reactive(input$height_geneviewer_interactive), scale = reactive(input$scale_geneviewer_interactive))
+  gene_static <- callModule(geneView, "geneviewer_static", clarion = reactive(fs()$object), plot.method = "static", width = reactive(input$width_geneviewer_static), height = reactive(input$height_geneviewer_static), scale = reactive(input$scale_geneviewer_static))
+  gene_interactive <- callModule(geneView, "geneviewer_interactive", clarion = reactive(fs()$object), plot.method = "interactive", width = reactive(input$width_geneviewer_interactive), height = reactive(input$height_geneviewer_interactive), scale = reactive(input$scale_geneviewer_interactive))
   
   output$geneviewer_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     gene_static()
@@ -657,7 +607,7 @@ server <- function(session, input, output) {
   
   # data reduction ----------------------------------------------------------
   # pca
-  pca <- callModule(pca, "pca", data = reactive(fs()$data), types = reactive(metadata()[level != "feature", c("key", "level", "label", "sub_label")]), level = reactive(metadata()[level != "feature"][["level"]]), width = reactive(input$width_pca), height = reactive(input$height_pca), scale = reactive(input$scale_pca))
+  pca <- callModule(pca, "pca", clarion = reactive(fs()$object), width = reactive(input$width_pca), height = reactive(input$height_pca), scale = reactive(input$scale_pca))
   
   output$pca_data_tabs <- renderUI({
     tabs <- lapply(names(pca()), function(name) {
@@ -670,8 +620,8 @@ server <- function(session, input, output) {
   })
   
   observe({
-    if(input$pca_tabs == "Data" & !is.null(pca())){
-      for(name in names(pca())) {
+    if (input$pca_tabs == "Data" & !is.null(pca())) {
+      for (name in names(pca())) {
         #local so each item get's own id, else tables will be overwritten
         local({
           local_name <- name
@@ -684,7 +634,7 @@ server <- function(session, input, output) {
   })
   
   # global clustering heatmap
-  glob_cor_table <- callModule(global_cor_heatmap, "glob_cor_heat", data = reactive(fs()$data), types = reactive(metadata()[level != "feature", c("key", "level", "label", "sub_label")]), width = reactive(input$width_global_cor_heatmap), height = reactive(input$height_global_cor_heatmap), scale = reactive(input$scale_global_cor_heatmap))
+  glob_cor_table <- callModule(global_cor_heatmap, "glob_cor_heat", clarion = reactive(fs()$object), width = reactive(input$width_global_cor_heatmap), height = reactive(input$height_global_cor_heatmap), scale = reactive(input$scale_global_cor_heatmap))
   
   output$glob_cor_heat_data <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     glob_cor_table()
@@ -692,12 +642,12 @@ server <- function(session, input, output) {
   
   # scatterplot -------------------------------------------------------------
   ## static
-  marker_simple_static <- callModule(marker, "marker_simple_scatter_static", highlight.labels = reactive(fsh()$data))
-  marker_duo_static <- callModule(marker, "marker_duoscatter_static", highlight.labels = reactive(fsh()$data))
+  marker_simple_static <- callModule(marker, "marker_simple_scatter_static", clarion = reactive(fsh()$object))
+  marker_duo_static <- callModule(marker, "marker_duoscatter_static", clarion = reactive(fsh()$object))
   
-  scatter_static <- callModule(scatterPlot, "simple_scatter_static", data = reactive(fs()$data), types = reactive(metadata()[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_simple_static, width = reactive(input$width_simple_scatter_static), height = reactive(input$height_simple_scatter_static), scale = reactive(input$scale_simple_scatter_static))
-  duo_static_1 <- callModule(scatterPlot, "duoscatter_static_1", data = reactive(fs()$data), types = reactive(metadata()[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static), scale = reactive(input$scale_duoscatter_static))
-  duo_static_2 <- callModule(scatterPlot, "duoscatter_static_2", data = reactive(fs()$data), types = reactive(metadata()[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static), scale = reactive(input$scale_duoscatter_static))
+  scatter_static <- callModule(scatterPlot, "simple_scatter_static", clarion = reactive(fs()$object), markerOutput = marker_simple_static, width = reactive(input$width_simple_scatter_static), height = reactive(input$height_simple_scatter_static), scale = reactive(input$scale_simple_scatter_static))
+  duo_static_1 <- callModule(scatterPlot, "duoscatter_static_1", clarion = reactive(fs()$object), markerOutput = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static), scale = reactive(input$scale_duoscatter_static))
+  duo_static_2 <- callModule(scatterPlot, "duoscatter_static_2", clarion = reactive(fs()$object), markerOutput = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static), scale = reactive(input$scale_duoscatter_static))
   
   output$simple_scatter_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     scatter_static()
@@ -710,12 +660,12 @@ server <- function(session, input, output) {
   })
   
   ## interactive
-  marker_simple_interactive <- callModule(marker, "marker_simple_scatter_interactive", highlight.labels = reactive(fsh()$data))
-  marker_duo_interactive <- callModule(marker, "marker_duoscatter_interactive", highlight.labels = reactive(fsh()$data))
+  marker_simple_interactive <- callModule(marker, "marker_simple_scatter_interactive", clarion = reactive(fs()$object))
+  marker_duo_interactive <- callModule(marker, "marker_duoscatter_interactive", clarion = reactive(fs()$object))
   
-  scatter_interactive <- callModule(scatterPlot, "simple_scatter_interactive", data = reactive(fs()$data), types = reactive(metadata()[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_simple_interactive, plot.method = "interactive", width = reactive(input$width_simple_scatter_interactive), height = reactive(input$height_simple_scatter_interactive), scale = reactive(input$scale_simple_scatter_interactive))
-  duo_interactive_1 <- callModule(scatterPlot, "duoscatter_interactive_1", data = reactive(fs()$data), types = reactive(metadata()[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
-  duo_interactive_2 <- callModule(scatterPlot, "duoscatter_interactive_2", data = reactive(fs()$data), types = reactive(metadata()[level != "feature", c("key", "level", "label", "sub_label")]), features = reactive(fsh()$data), markerReac = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
+  scatter_interactive <- callModule(scatterPlot, "simple_scatter_interactive", clarion = reactive(fs()$object), markerOutput = marker_simple_interactive, plot.method = "interactive", width = reactive(input$width_simple_scatter_interactive), height = reactive(input$height_simple_scatter_interactive), scale = reactive(input$scale_simple_scatter_interactive))
+  duo_interactive_1 <- callModule(scatterPlot, "duoscatter_interactive_1", clarion = reactive(fs()$object), markerOutput = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
+  duo_interactive_2 <- callModule(scatterPlot, "duoscatter_interactive_2", clarion = reactive(fs()$object), markerOutput = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
   
   output$simple_scatter_interactive_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     scatter_interactive()
@@ -729,14 +679,14 @@ server <- function(session, input, output) {
   
   # heatmap -----------------------------------------------------------------
   ## static
-  heatmap_static_table <- callModule(heatmap, "heatmap_static", data = reactive(fs()$data), types = reactive(metadata()[level != "feature", c("key", "level", "label", "sub_label")]), plot.method = "static", custom.row.label = reactive(fs()$data), width = reactive(input$width_heatmap_static), height = reactive(input$height_heatmap_static), scale = reactive(input$scale_heatmap_static))
+  heatmap_static_table <- callModule(heatmap, "heatmap_static", clarion = reactive(fs()$object), plot.method = "static", width = reactive(input$width_heatmap_static), height = reactive(input$height_heatmap_static), scale = reactive(input$scale_heatmap_static))
   
   output$heatmap_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     heatmap_static_table()
   })
   
   ## interactive
-  heatmap_interactive_table <- callModule(heatmap, "heatmap_interactive", data = reactive(fs()$data), types = reactive(metadata()[level != "feature", c("key", "level", "label", "sub_label")]), plot.method = "interactive", custom.row.label = reactive(fs()$data), width = reactive(input$width_heatmap_interactive), height = reactive(input$height_heatmap_interactive), scale = reactive(input$scale_heatmap_interactive))
+  heatmap_interactive_table <- callModule(heatmap, "heatmap_interactive", clarion = reactive(fs()$object), plot.method = "interactive", width = reactive(input$width_heatmap_interactive), height = reactive(input$height_heatmap_interactive), scale = reactive(input$scale_heatmap_interactive))
   
   output$heatmap_interactive_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     heatmap_interactive_table()
