@@ -10,6 +10,10 @@ library(shinyBS)
 library(data.table)
 library(htmltools)
 
+# versions
+wilson_app_version <- "2.0.0"
+wilson_package_version <- as.character(packageVersion("wilson"))
+
 #
 # UI options
 #
@@ -65,6 +69,10 @@ if (wilson_redirect_stdout & !interactive() ) {
 	sink(stderr(), type = "output")
 }
 
+# create version info
+version_info <- paste0("wilson app: ", wilson_app_version, "\n",
+                       "wilson package: ", wilson_package_version)
+
 # Define the UI
 ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboardSidebar(disable = TRUE),
                     body = dashboardBody(
@@ -93,7 +101,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                        }'))
                                 ),
                       titlePanel(title = "", windowTitle = "WIlsON"),
-                      navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;")), theme = shinytheme("sandstone"), position = "fixed-top", id = "top-menu",
+                      navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;", title = version_info)), theme = shinytheme("sandstone"), position = "fixed-top", id = "top-menu",
                                  # introduction ------------------------------------------------------------
                                  tabPanel(
                                     title = "Introduction",
