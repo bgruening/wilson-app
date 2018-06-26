@@ -504,6 +504,8 @@ server <- function(session, input, output) {
     external <- sapply(list.files(path = "external_data/", pattern = "\\.se|\\.clarion"), function(x){ paste0("external_data/", x)})
 
     if (length(external) > 0) {
+      # omit duplicated names from load
+      load <- load[setdiff(names(load), names(external))]
       # merge file lists
       load <- c(load, external)
       # sort by name
