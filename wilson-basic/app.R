@@ -506,6 +506,21 @@ server <- function(session, input, output) {
   # Use all .se and .clarion files specified in data/
   load <- sapply(list.files(path = "data/", pattern = "\\.se|\\.clarion"), function(x){ paste0("data/", x)})
   
+  # check for additional data
+  if (dir.exists("external_data/")) {
+    # use all .se and .clarion files specified in external_data/
+    external <- sapply(list.files(path = "external_data/", pattern = "\\.se|\\.clarion"), function(x){ paste0("external_data/", x)})
+
+    if (length(external) > 0) {
+      # omit duplicated names from load
+      load <- load[setdiff(names(load), names(external))]
+      # merge file lists
+      load <- c(load, external)
+      # sort by name
+      load <- load[order(names(load))]
+    }
+  }
+  
   output$fileLoader <- renderUI({
     shiny::req(input$data_origin)
     
