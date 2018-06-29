@@ -668,9 +668,9 @@ server <- function(session, input, output) {
   marker_simple_static <- callModule(marker, "marker_simple_scatter_static", clarion = reactive(fsh()$object))
   marker_duo_static <- callModule(marker, "marker_duoscatter_static", clarion = reactive(fsh()$object))
   
-  scatter_static <- callModule(scatterPlot, "simple_scatter_static", clarion = reactive(fs()$object), markerOutput = marker_simple_static, width = reactive(input$width_simple_scatter_static), height = reactive(input$height_simple_scatter_static), scale = reactive(input$scale_simple_scatter_static))
-  duo_static_1 <- callModule(scatterPlot, "duoscatter_static_1", clarion = reactive(fs()$object), markerOutput = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static), scale = reactive(input$scale_duoscatter_static))
-  duo_static_2 <- callModule(scatterPlot, "duoscatter_static_2", clarion = reactive(fs()$object), markerOutput = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static), scale = reactive(input$scale_duoscatter_static))
+  scatter_static <- callModule(scatterPlot, "simple_scatter_static", clarion = reactive(fs()$object), marker.output = marker_simple_static, width = reactive(input$width_simple_scatter_static), height = reactive(input$height_simple_scatter_static), scale = reactive(input$scale_simple_scatter_static))
+  duo_static_1 <- callModule(scatterPlot, "duoscatter_static_1", clarion = reactive(fs()$object), marker.output = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static), scale = reactive(input$scale_duoscatter_static))
+  duo_static_2 <- callModule(scatterPlot, "duoscatter_static_2", clarion = reactive(fs()$object), marker.output = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static), scale = reactive(input$scale_duoscatter_static))
   
   output$simple_scatter_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     scatter_static()
@@ -686,9 +686,9 @@ server <- function(session, input, output) {
   marker_simple_interactive <- callModule(marker, "marker_simple_scatter_interactive", clarion = reactive(fs()$object))
   marker_duo_interactive <- callModule(marker, "marker_duoscatter_interactive", clarion = reactive(fs()$object))
   
-  scatter_interactive <- callModule(scatterPlot, "simple_scatter_interactive", clarion = reactive(fs()$object), markerOutput = marker_simple_interactive, plot.method = "interactive", width = reactive(input$width_simple_scatter_interactive), height = reactive(input$height_simple_scatter_interactive), scale = reactive(input$scale_simple_scatter_interactive))
-  duo_interactive_1 <- callModule(scatterPlot, "duoscatter_interactive_1", clarion = reactive(fs()$object), markerOutput = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
-  duo_interactive_2 <- callModule(scatterPlot, "duoscatter_interactive_2", clarion = reactive(fs()$object), markerOutput = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
+  scatter_interactive <- callModule(scatterPlot, "simple_scatter_interactive", clarion = reactive(fs()$object), marker.output = marker_simple_interactive, plot.method = "interactive", width = reactive(input$width_simple_scatter_interactive), height = reactive(input$height_simple_scatter_interactive), scale = reactive(input$scale_simple_scatter_interactive))
+  duo_interactive_1 <- callModule(scatterPlot, "duoscatter_interactive_1", clarion = reactive(fs()$object), marker.output = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
+  duo_interactive_2 <- callModule(scatterPlot, "duoscatter_interactive_2", clarion = reactive(fs()$object), marker.output = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
   
   output$simple_scatter_interactive_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     scatter_interactive()
