@@ -1,21 +1,21 @@
 !format=SummarizedExperiment
 !version=1.0
 !experiment_id=123456
-#key	factor1	level	type	label	sub_label
-#Feature	gene id	feature	unique_id	unique id	
-#Gene		feature	category	Gene name	
-#GeneID		feature	category	Ensembl ID	
-#Type		feature	category	feature type	
-#Chr		feature	category	Chr	
-#Start		feature	category	start	
-#Stop		feature	category	stop	
-#Strand		feature	category	strand	
-#P-val control		contrast	probability	control	P-val
-#Q-val control		contrast	probability	control	Q-val
-#P-val all		contrast	probability	all_PAH	P-val
-#Q-val all		contrast	probability	all_PAH	Q-val
-#Higher in		feature	category	higher_in	
-#with Q-val		contrast	probability	direction	Q-val
+#key	level	type	label	sub_label
+#Feature	feature	unique_id	unique id	
+#Gene	feature	category	Gene name	
+#GeneID	feature	category	Ensembl ID	
+#Type	feature	category	feature type	
+#Chr	feature	category	Chr	
+#Start	feature	category	start	
+#Stop	feature	category	stop	
+#Strand	feature	category	strand	
+#P-val control	contrast	probability	control	P-val
+#Q-val control	contrast	probability	control	Q-val
+#P-val all	contrast	probability	all_PAH	P-val
+#Q-val all	contrast	probability	all_PAH	Q-val
+#Higher in	feature	category	higher_in	
+#with Q-val	contrast	probability	direction	Q-val
 Feature	Gene	GeneID	Type	Chr	Start	Stop	Strand	P-val control	Q-val control	P-val all	Q-val all	Higher in	with Q-val
 MXRA8-009-exon-2	MXRA8	ENSG00000162576.12	protein_coding	chr1	1289573	1289889	-	1	1	2.81E-06	0.004315	all	0.004315
 MXRA8-001-exon-6	MXRA8	ENSG00000162576.12	protein_coding	chr1	1289734	1289889	-	1	1	2.81E-06	0.008776	all	0.008776
