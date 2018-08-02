@@ -11,7 +11,7 @@ library(data.table)
 library(htmltools)
 
 # versions
-wilson_app_version <- "2.0.0"
+wilson_app_version <- "2.0.1"
 wilson_package_version <- as.character(packageVersion("wilson"))
 
 #
@@ -108,7 +108,7 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                     column(
                                       width = 7,
                                       offset = 2,
-                                      includeMarkdown("introduction/intro.md")
+                                      includeMarkdown(file.path("introduction", "intro.md"))
                                     )
                                   ),
                                  # feature Selection -------------------------------------------------------
@@ -459,7 +459,7 @@ server <- function(session, input, output) {
     dir.create("logs")
   }
   
-  logger <- create.logger(logfile = paste0("logs/", session$token, ".log"), level = "INFO")
+  logger <- create.logger(logfile = file.path("logs", paste0(session$token, ".log")), level = "INFO")
   set_logger(logger, token = session$token)
   
   # delete logger on session end
@@ -468,7 +468,7 @@ server <- function(session, input, output) {
   })
   
   # read log
-  log <- reactiveFileReader(intervalMillis = 100, session = session, filePath = paste0("logs/", session$token, ".log"), readFunc = readLines)
+  log <- reactiveFileReader(intervalMillis = 100, session = session, filePath = file.path("logs", paste0(session$token, ".log")), readFunc = readLines)
   
   # show log
   prepare_log <- reactive(paste(log(), collapse = "\n"))
@@ -503,13 +503,13 @@ server <- function(session, input, output) {
   #
   # Data options
   #
-  # Use all .se and .clarion files specified in data/
-  load <- sapply(list.files(path = "data/", pattern = "\\.se|\\.clarion"), function(x){ paste0("data/", x)})
+  # Use all .se and .clarion files specified in data
+  load <- sapply(list.files(path = "data", pattern = "\\.se|\\.clarion"), function(x){ file.path("data", x)})
   
   # check for additional data
-  if (dir.exists("external_data/")) {
+  if (dir.exists("external_data")) {
     # use all .se and .clarion files specified in external_data/
-    external <- sapply(list.files(path = "external_data/", pattern = "\\.se|\\.clarion"), function(x){ paste0("external_data/", x)})
+    external <- sapply(list.files(path = "external_data", pattern = "\\.se|\\.clarion"), function(x){ file.path("external_data", x)})
 
     if (length(external) > 0) {
       # omit duplicated names from load
