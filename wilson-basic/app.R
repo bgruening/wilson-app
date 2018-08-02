@@ -504,12 +504,12 @@ server <- function(session, input, output) {
   # Data options
   #
   # Use all .se and .clarion files specified in data
-  load <- sapply(list.files(path = "data", pattern = "\\.se|\\.clarion"), function(x){ file.path("data", x)})
+  load <- sapply(list.files(path = "data", pattern = "\\.se$|\\.clarion$"), function(x){ file.path("data", x)})
   
   # check for additional data
   if (dir.exists("external_data")) {
-    # use all .se and .clarion files specified in external_data/
-    external <- sapply(list.files(path = "external_data", pattern = "\\.se|\\.clarion"), function(x){ file.path("external_data", x)})
+    # use all .se and .clarion files specified in external_data
+    external <- sapply(list.files(path = "external_data", pattern = "\\.se$|\\.clarion$"), function(x){ file.path("external_data", x)})
 
     if (length(external) > 0) {
       # omit duplicated names from load
