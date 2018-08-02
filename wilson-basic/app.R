@@ -59,14 +59,14 @@ if (wilson_logging) options(shiny.trace = TRUE)
 if (wilson_enable_reactive_event_logging) options(shiny.reactlog = TRUE)
 if (wilson_enable_auto_reload) {
   options(shiny.autoreload = TRUE)
-	options(shiny.autoreload.pattern = wilson_auto_reload_pattern)
-	options(shiny.autoreload.interval = wilson_auto_reload_interval)
+  options(shiny.autoreload.pattern = wilson_auto_reload_pattern)
+  options(shiny.autoreload.interval = wilson_auto_reload_interval)
 }
 options(shiny.maxRequestSize = wilson_max_upload_size * 1024^2)
 
 # Redirect stdout to stderr when running on server. All output will end up in the log file
 if (wilson_redirect_stdout & !interactive() ) {
-	sink(stderr(), type = "output")
+  sink(stderr(), type = "output")
 }
 
 # create version info
@@ -93,24 +93,25 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                 ),
                                 # custom dropdown width
                                 tags$style(
-                                  HTML('#fileLoader + div>.selectize-dropdown{
+                                  HTML("#fileLoader + div>.selectize-dropdown{
                                           width: 300px !important;
                                         }
                                        #fileLoader + div>.selectize-input{
                                           overflow: auto;
-                                       }'))
-                                ),
+                                       }")
+                                )
+                      ),
                       titlePanel(title = "", windowTitle = "WIlsON"),
                       navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;", title = version_info)), theme = shinytheme("sandstone"), position = "fixed-top", id = "top-menu",
                                  # introduction ------------------------------------------------------------
                                  tabPanel(
-                                    title = "Introduction",
-                                    column(
-                                      width = 7,
-                                      offset = 2,
-                                      includeMarkdown(file.path("introduction", "intro.md"))
-                                    )
-                                  ),
+                                   title = "Introduction",
+                                   column(
+                                     width = 7,
+                                     offset = 2,
+                                     includeMarkdown(file.path("introduction", "intro.md"))
+                                   )
+                                 ),
                                  # feature Selection -------------------------------------------------------
                                  tabPanel(title = "Feature Selection",
                                           sidebarLayout(
@@ -188,13 +189,11 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                                tabPanel(title = "Data",
                                                                         dataTableOutput("geneviewer_interactive_table")
                                                                )
-                                                               
                                                         )
                                               )
                                             )
                                    )
-                                 )
-                                 ,
+                                 ),
                                  # data reduction ----------------------------------------------------------
                                  navbarMenu(
                                    title = "Data Reduction",
@@ -445,7 +444,6 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                             )
                                    )
                                  )
-                                 
                       )
                     )
 )
@@ -510,7 +508,7 @@ server <- function(session, input, output) {
   if (dir.exists("external_data")) {
     # use all .se and .clarion files specified in external_data
     external <- sapply(list.files(path = "external_data", pattern = "\\.se$|\\.clarion$"), function(x){ file.path("external_data", x)})
-
+    
     if (length(external) > 0) {
       # omit duplicated names from load
       load <- load[setdiff(names(load), names(external))]
@@ -570,12 +568,12 @@ server <- function(session, input, output) {
     if (!isTruthy(file)) {
       error(logger, paste("Couldn't parse", file_path()$name, file))
       showNotification(
-                      id = "parsing-error",
-                      paste0("Error parsing file ", file_path()$name, "."),
-                      file,
-                      duration = NULL,
-                      type = "error"
-                      )
+        id = "parsing-error",
+        paste0("Error parsing file ", file_path()$name, "."),
+        file,
+        duration = NULL,
+        type = "error"
+      )
       
       shinyjs::addClass(selector = "#shiny-notification-parsing-error", class = "notification-position-center")
     } else {
