@@ -462,7 +462,7 @@ server <- function(session, input, output) {
   
   # delete logger on session end
   onSessionEnded(function() {
-    remove(list = paste0("logger", session$token), envir = wilson:::wilson.globals)
+    set_logger(NULL, token = session$token)
   })
   
   # read log
