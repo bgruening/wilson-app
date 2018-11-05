@@ -47,6 +47,7 @@ wilson_auto_reload_pattern <- ".*\\.(r|se|R|clarion)$"
 wilson_auto_reload_interval <- 3000
 
 # Sets the max file upload size in mb
+# This value only changes upload size of the shiny-server preceeding services (e.g. reverse proxy) must be altered aswell.
 wilson_max_upload_size <- 100
 
 # Allow logging of uploaded files for debugging purposes
