@@ -83,7 +83,10 @@ sudo systemctl start shiny-server
 <a name="studio"/></a>
 ## Run app in RStudio
 To run this app in your local RStudio you have to install the **WIlsON R package** and it's dependencies.
-(NOTE: in case you use MS based OS, [Rtools](https://cran.r-project.org/bin/windows/Rtools/) is needed for downloading plots)
+(NOTE: in case you use MS based OS, [Rtools](https://cran.r-project.org/bin/windows/Rtools/) is needed for downloading plots. Make sure to add Rtools to Systempath during installation.)
+
+![rtools install](images/rtools_install.png)
+
 ```
 install.packages("devtools")
 devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3", auth_token = "")
