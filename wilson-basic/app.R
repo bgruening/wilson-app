@@ -11,7 +11,7 @@ if (!require(data.table)) install.packages("data.table"); library(data.table)
 if (!require(htmltools)) install.packages("htmltools"); library(htmltools)
 
 # versions
-wilson_app_version <- "2.0.1"
+wilson_app_version <- "2.0.2"
 wilson_package_version <- as.character(packageVersion("wilson"))
 
 #
@@ -682,8 +682,8 @@ server <- function(session, input, output) {
   })
   
   ## interactive
-  marker_simple_interactive <- callModule(marker, "marker_simple_scatter_interactive", clarion = reactive(fs()$object))
-  marker_duo_interactive <- callModule(marker, "marker_duoscatter_interactive", clarion = reactive(fs()$object))
+  marker_simple_interactive <- callModule(marker, "marker_simple_scatter_interactive", clarion = reactive(fsh()$object))
+  marker_duo_interactive <- callModule(marker, "marker_duoscatter_interactive", clarion = reactive(fsh()$object))
   
   scatter_interactive <- callModule(scatterPlot, "simple_scatter_interactive", clarion = reactive(fs()$object), marker.output = marker_simple_interactive, plot.method = "interactive", width = reactive(input$width_simple_scatter_interactive), height = reactive(input$height_simple_scatter_interactive), scale = reactive(input$scale_simple_scatter_interactive))
   duo_interactive_1 <- callModule(scatterPlot, "duoscatter_interactive_1", clarion = reactive(fs()$object), marker.output = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
