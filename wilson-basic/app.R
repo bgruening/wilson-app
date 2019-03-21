@@ -1,14 +1,16 @@
-if (!require(shiny)) install.packages("shiny"); library(shiny)
-if (!require(DT)) install.packages("DT"); library(DT)
-if (!require(shinydashboard)) install.packages("shinydashboard"); library(shinydashboard)
-if (!require(shinythemes)) install.packages("shinythemes"); library(shinythemes)
-if (!require(colourpicker)) install.packages("colourpicker"); library(colourpicker)
-if (!require(shinyjs)) install.packages("shinyjs"); library(shinyjs)
-if (!require(wilson)) install.packages("wilson"); library(wilson)
-if (!require(log4r)) install.packages("log4r"); library(log4r)
-if (!require(shinyBS)) install.packages("shinyBS"); library(shinyBS)
-if (!require(data.table)) install.packages("data.table"); library(data.table)
-if (!require(htmltools)) install.packages("htmltools"); library(htmltools)
+repo <- "https://cloud.r-project.org/"
+
+if (!require(shiny)) install.packages("shiny", repos = repo); library(shiny)
+if (!require(DT)) install.packages("DT", repos = repo); library(DT)
+if (!require(shinydashboard)) install.packages("shinydashboard", repos = repo); library(shinydashboard)
+if (!require(shinythemes)) install.packages("shinythemes", repos = repo); library(shinythemes)
+if (!require(colourpicker)) install.packages("colourpicker", repos = repo); library(colourpicker)
+if (!require(shinyjs)) install.packages("shinyjs", repos = repo); library(shinyjs)
+if (!require(wilson)) install.packages("wilson", repos = repo); library(wilson)
+if (!require(log4r)) install.packages("log4r", repos = repo); library(log4r)
+if (!require(shinyBS)) install.packages("shinyBS", repos = repo); library(shinyBS)
+if (!require(data.table)) install.packages("data.table", repos = repo); library(data.table)
+if (!require(htmltools)) install.packages("htmltools", repos = repo); library(htmltools)
 
 # versions
 wilson_app_version <- "2.0.2"
