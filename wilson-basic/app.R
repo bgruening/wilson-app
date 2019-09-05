@@ -1,34 +1,37 @@
-repo <- "https://cloud.r-project.org/"
+#
+# WIlsON: Webbased Interactive Omics visualizatioN
+# Basic App
+#
 
-if (!require(shiny)) install.packages("shiny", repos = repo); library(shiny)
-if (!require(DT)) install.packages("DT", repos = repo); library(DT)
-if (!require(shinydashboard)) install.packages("shinydashboard", repos = repo); library(shinydashboard)
-if (!require(shinythemes)) install.packages("shinythemes", repos = repo); library(shinythemes)
-if (!require(colourpicker)) install.packages("colourpicker", repos = repo); library(colourpicker)
-if (!require(shinyjs)) install.packages("shinyjs", repos = repo); library(shinyjs)
-if (!require(wilson)) install.packages("wilson", repos = repo); library(wilson)
-if (!require(log4r)) install.packages("log4r", repos = repo); library(log4r)
-if (!require(shinyBS)) install.packages("shinyBS", repos = repo); library(shinyBS)
-if (!require(data.table)) install.packages("data.table", repos = repo); library(data.table)
-if (!require(htmltools)) install.packages("htmltools", repos = repo); library(htmltools)
+# Dependency check
+if(!requireNamespace("wilson", quietly = TRUE)) { stop("The package wilson needs to be installed in order to use this app.")}
+if(!requireNamespace("shinydashboard", quietly = TRUE)) { stop("The package shinydashboard needs to be installed in order to use this app.")}
+if(!requireNamespace("shinythemes", quietly = TRUE)) { stop("The package shinythemes needs to be installed in order to use this app.")}
+if(!requireNamespace("shinyBS", quietly = TRUE)) { stop("The package shinyBS needs to be installed in order to use this app.")}
+if(!requireNamespace("htmltools", quietly = TRUE)) { stop("The package htmltools needs to be installed in order to use this app.")}
 
-# versions
-wilson_app_version <- "2.0.2"
+# Set versions
+wilson_app_version <- "WIlsON basic 2.1.0"
 wilson_package_version <- as.character(packageVersion("wilson"))
 
 #
 # UI options
 #
 # width of the side panel
-wilson_sidepanelwidth <- 2
+wilson_sidepanelwidth <- Sys.getenv("WILSON_SIDEPANELWIDTH", unset = 2)
 
 # width of the main panel
-wilson_mainpanelwidth <- 10
+wilson_mainpanelwidth <- Sys.getenv("WILSON_MAINPANELWIDTH", unset = 10)
+
+# Which page should the user land on - default is the Introdcution page
+wilson_landing_page <- Sys.getenv("WILSON_LANDING_PAGE", unset = "introduction")
+if(!wilson_landing_page %in% c("introduction", "feature_selection")) {
+  wilson_landing_page <- "introduction"
+}
 
 #
 # Server options
 #
-
 # Allow the server to print messages to the console
 wilson_logging <- FALSE
 
@@ -73,8 +76,18 @@ if (wilson_redirect_stdout & !interactive() ) {
 }
 
 # create version info
-version_info <- paste0("wilson app: ", wilson_app_version, "\n",
-                       "wilson package: ", wilson_package_version)
+version_info <- paste0("---- VERSIONS ----\n",
+                       "App: ", wilson_app_version, "\n",
+                       "Package: ", wilson_package_version)
+
+# Load packages
+library(shiny)
+library(shinydashboard)
+library(shinyjs)
+library(shinyBS)
+library(shinythemes)
+library(log4r)
+library(wilson)
 
 # Define the UI
 ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboardSidebar(disable = TRUE),
@@ -105,7 +118,11 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                 )
                       ),
                       titlePanel(title = "", windowTitle = "WIlsON"),
-                      navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;", title = version_info)), theme = shinytheme("sandstone"), position = "fixed-top", id = "top-menu",
+                      navbarPage(title = div(style = "margin-left: -15px; margin-top: -20px", img(src = "wilson_header.png", width = "auto", height = "63px", style = "margin-right: -15px;", title = version_info)),
+                                 theme = shinytheme("sandstone"),
+                                 position = "fixed-top",
+                                 id = "top-menu",
+                                 selected = wilson_landing_page,
                                  # introduction ------------------------------------------------------------
                                  tabPanel(
                                    title = "Introduction",
@@ -113,7 +130,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                      width = 7,
                                      offset = 2,
                                      includeMarkdown(file.path("introduction", "intro.md"))
-                                   )
+                                   ),
+                                   value = "introduction"
                                  ),
                                  # feature Selection -------------------------------------------------------
                                  tabPanel(title = "Feature Selection",
@@ -139,7 +157,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                              )
                                                       )
                                             )
-                                          )
+                                          ),
+                                          value = "feature_selection"
                                  ),
                                  # geneview ---------------------------------------------------------------
                                  navbarMenu(
@@ -168,7 +187,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                                )
                                                         )
                                               )
-                                            )
+                                            ),
+                                            value = "geneview_static"
                                    ),
                                    tabPanel(title = "interactive",
                                             sidebarLayout(
@@ -194,7 +214,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                                )
                                                         )
                                               )
-                                            )
+                                            ),
+                                            value = "geneview_interactive"
                                    )
                                  ),
                                  # data reduction ----------------------------------------------------------
@@ -224,7 +245,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                                )
                                                         )
                                               )
-                                            )
+                                            ),
+                                            value = "data_reduction_pca"
                                    ),
                                    tabPanel(title = "Global Correlation Heatmap",
                                             sidebarLayout(
@@ -250,7 +272,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                                )
                                                         )
                                               )
-                                            )
+                                            ),
+                                            value = "data_reduction_global_correlation_heatmap"
                                    )
                                  ),
                                  # scatterplot -------------------------------------------------------------
@@ -283,7 +306,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                         )
                                                  )
                                        )
-                                     )
+                                     ),
+                                     value = "scatterplot_static_simple"
                                    ),
                                    tabPanel(
                                      title = "Duoscatter",
@@ -321,7 +345,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                         )
                                                  )
                                        )
-                                     )
+                                     ),
+                                     value = "scatterplot_static_duoscatter"
                                    ),
                                    "Interactive",
                                    tabPanel(
@@ -350,7 +375,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                         )
                                                  )
                                        )
-                                     )
+                                     ),
+                                     value = "scatterplot_interactive_simple"
                                    ),
                                    tabPanel(
                                      title = "Duoscatter",
@@ -388,7 +414,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                         )
                                                  )
                                        )
-                                     )
+                                     ),
+                                     value = "scatterplot_interactive_duoscatter"
                                    )
                                  ),
                                  # heatmap -----------------------------------------------------------------
@@ -418,7 +445,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                                )
                                                         )
                                               )
-                                            )
+                                            ),
+                                            value = "heatmap_static"
                                    ),
                                    tabPanel(title = "Interactive",
                                             sidebarLayout(
@@ -444,7 +472,8 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
                                                                )
                                                         )
                                               )
-                                            )
+                                            ),
+                                            value = "heatmap_interactive"
                                    )
                                  )
                       )
@@ -454,27 +483,27 @@ ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboar
 server <- function(session, input, output) {
   # Session token
   message("Session: ", session$token)
-  
+
   # logging
   if (!dir.exists("logs")) {
     dir.create("logs")
   }
-  
+
   logger <- create.logger(logfile = file.path("logs", paste0(session$token, ".log")), level = "INFO")
   set_logger(logger, token = session$token)
-  
+
   # delete logger on session end
   onSessionEnded(function() {
     set_logger(NULL, token = session$token)
   })
-  
+
   # read log
   log <- reactiveFileReader(intervalMillis = 100, session = session, filePath = file.path("logs", paste0(session$token, ".log")), readFunc = readLines)
-  
+
   # show log
   prepare_log <- reactive(paste(log(), collapse = "\n"))
   output$filter_log <- output$geneviewer_static_log <- output$geneviewer_interactive_log <- output$pca_log <- output$global_cor_heatmap_log <- output$simple_scatter_static_log <- output$simple_scatter_interactive_log <- output$duoscatter_static_log <- output$duoscatter_interactive_log <- output$heatmap_static_log <- output$heatmap_interactive_log <- renderText(prepare_log())
-  
+
   observeEvent(ignoreNULL = FALSE, ignoreInit = TRUE, {
     input$filter_log_b
     input$geneviewer_static_log_b
@@ -500,18 +529,18 @@ server <- function(session, input, output) {
     toggle("heatmap_static_log")
     toggle("heatmap_interactive_log")
   })
-  
+
   #
   # Data options
   #
   # Use all .se and .clarion files specified in data
   load <- sapply(list.files(path = "data", pattern = "\\.se$|\\.clarion$"), function(x){ file.path("data", x)})
-  
+
   # check for additional data
   if (dir.exists("external_data")) {
     # use all .se and .clarion files specified in external_data
     external <- sapply(list.files(path = "external_data", pattern = "\\.se$|\\.clarion$"), function(x){ file.path("external_data", x)})
-    
+
     if (length(external) > 0) {
       # omit duplicated names from load
       load <- load[setdiff(names(load), names(external))]
@@ -521,17 +550,17 @@ server <- function(session, input, output) {
       load <- load[order(names(load))]
     }
   }
-  
+
   output$fileLoader <- renderUI({
     shiny::req(input$data_origin)
-    
+
     if (input$data_origin == "Examples") {
       return(selectizeInput(inputId = "fileLoader", label = "Select data set", choices = load, selected = input$fileLoader))
     } else if (input$data_origin == "Upload") {
       return(fileInput(inputId = "fileLoader2", label = "Upload clarion file", accept = c(".se", ".clarion")))
     }
   })
-  
+
   # last upload filepath; prevents loading of last upload
   last_upload <- reactiveVal(value = "")
   # returns filepath
@@ -540,34 +569,34 @@ server <- function(session, input, output) {
       return(TRUE)
     } else if (isTruthy(input$fileLoader2$datapath) && input$data_origin == "Upload" && input$fileLoader2$datapath != isolate(last_upload())) {
       last_upload(input$fileLoader2$datapath)
-      
+
       return(TRUE)
     }
   }, {
     if (input$data_origin == "Examples") {
       shiny::req(input$fileLoader)
-      
+
       return(list(path = input$fileLoader, name = input$fileLoader))
     } else if (input$data_origin == "Upload") {
       shiny::req(input$fileLoader2$datapath)
-      
+
       # copy for debugging
       if (wilson_log_upload) {
         # file name = session_date_filename
         date <- strftime(x = Sys.time(), format = "%Y%m%d-%H%M%S")
         file.copy(from = input$fileLoader2$datapath, to = file.path("logs", paste(session$token, date, input$fileLoader2$name, sep = "_")))
       }
-      
+
       return(list(path = input$fileLoader2$datapath, name = input$fileLoader2$name))
     }
   })
-  
+
   # Load and parse data
   parsed <- reactive({
     shiny::req(file_path())
-    
+
     file <- try(parser(file_path()$path))
-    
+
     if (!isTruthy(file)) {
       error(logger, paste("Couldn't parse", file_path()$name, file))
       showNotification(
@@ -577,27 +606,27 @@ server <- function(session, input, output) {
         duration = NULL,
         type = "error"
       )
-      
+
       shinyjs::addClass(selector = "#shiny-notification-parsing-error", class = "notification-position-center")
     } else {
       info(logger, paste("Parsing file", file_path()$name))
       removeNotification(id = "parsing-error")
     }
-    
+
     shiny::req(file)
   })
-  
+
   # featureSelection --------------------------------------------------------
   fs <- callModule(featureSelector, "featureSelector", clarion = parsed)
   fsh <- callModule(featureSelector, "featureSelector_h", clarion = reactive(fs()$object), selection.default = "none")
-  
+
   # show filter selection
   text <- reactive(paste(fs()$filter, collapse = "\n"))
   output$filter1 <- output$filter_geneviewer_static <- output$filter_geneviewer_interactive <- output$filter_pca <- output$filter_global_cor_heatmap <- output$filter_simple_scatter_static <- output$filter_simple_scatter_interactive <- output$filter_duoscatter_static <- output$filter_duoscatter_interactive <- output$filter_heatmap_static <- output$filter_heatmap_interactive <- renderText(text())
   # show filter highlight selection
   text_h <- reactive(paste(fsh()$filter, collapse = "\n"))
   output$filter_h1 <- output$filter_h_geneviewer_static <- output$filter_h_geneviewer_interactive <- output$filter_h_pca <- output$filter_h_global_cor_heatmap <- output$filter_h_simple_scatter_static <- output$filter_h_simple_scatter_interactive <- output$filter_h_duoscatter_static <- output$filter_h_duoscatter_interactive <- output$filter_h_heatmap_static <- output$filter_h_heatmap_interactive <- renderText(text_h())
-  
+
   # enable/ disable tabs
   observe({
     if (isTruthy(fs()$object)) {
@@ -616,23 +645,23 @@ server <- function(session, input, output) {
       )
     }
   })
-  
+
   # geneviewer --------------------------------------------------------------
   gene_static <- callModule(geneView, "geneviewer_static", clarion = reactive(fs()$object), plot.method = "static", width = reactive(input$width_geneviewer_static), height = reactive(input$height_geneviewer_static), scale = reactive(input$scale_geneviewer_static))
   gene_interactive <- callModule(geneView, "geneviewer_interactive", clarion = reactive(fs()$object), plot.method = "interactive", width = reactive(input$width_geneviewer_interactive), height = reactive(input$height_geneviewer_interactive), scale = reactive(input$scale_geneviewer_interactive))
-  
+
   output$geneviewer_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     gene_static()
   })
-  
+
   output$geneviewer_interactive_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     gene_interactive()
   })
-  
+
   # data reduction ----------------------------------------------------------
   # pca
   pca <- callModule(pca, "pca", clarion = reactive(fs()$object), width = reactive(input$width_pca), height = reactive(input$height_pca), scale = reactive(input$scale_pca))
-  
+
   output$pca_data_tabs <- renderUI({
     tabs <- lapply(names(pca()), function(name) {
       tabPanel(
@@ -642,7 +671,7 @@ server <- function(session, input, output) {
     })
     do.call(tabsetPanel, tabs)
   })
-  
+
   observe({
     if (input$pca_tabs == "Data" & !is.null(pca())) {
       for (name in names(pca())) {
@@ -656,23 +685,23 @@ server <- function(session, input, output) {
       }
     }
   })
-  
+
   # global clustering heatmap
   glob_cor_table <- callModule(global_cor_heatmap, "glob_cor_heat", clarion = reactive(fs()$object), width = reactive(input$width_global_cor_heatmap), height = reactive(input$height_global_cor_heatmap), scale = reactive(input$scale_global_cor_heatmap))
-  
+
   output$glob_cor_heat_data <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     glob_cor_table()
   })
-  
+
   # scatterplot -------------------------------------------------------------
   ## static
   marker_simple_static <- callModule(marker, "marker_simple_scatter_static", clarion = reactive(fsh()$object))
   marker_duo_static <- callModule(marker, "marker_duoscatter_static", clarion = reactive(fsh()$object))
-  
+
   scatter_static <- callModule(scatterPlot, "simple_scatter_static", clarion = reactive(fs()$object), marker.output = marker_simple_static, width = reactive(input$width_simple_scatter_static), height = reactive(input$height_simple_scatter_static), scale = reactive(input$scale_simple_scatter_static))
   duo_static_1 <- callModule(scatterPlot, "duoscatter_static_1", clarion = reactive(fs()$object), marker.output = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static), scale = reactive(input$scale_duoscatter_static))
   duo_static_2 <- callModule(scatterPlot, "duoscatter_static_2", clarion = reactive(fs()$object), marker.output = marker_duo_static, width = reactive(input$width_duoscatter_static), height = reactive(input$height_duoscatter_static), scale = reactive(input$scale_duoscatter_static))
-  
+
   output$simple_scatter_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     scatter_static()
   })
@@ -682,15 +711,15 @@ server <- function(session, input, output) {
   output$duoscatter_static_table_2 <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     duo_static_2()
   })
-  
+
   ## interactive
   marker_simple_interactive <- callModule(marker, "marker_simple_scatter_interactive", clarion = reactive(fsh()$object))
   marker_duo_interactive <- callModule(marker, "marker_duoscatter_interactive", clarion = reactive(fsh()$object))
-  
+
   scatter_interactive <- callModule(scatterPlot, "simple_scatter_interactive", clarion = reactive(fs()$object), marker.output = marker_simple_interactive, plot.method = "interactive", width = reactive(input$width_simple_scatter_interactive), height = reactive(input$height_simple_scatter_interactive), scale = reactive(input$scale_simple_scatter_interactive))
   duo_interactive_1 <- callModule(scatterPlot, "duoscatter_interactive_1", clarion = reactive(fs()$object), marker.output = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
   duo_interactive_2 <- callModule(scatterPlot, "duoscatter_interactive_2", clarion = reactive(fs()$object), marker.output = marker_duo_interactive, plot.method = "interactive", width = reactive(input$width_duoscatter_interactive), height = reactive(input$height_duoscatter_interactive), scale = reactive(input$scale_duoscatter_interactive))
-  
+
   output$simple_scatter_interactive_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     scatter_interactive()
   })
@@ -700,18 +729,18 @@ server <- function(session, input, output) {
   output$duoscatter_interactive_table_2 <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     duo_interactive_2()
   })
-  
+
   # heatmap -----------------------------------------------------------------
   ## static
   heatmap_static_table <- callModule(heatmap, "heatmap_static", clarion = reactive(fs()$object), plot.method = "static", width = reactive(input$width_heatmap_static), height = reactive(input$height_heatmap_static), scale = reactive(input$scale_heatmap_static))
-  
+
   output$heatmap_static_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     heatmap_static_table()
   })
-  
+
   ## interactive
   heatmap_interactive_table <- callModule(heatmap, "heatmap_interactive", clarion = reactive(fs()$object), plot.method = "interactive", width = reactive(input$width_heatmap_interactive), height = reactive(input$height_heatmap_interactive), scale = reactive(input$scale_heatmap_interactive))
-  
+
   output$heatmap_interactive_table <- renderDataTable(options = list(pageLength = 10, scrollX = TRUE), {
     heatmap_interactive_table()
   })
