@@ -1,29 +1,27 @@
-repo <- "https://cloud.r-project.org/"
+#
+# WIlsON: Webbased Interactive Omics visualizatioN
+# Basic App
+#
 
-if (!require(shiny)) install.packages("shiny", repos = repo); library(shiny)
-if (!require(DT)) install.packages("DT", repos = repo); library(DT)
-if (!require(shinydashboard)) install.packages("shinydashboard", repos = repo); library(shinydashboard)
-if (!require(shinythemes)) install.packages("shinythemes", repos = repo); library(shinythemes)
-if (!require(colourpicker)) install.packages("colourpicker", repos = repo); library(colourpicker)
-if (!require(shinyjs)) install.packages("shinyjs", repos = repo); library(shinyjs)
-if (!require(wilson)) install.packages("wilson", repos = repo); library(wilson)
-if (!require(log4r)) install.packages("log4r", repos = repo); library(log4r)
-if (!require(shinyBS)) install.packages("shinyBS", repos = repo); library(shinyBS)
-if (!require(data.table)) install.packages("data.table", repos = repo); library(data.table)
-if (!require(htmltools)) install.packages("htmltools", repos = repo); library(htmltools)
+# Dependency check
+if(!requireNamespace("wilson", quietly = TRUE)) { stop("The package wilson needs to be installed in order to use this app.")}
+if(!requireNamespace("shinydashboard", quietly = TRUE)) { stop("The package shinydashboard needs to be installed in order to use this app.")}
+if(!requireNamespace("shinythemes", quietly = TRUE)) { stop("The package shinythemes needs to be installed in order to use this app.")}
+if(!requireNamespace("shinyBS", quietly = TRUE)) { stop("The package shinyBS needs to be installed in order to use this app.")}
+if(!requireNamespace("htmltools", quietly = TRUE)) { stop("The package htmltools needs to be installed in order to use this app.")}
 
-# versions
-wilson_app_version <- "2.0.2"
+# Set versions
+wilson_app_version <- "WIlsON basic 2.1.0"
 wilson_package_version <- as.character(packageVersion("wilson"))
 
 #
 # UI options
 #
 # width of the side panel
-wilson_sidepanelwidth <- 2
+wilson_sidepanelwidth <- Sys.getenv("WILSON_SIDEPANELWIDTH", unset = 2)
 
 # width of the main panel
-wilson_mainpanelwidth <- 10
+wilson_mainpanelwidth <- Sys.getenv("WILSON_MAINPANELWIDTH", unset = 10)
 
 # Which page should the user land on - default is the Introdcution page
 wilson_landing_page <- Sys.getenv("WILSON_LANDING_PAGE", unset = "introduction")
@@ -31,7 +29,6 @@ wilson_landing_page <- Sys.getenv("WILSON_LANDING_PAGE", unset = "introduction")
 #
 # Server options
 #
-
 # Allow the server to print messages to the console
 wilson_logging <- FALSE
 
@@ -76,8 +73,18 @@ if (wilson_redirect_stdout & !interactive() ) {
 }
 
 # create version info
-version_info <- paste0("wilson app: ", wilson_app_version, "\n",
-                       "wilson package: ", wilson_package_version)
+version_info <- paste0("---- VERSIONS ----\n",
+                       "App: ", wilson_app_version, "\n",
+                       "Package: ", wilson_package_version)
+
+# Load packages
+library(shiny)
+library(shinydashboard)
+library(shinyjs)
+library(shinyBS)
+library(shinythemes)
+library(log4r)
+library(wilson)
 
 # Define the UI
 ui <- dashboardPage(header = dashboardHeader(disable = TRUE), sidebar = dashboardSidebar(disable = TRUE),
