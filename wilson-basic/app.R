@@ -24,7 +24,8 @@ wilson_sidepanelwidth <- Sys.getenv("WILSON_SIDEPANELWIDTH", unset = 2)
 wilson_mainpanelwidth <- Sys.getenv("WILSON_MAINPANELWIDTH", unset = 10)
 
 # Which page should the user land on - default is the Introdcution page
-wilson_landing_page <- Sys.getenv("WILSON_LANDING_PAGE", unset = "introduction")
+wilson_landing_page <- match.arg(arg = Sys.getenv("WILSON_LANDING_PAGE", unset = "introduction"),
+                                 choices = c("introduction", "feature_selection"))
 
 #
 # Server options
