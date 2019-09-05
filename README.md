@@ -1,110 +1,61 @@
-# WIlsON: Webbased Interactive Omics visualizatioN -  The Application
+# WIlsON: Webbased Interactive Omics visualizatioN -  Applications
+
 ## Abstract
-This repository contains the reference application of the [WIlsON R package]( https://github.molgen.mpg.de/loosolab/wilson). It is primarily intended to empower screening platforms to offer access to pre-calculated HT screen results to the non-computational scientist or enduser. Facilitated by an [open file format](#clarion), WIlsON supports all types of omics screens, serves results via a web-based dashboard, and enables end-users to perform analyses and generate publication-ready plots without any programming skills.
 
-## Availability
-The WIlsON app can be applied either via a [centralized R Shiny server](#shiny), via applications such as [Rstudio](#studio), or as a virtualized Docker container for offline usage (Please refer to [that repository](https://hub.docker.com/r/loosolab/wilson/) for a more detailed description).
+This repository contains reference applications that utilize functions from the [WIlsON R package]( https://github.molgen.mpg.de/loosolab/wilson). It is primarily intended to empower high-throughput service platforms to offer access to pre-calculated high-throughput screening results to non-computational scientist. Facilitated by an [open file format](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/CLARION-Format), WIlsON supports all types of -omics screens, serves results via a web-based dashboard, and enables users to perform analyses and generate publication-ready visualizations without programming skills.
 
+## Application deployment
 
-WIlsON can be tested on our [official demonstration server](http://loosolab.mpi-bn.mpg.de/apps/wilson/). 
+A WIlsON application typically consists of the following components:
 
-The underlying WIlsON R package can be downloaded [here](https://github.molgen.mpg.de/loosolab/wilson). 
+- an `app.R` file, containing all R code of the application.
+- a `data` directory, containing input file(s) in CLARION format.
+- an `introduction` directory, containing markdown documents of the landing page.
+- a `www` directory, containing images and logos.
 
-Please make sure to check our other projects at [loosolab](http://loosolab.mpi-bn.mpg.de/).
+Applications described here can easily be deployed [locally](#using-rstudio), on a [centralized R Shiny server](#using-a-shiny-server), or anywhere using [Docker containers](#using-docker-containers):
 
-## How to use it?
-A detailed description of the WIlsON app can be found in the [manual](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki). For a quick start without further reading, a set of [tutorial use cases](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki#use_cases) are available.
+### Using RStudio
 
-<a name="clarion"/></a>
-## Data import and our data format CLARION
+1. On Windows-based systems, install [RTools](https://cran.r-project.org/bin/windows/Rtools/).
+2. Install all prerequisites using `install.packages("BiocManager", "webshot"); BiocManager::install(c("shinyBS", "shinydashboard", "shinythemes", "htmltools", "wilson"))`.
+3. Download the WIlsON applications from the [Releases](https://github.molgen.mpg.de/loosolab/wilson-apps/releases) page and extract them on your local disk.
+4. Set the working directory to the extracted release using `setwd("file/to/extracted_release")`.
+5. Run an app, e.g. `shiny::runApp("wilson-basic/")`.
 
-CLARION: generiC fiLe formAt foR quantItative cOmparsions of high throughput screeNs
+### Using a Shiny server
 
-CLARION is a data format especially developed to be used with WIlsON, which relies on a tab-delimited table with a metadata header to describe the following columns. It is based on the Summarized Experiment format and supports all types of data which can be reduced to features and their annotation (e.g. genes, transcripts, proteins, probes) with assigned numerical values (e.g. count, score, log2foldchange, z-score, p-value). Most result tables derived from RNA-Seq, ChIP/ATAC-Seq, Proteomics, Microarrays, and many other analyses can thus be easily reformatted to become compatible without having to modify the code of WIlsON for each specific experiment.
+1. Similar to the local usage, install all prerequisites using `install.packages("BiocManager", "webshot"); BiocManager::install(c("shinyBS", "shinydashboard", "shinythemes", "htmltools", "wilson"))`.
+2. Download the WIlsON applications from the [Releases](https://github.molgen.mpg.de/loosolab/wilson-apps/releases) page and extract them on the shiny servers disk.
+3. Move the application folder(s) into the shiny servers application folder (e.g. to `/srv/shiny-server/wilson-basic`).
+4. Restart your shiny server.
 
-Please check the following link for details considering the [CLARION format](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/CLARION-Format).
+### Using Docker Containers
 
-### Folder structure and data location
-The R Shiny WIlsON application consists of the following components.
-```
-app.R		-> R code
-/data		-> Folder with input file(s) (CLARION format)
-/introduction	-> Introduction / Data Format web pages
-/www		-> WIlsON logo
-```
+1. Pull one of [WIlsONs application images](#available-images) using e.g. `docker pull loosolab/wilson-basic:2.1.0`.
+2. Rund the application image using `docker run -d loosolab/wilson-basic:2.1.0`.
 
+#### Available images
 
+Currently, the following application images are available:
 
-### How do I load my own data?
-Add the file suffix *.clarion* or *.se*, and place it/them into the /data folder. Then you reload the app or the R Shiny server. The new dataset can be selected from the apps drop down menue in the feature selection pane! 
-```
-cp mydata.clarion /srv/shiny-server/sample-apps/data
-sudo systemctl stop shiny-server
-sudo systemctl daemon-reload
-sudo systemctl start shiny-server
-```
+* [WIlsON basic](https://hub.docker.com/r/loosolab/wilson-basic/tags)
 
-For an overview, see also [here](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/CLARION-Format#import-data-into-the-app).
+## Loading custom data
 
+For deployments using (RStudio)[#using-rstudio] and [Shiny Server](#using-a-shiny-server), it is sufficient to add [CLARION](#clarion) files to the `/data` folder and reload the app/server.
+The new dataset can be selected from the within the app, using the drop down menu in the feature selection panel.
 
-<a name="shiny"/></a>
-## Installation of R Shiny server in “virgin” Debian 9 Linux
-Update and install the following Debian packages.
-```
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install r-base libnlopt-dev wget libssl-dev libxml2-dev libcurl4-openssl-dev git gdebi-core
-```
-
-Install **R Shiny server** according to the manual found here https://www.rstudio.com/products/shiny/download-server/ (make sure to install to global R library, NOT personal!).
-
-Start R and install the **WIlsON R** package and dependencies (make sure to install to global R library, NOT personal!).
-```
-R
-install.packages("devtools")
-devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3", auth_token = NULL)
-```
-
-Download the **WIlsON R application** archive from https://github.molgen.mpg.de/loosolab/wilson-apps and unzip. Move wilson-basic folder into R Shiny server apps folder (e.g. /srv/shiny-server/sample-apps/wilson-basic).
-
-Change the owner of the R Shiny apps folder to be the “shiny” user.
-```
-sudo chown –R shiny:shiny /srv/shiny-server/sample-apps 
-```
-
-Restart R Shiny server.
-```
-sudo systemctl stop shiny-server
-sudo systemctl daemon-reload
-sudo systemctl start shiny-server
-```
-
-
-<a name="studio"/></a>
-## Run app in RStudio
-To run this app in your local RStudio you have to install the **WIlsON R package** and it's dependencies.
-(NOTE: in case you use MS based OS, [Rtools](https://cran.r-project.org/bin/windows/Rtools/) is needed for downloading plots. Make sure to add Rtools to Systempath during installation.)
-
-![rtools install](images/rtools_install.png)
-
-```
-install.packages("devtools")
-devtools::install_github(repo = "loosolab/wilson", host="github.molgen.mpg.de/api/v3", auth_token = NULL)
-```
-Now either clone the repository and use ``runApp()``:
-```
-# Switch with setwd into the main folder e.g. wilson-apps.
-setwd('yourPath'/wilson-apps)
-# Use runApp to run the desired app. E.g. for wilson-basic
-shiny::runApp("wilson-basic/")
-```
-Or use ``runUrl()``:
-```
-shiny::runUrl("https://github.molgen.mpg.de/loosolab/wilson-apps/archive/master.zip", subdir = "/wilson-basic")
-```
+For the Docker deployment, mount a directory with the [CLARION](https://github.molgen.mpg.de/loosolab/wilson-apps/wiki/CLARION-Format) files to `srv/shiny-server/external_data/` using Dockers `-v /path/to/files:/srv/shiny-server/external_data`. 
 
 ## How to cite
 * Schultheis H, Kuenne C, Preussner J, Wiegandt R, Fust A, Bentsen M, Looso M. WIlsON: Webbased Interactive Omics VisualizatioN. (2018), doi: https://doi.org/10.1093/bioinformatics/bty711
+
+## Further information
+
+* WIlsON can be tested on our [official demonstration server](http://loosolab.mpi-bn.mpg.de/apps/wilson/). 
+* The underlying WIlsON R package can be installed from [CRAN](https://cran.r-project.org/web/packages/wilson/index.html). 
+* Please make sure to check our other projects at [loosolab](http://loosolab.mpi-bn.mpg.de/).
 
 ## License
 This project is licensed under the MIT license.
