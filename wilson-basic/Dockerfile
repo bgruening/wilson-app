@@ -48,4 +48,4 @@ RUN apt-get update && apt-get install -y \
 
 # Start container
 USER shiny
-ENTRYPOINT ["/entrypoint.sh", "/usr/bin/shiny-server.sh"]
+CMD ["/entrypoint.sh", "/usr/bin/shiny-server.sh"]
